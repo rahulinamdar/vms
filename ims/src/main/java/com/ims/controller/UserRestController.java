@@ -29,4 +29,10 @@ public class UserRestController {
 		return "Done";
 	}
 	
+	@RequestMapping(value = "/staticPage", method = RequestMethod.GET)
+	   public String redirect() {
+	     
+	      return "redirect:/index.html";
+	   }
+	
 }
