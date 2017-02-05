@@ -1,0 +1,38 @@
+{
+	"TileCollection" : [
+		{
+			"id":"about_us",
+			"icon" : "sap-icon://hint",
+			"type" : "Monitor",
+			"title" : "About Vasudha Organics Inc."
+		},
+		{
+			"id":"so",
+			"icon" : "sap-icon://inbox",
+			"number" : "89",
+			"title" : "Sales Orders"
+		},
+		{
+			"id":"create_so",
+			"type" : "Create",
+			"title" : "Create Sales Order",
+			"info" : "28 Days Left",
+			"infoState" : "Success"
+		},
+		{
+			"id":"invoice",
+			"icon" : "sap-icon://travel-expense-report",
+			"number" : "281",
+			"numberUnit" : "inr",
+			"title" : "Invoices"
+		},
+		{
+			"id":"stocks",
+			"icon" : "sap-icon://loan",
+			"number" : "2380",
+			"numberUnit" : "inr",
+			"title" : "Stock",
+			"info" : "till date"
+		}
+	]
+}

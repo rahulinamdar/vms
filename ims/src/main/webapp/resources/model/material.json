@@ -1,0 +1,23 @@
+{
+	"materials":[
+		
+		{
+			"materialId":"100",
+			"materialDesc":"Apple",
+			"uom":"kg",
+			"price":"100",
+			"currency":"INR",
+			"discount":"",
+			"discountRemarks":""
+		},
+		{
+			"materialId":"101",
+			"uom":"kg",
+			"materialDesc":"Carrot",
+			"price":"50",
+			"currency":"INR",
+			"discount":"",
+			"discountRemarks":""
+		}
+		]
+}

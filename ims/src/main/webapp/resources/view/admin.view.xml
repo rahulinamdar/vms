@@ -1,0 +1,21 @@
+<mvc:View xmlns:core="sap.ui.core" xmlns:mvc="sap.ui.core.mvc" xmlns="sap.m" controllerName="com.vasudha.controller.admin"
+	xmlns:html="http://www.w3.org/1999/xhtml">
+	<Page title="{i18n>appTitle}">
+		<content>
+	<TileContainer
+			id="container"
+			tileDelete="handleTileDelete"
+			tiles="{/TileCollection}">
+			<StandardTile
+				icon="{icon}"
+				type="{type}"
+				number="{number}"
+				numberUnit="{numberUnit}"
+				title="{title}"
+				info="{info}"
+				infoState="{infoState}"
+				press="pressHandler"/>
+		</TileContainer>
+		</content>
+		</Page>
+</mvc:View>

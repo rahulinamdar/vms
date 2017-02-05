@@ -1,0 +1,16 @@
+<mvc:View xmlns:core="sap.ui.core" xmlns:mvc="sap.ui.core.mvc" xmlns="sap.m" xmlns:l="sap.ui.layout" xmlns:c="com.vasudha.model" controllerName="com.vasudha.controller.landing"
+	xmlns:html="http://www.w3.org/1999/xhtml">
+	<Page title="{i18n>appTitle}">
+		<content>
+			<Toolbar height="auto">
+				<ToolbarSpacer/>
+				<Panel id="carouselContainer" height="650px">
+					<Carousel class="sapUiContentPadding" loop="true" id="carouselSample" >
+					</Carousel>
+				</Panel>
+				<ToolbarSpacer/>
+			</Toolbar>
+		</content>
+	</Page>
+		
+</mvc:View>

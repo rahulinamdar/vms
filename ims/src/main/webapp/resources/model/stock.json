@@ -1,0 +1,34 @@
+{
+	"stock":[
+		{
+			"materialId":"100",
+			"serialNo":"1000",
+			"materialDesc":"Apple",
+			"availableQuantity":"10",
+			"total":"100",
+			"regionId":"1st Gate",
+			"uom":"Kg",
+			"category":"Fruit"
+		},
+		{
+			"materialId":"101",
+			"serialNo":"1001",
+			"materialDesc":"Pineapple",
+			"availableQuantity":"10",
+			"total":"100",
+			"regionId":"1st Gate",
+			"uom":"Kg",
+			"category":"Fruit"
+		},
+		{
+			"materialId":"102",
+			"serialNo":"1003",
+			"materialDesc":"Carrot",
+			"availableQuantity":"5",
+			"total":"100",
+			"regionId":"2nd Gate",
+			"uom":"Kg",
+			"category":"Vegitable"
+		}
+		]
+}

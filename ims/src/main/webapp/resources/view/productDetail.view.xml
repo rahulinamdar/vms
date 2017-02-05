@@ -1,0 +1,48 @@
+<mvc:View xmlns:core="sap.ui.core" xmlns:mvc="sap.ui.core.mvc" xmlns="sap.m" controllerName="com.vasudha.controller.productDetail"
+	xmlns:html="http://www.w3.org/1999/xhtml" xmlns:form="sap.ui.layout.form">
+			<Page title="Title">
+				<content>
+					<ObjectHeader id="objectHeader" title="{ProductID}" number="{ path: 'Price', formatter: '.formatter.numberUnit' }"
+				numberUnit="{CurrencyCode}" titleActive="true" titlePress="onShowDetailPopover" responsive="true"></ObjectHeader>
+			<Panel class="sapUiResponsiveMargin" width="auto" headerText="{i18n>productTitle}" expandable="{device>/system/phone}" expanded="true">
+				<content>
+					<form:SimpleForm id="objectForm">
+						<form:content>
+							<Label text="{i18n>productCategoryLabel}"/>
+							<Text text="{Category}"/>
+							<Label text="{i18n>productNameLabel}"/>
+							<Text text="{Name}"/>
+							<Label text="{i18n>productWeightLabel}"/>
+							<Text text="{= ${WeightMeasure} + ' ' + ${WeightUnit}}"/>
+						</form:content>
+					</form:SimpleForm>
+				</content>
+			</Panel>
+			<Panel class="sapUiResponsiveMargin"
+				width="auto" headerText="{i18n>supplierTitle}" 
+				expandable="{device>/system/phone}" 
+				expanded="false">
+				<content>
+					<List id="supplierList">
+						<items>
+							<StandardListItem icon="sap-icon://building" title="{ToSupplier/CompanyName}"/>
+							<StandardListItem icon="sap-icon://email" title="{ToSupplier/EmailAddress}"/>
+							<StandardListItem icon="sap-icon://world" title="{ToSupplier/WebAddress}"/>
+							<StandardListItem icon="sap-icon://phone" title="{ToSupplier/PhoneNumber}"/>
+							<StandardListItem icon="sap-icon://map" title="{ToSupplier/Address/City}"/>
+						</items>
+					</List>
+				</content>
+			</Panel>
+				</content>
+				<footer>
+			<Toolbar>
+				<ToolbarSpacer/>
+				<Button text="Accept" type="Accept" />
+				<Button text="Reject" type="Reject" />
+				<Button text="Edit" />
+				<Button text="Delete" />
+			</Toolbar>
+		</footer>
+			</Page>
+</mvc:View>

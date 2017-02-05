@@ -1,0 +1,39 @@
+<mvc:View xmlns:core="sap.ui.core" xmlns:mvc="sap.ui.core.mvc" xmlns="sap.m" controllerName="com.vasudha.controller.productList"
+	xmlns:html="http://www.w3.org/1999/xhtml">
+	<Page title="{i18n>productMasterTitle}">
+		<subHeader>
+			<Toolbar>
+				<SearchField liveChange="onSearch" width="100%"/>
+			</Toolbar>
+		</subHeader>
+		<content>
+			<List id="idList" items="{products>/materials}" selectionChange="onSelectionChange" includeItemInSelection="true">
+				<infoToolbar>
+					<Toolbar visible="false" id="idInfoToolbar">
+						<Label id="idFilterLabel"/>
+					</Toolbar>
+				</infoToolbar>
+				<items>
+					<ObjectListItem id="prodListItem" intro="{products>materialId}"
+						number="{parts: [ {path: 'products>price'}, {path: 'products>currency'}],
+                            type : 'sap.ui.model.type.Currency',
+                            formatOptions: { showMeasure: false }}" 
+                        numberUnit="{products>currency}" press="onSelect" title="{products>materialDesc}"
+						type="{= ${device>/system/phone} ? 'Active' : 'Inactive'}">
+						<!--<secondStatus>
+							<ObjectStatus id="changedAtObjectStatus" text="{path: 'ChangedAt', type: 'sap.ui.model.type.Date',
+									formatOptions: { style: 'medium',
+													strictParsing: true,
+													relative: true }}"/>
+						</secondStatus>
+						<attributes>-->
+							<!--empty attribute added to align ItemCount with ChangeAt-->
+							<!--<ObjectAttribute id="emptyAttribute"/>
+							<ObjectAttribute id="itemCountObjectAttribute" text="{path: 'ItemCount', formatter: '.formatter.items'}"/>
+						</attributes>-->
+					</ObjectListItem>
+				</items>
+			</List>
+		</content>
+	</Page>
+</mvc:View>

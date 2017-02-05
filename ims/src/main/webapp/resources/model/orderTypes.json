@@ -1,0 +1,19 @@
+{
+	
+	"orderTypes":[
+		
+		{
+			"orderTypeId":"1",
+			"orderType":"Bulk"
+		},
+			{
+			"orderTypeId":"2",
+			"orderType":"Shop Pickup"
+		},
+			{
+			"orderTypeId":"3",
+			"orderType":"Home Delivery"
+		}
+		]
+	
+}

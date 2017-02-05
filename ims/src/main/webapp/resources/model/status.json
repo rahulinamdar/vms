@@ -1,0 +1,26 @@
+{
+	"status":[
+		{
+			"statusId":"1",
+			"status":"Pending"
+			
+		},
+		{
+			"statusId":"2",
+			"status":"In Progress"
+			
+		},
+		{
+			"statusId":"3",
+			"status":"Packed"
+			
+		},
+		
+		{
+			"statusId":"4",
+			"status":"Delivered"
+			
+		}
+		
+		]
+}
