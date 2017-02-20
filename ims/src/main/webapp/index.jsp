@@ -1,1 +1,1 @@
-<jsp:forward page="resources/" />
+<jsp:forward page="/resources/" />
