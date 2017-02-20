@@ -22,10 +22,12 @@ public class Uom {
 	private String uomid;
 	
 	private String uom;
-	private String modifiedby;
+	//TODO Can be done by extending commomn entity --@Rahul
+	
+	/*private String modifiedby;
 	private String createdby;
 	private Date modifiedon;
-	private Date createdon;
+	private Date createdon;*/
 	
 	public String getUomid() {
 		return uomid;
@@ -39,30 +41,7 @@ public class Uom {
 	public void setUom(String uom) {
 		this.uom = uom;
 	}
-	public String getModifiedby() {
-		return modifiedby;
-	}
-	public void setModifiedby(String modifiedby) {
-		this.modifiedby = modifiedby;
-	}
-	public String getCreatedby() {
-		return createdby;
-	}
-	public void setCreatedby(String createdby) {
-		this.createdby = createdby;
-	}
-	public Date getModifiedon() {
-		return modifiedon;
-	}
-	public void setModifiedon(Date modifiedon) {
-		this.modifiedon = modifiedon;
-	}
-	public Date getCreatedon() {
-		return createdon;
-	}
-	public void setCreatedon(Date createdon) {
-		this.createdon = createdon;
-	}
+	
 	public long getId() {
 		return id;
 	}
