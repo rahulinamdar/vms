@@ -19,19 +19,6 @@ public class VmsProduct extends EntityAudit{
 	@Transient
 	private static final long serialVersionUID = 1L;
 
-	/*@Id
-	@GeneratedValue(strategy=GenerationType.AUTO)
-	@Column(name="product_id")
-	private long product_id;*/
-	
-	/*public long getProduct_id() {
-		return product_id;
-	}
-
-
-	public void setProduct_id(long product_id) {
-		this.product_id = product_id;
-	}*/
 
 	@Column(name="PRODUCT_IMAGE")
 	private String productImage;
