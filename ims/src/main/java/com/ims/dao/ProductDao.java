@@ -1,9 +1,15 @@
 package com.ims.dao;
 
-import com.ims.entity.VmsProduct;
+import java.util.List;
+
+import org.springframework.http.ResponseEntity;
+
+import com.ims.entity.Product;
 
 public interface ProductDao {
 
-	void saveProduct(VmsProduct product);
+	void saveProduct(Product product);
+
+	List<Product> getProducts();
 	
 }
