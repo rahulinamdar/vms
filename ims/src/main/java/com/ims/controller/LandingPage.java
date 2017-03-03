@@ -6,8 +6,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @Controller
 public class LandingPage {
 
-	@RequestMapping({"/","/ims"})
+	@RequestMapping({"/spring","/ims"})
 	//@RequestMapping(value="/")
+	
 
 	public String loadIndexPage(){
 		System.out.println("asd");

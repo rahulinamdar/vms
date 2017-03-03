@@ -7,6 +7,7 @@ import javax.persistence.AttributeOverride;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Transient;
@@ -16,7 +17,10 @@ import javax.persistence.Transient;
  * The persistent class for the Product database table.
  * 
  */
-@NamedQuery( name="Product.getAll", query= "SELECT p FROM Product p" )
+@NamedQueries({
+@NamedQuery( name="Product.getAll", query= "SELECT p FROM Product p" ),
+@NamedQuery( name="Product.getProduct", query= "SELECT p FROM Product p WHERE p.productId = :productId" )
+})
 @AttributeOverride(name = "id", column = @Column(name = "product_id"))
 @Entity
 public class Product extends EntityAudit{

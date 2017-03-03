@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.Date;
 
 import javax.persistence.AttributeOverride;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.OneToOne;
@@ -22,7 +23,7 @@ public class ProductPrice extends EntityAudit implements Serializable {
 	@Transient
 	private static final long serialVersionUID = 1L;
 	
-	@Column(name="PRODUCT",unique=true)
+	
 	private String productId;
 	
 	@Temporal(TemporalType.TIMESTAMP)
@@ -30,7 +31,7 @@ public class ProductPrice extends EntityAudit implements Serializable {
 	
 	private double price;
 	
-	@OneToOne
+	@OneToOne(cascade=CascadeType.ALL)
 	private Uom uom;
 	
 	public ProductPrice() {

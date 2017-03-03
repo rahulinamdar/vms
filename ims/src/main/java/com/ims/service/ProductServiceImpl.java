@@ -1,6 +1,7 @@
 package com.ims.service;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -11,8 +12,10 @@ import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.ims.beans.ProductBean;
 import com.ims.dao.ProductDao;
 import com.ims.entity.ProductPrice;
+import com.ims.entity.Uom;
 import com.ims.entity.Product;
 
 @Transactional
@@ -64,6 +67,18 @@ public class ProductServiceImpl implements ProductService{
 		}
 		
 		return productMap;
+	}
+
+	@Override
+	public void addProduct(ProductBean product) {
+		
+		
+		productDao.addProduct(product);
+	}
+
+	@Override
+	public void updateProduct(ProductBean product) {
+		productDao.updateProduct(product);		
 	}
 
 }
