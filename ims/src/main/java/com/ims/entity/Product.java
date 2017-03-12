@@ -45,6 +45,7 @@ public class Product extends EntityAudit{
 	@OneToMany(cascade=CascadeType.ALL)
 	private List<ProductStock> stock; 
 
+<<<<<<< HEAD
 	public List<ProductStock> getStock() {
 		return stock;
 	}
@@ -58,6 +59,10 @@ public class Product extends EntityAudit{
 	@OneToMany(mappedBy="product",fetch=FetchType.EAGER)
 	private Set<Stock> stocks;
 	
+=======
+	@OneToMany(mappedBy="product",fetch=FetchType.EAGER)
+	private Set<Stock> stocks;
+>>>>>>> branch 'master' of https://github.com/rahulinamdar/vms.git
 	
 	public Product() {
 	}

@@ -1,8 +1,15 @@
 package com.ims.entity;
 
+import java.util.Set;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
+<<<<<<< HEAD
 import javax.persistence.NamedQuery;
+=======
+import javax.persistence.FetchType;
+import javax.persistence.OneToMany;
+>>>>>>> branch 'master' of https://github.com/rahulinamdar/vms.git
 import javax.persistence.Table;
 
 @NamedQuery(name="Region.getAll", query ="SELECT r FROM Region r")
@@ -23,6 +30,9 @@ public class Region extends EntityAudit{
 	private String shopaddress;
 	private double 	geo_lat;
 	private double geo_long;
+	
+	@OneToMany(mappedBy="region")
+	private Set<Stock> stocks; 
 	
 	public String getRegionid() {
 		return regionid;
