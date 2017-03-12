@@ -1,5 +1,6 @@
 package com.ims.dao;
 
+import java.text.ParseException;
 import java.util.List;
 
 import org.springframework.http.ResponseEntity;
@@ -13,8 +14,8 @@ public interface ProductDao {
 
 	List<Product> getProducts();
 
-	void addProduct(ProductBean product);
+	void addProduct(ProductBean product) throws ParseException;
 
-	void updateProduct(ProductBean product);
+	void updateProduct(ProductBean product) throws ParseException;
 	
 }

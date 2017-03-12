@@ -1,5 +1,6 @@
 package com.ims.service;
 
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
@@ -15,6 +16,7 @@ import org.springframework.stereotype.Service;
 import com.ims.beans.ProductBean;
 import com.ims.dao.ProductDao;
 import com.ims.entity.ProductPrice;
+import com.ims.entity.ProductStock;
 import com.ims.entity.Uom;
 import com.ims.entity.Product;
 
@@ -41,6 +43,7 @@ public class ProductServiceImpl implements ProductService{
 		List<Map<String,Object>> productMap = new ArrayList<>();
 		Iterator<Product> itr = prods.iterator();
 		while(itr.hasNext()){
+
 			Map<String,Object> product = new HashMap<>();
 			Product prod = new Product();
 			prod = itr.next();
@@ -63,6 +66,22 @@ public class ProductServiceImpl implements ProductService{
 				priceList.add(productPrice);
 			}
 			product.put("priceList", priceList);
+			
+			List<ProductStock> stock = prod.getStock();
+			Iterator<ProductStock> stockItr = stock.iterator();
+			List<Map<String,Object>> stockList = new ArrayList<>();
+			while(stockItr.hasNext()){
+				Map<String,Object> productStock = new HashMap<>();
+				ProductStock prodStock = stockItr.next();
+				
+				productStock.put("productId", prodStock.getProductId());
+				productStock.put("stockDate", prodStock.getStockDate());
+				productStock.put("uom", prodStock.getUom().getUom());
+				productStock.put("region", prodStock.getRegion().getRegionname());
+				productStock.put("stock", prodStock.getStock());
+				stockList.add(productStock);
+			}
+			product.put("stockList", stockList);
 			productMap.add(product);
 		}
 		
@@ -70,14 +89,14 @@ public class ProductServiceImpl implements ProductService{
 	}
 
 	@Override
-	public void addProduct(ProductBean product) {
+	public void addProduct(ProductBean product) throws ParseException {
 		
 		
 		productDao.addProduct(product);
 	}
 
 	@Override
-	public void updateProduct(ProductBean product) {
+	public void updateProduct(ProductBean product) throws ParseException {
 		productDao.updateProduct(product);		
 	}
 

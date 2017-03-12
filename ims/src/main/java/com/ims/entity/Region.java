@@ -2,10 +2,12 @@ package com.ims.entity;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 
-@Entity
+@NamedQuery(name="Region.getAll", query ="SELECT r FROM Region r")
 @Table(name="region")
+@Entity
 public class Region extends EntityAudit{
 
 	

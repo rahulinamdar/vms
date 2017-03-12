@@ -1,5 +1,6 @@
 package com.ims.controller;
 
+import java.text.ParseException;
 import java.util.List;
 import java.util.Map;
 
@@ -50,14 +51,24 @@ public class ProductRestController {
 	@ResponseBody
 	public void  addProduct(@RequestBody ProductBean product){
 		System.out.println("Add");
-		productService.addProduct(product);
+		try {
+			productService.addProduct(product);
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 	
 	@RequestMapping(value="admin/products/update",method=RequestMethod.PUT,consumes=MediaType.APPLICATION_JSON_VALUE)
 	@ResponseBody
 	public void  updateProduct(@RequestBody ProductBean product){
 		System.out.println("update");
-		productService.updateProduct(product);
+		try {
+			productService.updateProduct(product);
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 	
 }

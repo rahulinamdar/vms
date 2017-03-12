@@ -1,5 +1,6 @@
 package com.ims.service;
 
+import java.text.ParseException;
 import java.util.List;
 import java.util.Map;
 
@@ -27,9 +28,10 @@ public interface ProductService {
 	 * @param product
 	 * 
 	 * @return
+	 * @throws ParseException 
 	 */
-	void addProduct(ProductBean product);
+	void addProduct(ProductBean product) throws ParseException;
 
-	void updateProduct(ProductBean product);
+	void updateProduct(ProductBean product) throws ParseException;
 	
 }
