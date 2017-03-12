@@ -2,11 +2,13 @@ package com.ims.entity;
 
 
 import java.util.List;
+import java.util.Set;
 
 import javax.persistence.AttributeOverride;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
@@ -36,12 +38,13 @@ public class Product extends EntityAudit{
 	
 	private String productImage;
 	private String productDescription;
-	
-	
 
 	@OneToMany(cascade=CascadeType.ALL)
 	private List<ProductPrice> price; 
 
+	@OneToMany(mappedBy="product",fetch=FetchType.EAGER)
+	private Set<Stock> stocks;
+	
 	public Product() {
 	}
 
