@@ -10,19 +10,54 @@ import javax.persistence.*;
  *
  */
 @Entity
+@NamedQueries({
+	@NamedQuery(name="ProductStock.getStock", query="SELECT p FROM ProductStock p WHERE p.product.productId = :productId AND p.stockDate =:date AND p.region.regionid = :regionId"),
+	@NamedQuery(name="ProductStock.getStock.ByDate", query="SELECT p FROM ProductStock p WHERE p.product.productId = :productId AND p.stockDate =:date")
+})
 
 public class ProductStock extends EntityAudit implements Serializable {
 
 	
 	private static final long serialVersionUID = 1L;
 
-	private String productId;
+	@ManyToOne
+	@JoinColumn(name="product_id",nullable=false)
+	private Product product;
+
+	private Double stock;
 	
-	public String getProductId() {
-		return productId;
+	@ManyToOne
+	@JoinColumn(name="region_id",insertable=true,nullable=false)
+	private Region region;
+	
+	@OneToOne
+	private Uom uom;
+	
+	@Temporal(TemporalType.DATE)
+	@Column(name="stock_date")
+	private Date stockDate;
+	
+	
+	public ProductStock() {
+		super();
 	}
-	public void setProductId(String productId) {
-		this.productId = productId;
+	public ProductStock(Product product, Region region, Date today) {
+		this.product = product;
+		this.region = region;
+		this.stockDate = today;
+	}
+	
+	/**
+	 * @return the product
+	 */
+	public Product getProduct() {
+		return product;
+	}
+	/**
+	 * @param product the product to set
+	 */
+	public void setProduct(Product product) {
+		this.product = product;
 	}
 	public Double getStock() {
 		return stock;
@@ -47,21 +82,6 @@ public class ProductStock extends EntityAudit implements Serializable {
 	}
 	public void setStockDate(Date stockDate) {
 		this.stockDate = stockDate;
-	}
-	private Double stock;
-	@OneToOne
-	private Region region;
-	@OneToOne
-	private Uom uom;
-	@Temporal(TemporalType.TIMESTAMP)
-	private Date stockDate;
-	public ProductStock() {
-		super();
-	}
-	public ProductStock(String productId, Region region, Date today) {
-		this.productId = productId;
-		this.region = region;
-		this.stockDate = today;
 	}
    
 }

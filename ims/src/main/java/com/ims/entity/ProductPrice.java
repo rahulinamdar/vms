@@ -7,6 +7,9 @@ import javax.persistence.AttributeOverride;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.NamedQuery;
 import javax.persistence.OneToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -18,15 +21,17 @@ import javax.persistence.Transient;
  */
 @Entity
 @AttributeOverride(name = "id", column = @Column(name = "productPrice_id"))
+@NamedQuery(name="ProductPrice.getPrice", query="SELECT p FROM ProductPrice p WHERE p.product.productId = :productId AND p.pricingDate =:date")
 public class ProductPrice extends EntityAudit implements Serializable {
 	
 	@Transient
 	private static final long serialVersionUID = 1L;
 	
+	@ManyToOne
+	@JoinColumn(name="product_id",nullable=false)
+	private Product product;
 	
-	private String productId;
-	
-	@Temporal(TemporalType.TIMESTAMP)
+	@Temporal(TemporalType.DATE)
 	private Date pricingDate;
 	
 	private double price;
@@ -37,13 +42,21 @@ public class ProductPrice extends EntityAudit implements Serializable {
 	public ProductPrice() {
 		super();
 	}   
-	public String getProductId() {
-		return this.productId;
+	 
+	/**
+	 * @return the product
+	 */
+	public Product getProduct() {
+		return product;
 	}
 
-	public void setProductId(String productId) {
-		this.productId = productId;
-	}   
+	/**
+	 * @param product the product to set
+	 */
+	public void setProduct(Product product) {
+		this.product = product;
+	}
+
 	public Date getPricingDate() {
 		return this.pricingDate;
 	}

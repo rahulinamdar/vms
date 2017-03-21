@@ -1,9 +1,11 @@
 package com.ims.controller;
 
 import java.text.ParseException;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.persistence.NoResultException;
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +17,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.ims.beans.ProductBean;
+import com.ims.beans.StockBean;
 import com.ims.entity.Product;
 import com.ims.service.ProductService;
 
@@ -47,6 +50,28 @@ public class ProductRestController {
 		return productService.getProducts();
 	}
 	
+	/**
+	 * Method is registers for the get call for the path "admin/product/getAll" which fetch all products
+	 * 
+	 * @author rahul
+	 * @param request
+	 * @return
+	 */
+	@RequestMapping(value="admin/product/getDetail",method=RequestMethod.GET,produces=MediaType.APPLICATION_JSON_VALUE)
+	@ResponseBody
+	public Map<String, Object>  getProductDetail(HttpServletRequest request){
+		System.out.println(request.getParameter("productId"));
+		Map<String, Object> result = new HashMap<>();
+		try {
+			result = productService.getProductDetails(request.getParameter("productId"));
+		} catch (NoResultException e) {
+			result.put("error", e.getMessage());
+		} catch (ParseException e) {
+			result.put("error", e.getMessage());
+		}
+		return result;
+	}
+	
 	@RequestMapping(value="admin/products/add",method=RequestMethod.POST,consumes=MediaType.APPLICATION_JSON_VALUE)
 	@ResponseBody
 	public void  addProduct(@RequestBody ProductBean product){
@@ -69,6 +94,20 @@ public class ProductRestController {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+	}
+	
+	@RequestMapping(value="admin/productPrice/update",method=RequestMethod.PUT,consumes=MediaType.APPLICATION_JSON_VALUE)
+	@ResponseBody
+	public void  updatePrice(@RequestBody ProductBean product) throws ParseException{
+		System.out.println("update price");
+			productService.updatePrice(product);
+	}
+	
+	@RequestMapping(value="admin/productStock/update",method=RequestMethod.PUT,consumes=MediaType.APPLICATION_JSON_VALUE)
+	@ResponseBody
+	public void  updateStock(@RequestBody List<StockBean> stock) throws ParseException{
+		System.out.println("update price");
+			productService.updateStock(stock);
 	}
 	
 }

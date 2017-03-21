@@ -4,7 +4,10 @@ import java.text.ParseException;
 import java.util.List;
 import java.util.Map;
 
+import javax.persistence.NoResultException;
+
 import com.ims.beans.ProductBean;
+import com.ims.beans.StockBean;
 import com.ims.entity.Product;
 
 public interface ProductService {
@@ -33,5 +36,12 @@ public interface ProductService {
 	void addProduct(ProductBean product) throws ParseException;
 
 	void updateProduct(ProductBean product) throws ParseException;
+
+	void updatePrice(ProductBean product) throws ParseException;
+
+	void updateStock(List<StockBean> stock) throws ParseException;
+
+	Map<String, Object> getProductDetails(String productId) throws NoResultException, ParseException;
+
 	
 }
