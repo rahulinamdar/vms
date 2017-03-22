@@ -32,6 +32,10 @@ public class User implements Serializable {
 
 	@Column(name="user_name")
 	private String userName;
+	
+	@OneToOne
+	@JoinColumn(name="role_id",insertable=true,nullable=false)
+	private Role role;
 
 	public User() {
 	}
@@ -50,6 +54,14 @@ public class User implements Serializable {
 
 	public void setUserName(String userName) {
 		this.userName = userName;
+	}
+
+	public Role getRole() {
+		return role;
+	}
+
+	public void setRole(Role role) {
+		this.role = role;
 	}
 
 }
