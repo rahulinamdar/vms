@@ -25,6 +25,8 @@ public class UserServiceImpl implements UserService {
 	@Transactional
 	public void saveUser(User user) {
 		// TODO Auto-generated method stub
+		
+		user.setPassword(passwordEncoder.encode(user.getPassword()));
 		userDao.saveUser(user);
 	}
 
