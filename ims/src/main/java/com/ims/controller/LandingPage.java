@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @Controller
 public class LandingPage {
 
-	@RequestMapping({"/spring","/ims"})
+	@RequestMapping({"/","/ims"})
 	//@RequestMapping(value="/")
 	
 

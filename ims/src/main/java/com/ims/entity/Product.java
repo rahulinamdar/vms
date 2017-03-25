@@ -2,10 +2,7 @@ package com.ims.entity;
 
 
 import java.util.List;
-import java.util.Set;
 
-import javax.persistence.AttributeOverride;
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -23,7 +20,6 @@ import javax.persistence.Transient;
 @NamedQuery( name="Product.getAll", query= "SELECT p FROM Product p" ),
 @NamedQuery( name="Product.getProduct", query= "SELECT p FROM Product p WHERE p.productId = :productId" )
 })
-@AttributeOverride(name = "id", column = @Column(name = "product_id"))
 @Entity
 public class Product extends EntityAudit{
 	
@@ -33,19 +29,40 @@ public class Product extends EntityAudit{
 	@Transient
 	private static final long serialVersionUID = 1L;
 	
-	@Column(name="PRODUCT",unique=true)
+	@Column(name="product_id",unique=true)
 	private String productId;
 	
 	private String productImage;
 	private String productDescription;
 
-	@OneToMany(cascade=CascadeType.ALL)
+	@OneToMany(mappedBy="product")
 	private List<ProductPrice> price; 
+	
+	@OneToMany(mappedBy="product")
+	private List<ProductStock> stock; 
 
-	@OneToMany(mappedBy="product",fetch=FetchType.EAGER)
-	private Set<Stock> stocks;
+//
+//	@OneToMany(mappedBy="product",fetch=FetchType.EAGER)
+//	private Set<Stock> stocks;
+
 	
 	public Product() {
+	}
+
+
+	/**
+	 * @return the stock
+	 */
+	public List<ProductStock> getStock() {
+		return stock;
+	}
+
+
+	/**
+	 * @param stock the stock to set
+	 */
+	public void setStock(List<ProductStock> stock) {
+		this.stock = stock;
 	}
 
 
