@@ -4,12 +4,17 @@ import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+@NamedQueries({
+		@NamedQuery(name="Region.getAll", query ="SELECT r FROM Region r"),
+		@NamedQuery(name="Region.getRegion", query ="SELECT r FROM Region r WHERE r.regionid = :regionId")
+})
 
-@Entity
 @Table(name="region")
+@Entity
 public class Region extends EntityAudit{
 
 	
@@ -27,7 +32,7 @@ public class Region extends EntityAudit{
 	private double geo_long;
 	
 	@OneToMany(mappedBy="region")
-	private Set<Stock> stocks; 
+	private Set<ProductStock> stocks; 
 	
 	public String getRegionid() {
 		return regionid;
