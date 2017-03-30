@@ -5,7 +5,9 @@ package com.ims.dao;
  * <b>This is an implemention class for user related operations</b>
  */
 import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
+import javax.persistence.TypedQuery;
 import javax.transaction.Transactional;
 
 import org.springframework.stereotype.Repository;
@@ -33,8 +35,12 @@ public class UserDaoImpl implements UserDao{
 	@Override
 	public User findUserByName(String userName) {
 		
-		
-		return null;
+		TypedQuery<User> query = entityManager.createNamedQuery("User.findUser",User.class).setParameter("userName", userName);
+		try{
+			return query.getSingleResult();
+		}catch(NoResultException ex){
+			return null;
+		}
 	}
 
 }

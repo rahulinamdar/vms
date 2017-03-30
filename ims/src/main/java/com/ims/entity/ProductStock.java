@@ -12,7 +12,9 @@ import javax.persistence.*;
 @Entity
 @NamedQueries({
 	@NamedQuery(name="ProductStock.getStock", query="SELECT p FROM ProductStock p WHERE p.product.productId = :productId AND p.stockDate =:date AND p.region.regionid = :regionId"),
-	@NamedQuery(name="ProductStock.getStock.ByDate", query="SELECT p FROM ProductStock p WHERE p.product.productId = :productId AND p.stockDate =:date")
+	@NamedQuery(name="ProductStock.getStock.ByDate", query="SELECT p FROM ProductStock p WHERE p.product.productId = :productId AND p.stockDate =:date"),
+	@NamedQuery(name="ProductStock.getStock.ProductsForAllRegions", query="SELECT p FROM ProductStock p WHERE p.stockDate =:date"),
+	@NamedQuery(name="ProductStock.getStock.ProductsForRegion", query="SELECT p FROM ProductStock p WHERE p.region.regionid = :regionId AND p.stockDate =:date")
 })
 
 public class ProductStock extends EntityAudit implements Serializable {
@@ -26,12 +28,14 @@ public class ProductStock extends EntityAudit implements Serializable {
 
 	private Double stock;
 	
+	private Double dump;
+	
 	@ManyToOne
 	@JoinColumn(name="region_id",insertable=true,nullable=false)
 	private Region region;
 	
-	@OneToOne
-	private Uom uom;
+	//@OneToOne
+	//private Uom uom;
 	
 	@Temporal(TemporalType.DATE)
 	@Column(name="stock_date")
@@ -71,17 +75,24 @@ public class ProductStock extends EntityAudit implements Serializable {
 	public void setRegion(Region region) {
 		this.region = region;
 	}
-	public Uom getUom() {
-		return uom;
-	}
-	public void setUom(Uom uom) {
-		this.uom = uom;
-	}
+	
 	public Date getStockDate() {
 		return stockDate;
 	}
 	public void setStockDate(Date stockDate) {
 		this.stockDate = stockDate;
+	}
+	/**
+	 * @return the dump
+	 */
+	public Double getDump() {
+		return dump;
+	}
+	/**
+	 * @param dump the dump to set
+	 */
+	public void setDump(Double dump) {
+		this.dump = dump;
 	}
    
 }

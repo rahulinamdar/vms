@@ -1,7 +1,6 @@
 package com.ims.dao;
 
 import java.text.ParseException;
-import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
@@ -49,19 +48,18 @@ public class ProductDaoImpl implements ProductDao{
 		productEntity.setProductId(product.getProductId());
 		productEntity.setProductDescription(product.getProductDescription());
 		productEntity.setProductImage("qwe/qew");
-		
+		Query uomQuery = entityManager.createNamedQuery("Uom.getUom", Uom.class).setParameter("uomId", product.getUom());
+		productEntity.setUom((Uom)uomQuery.getSingleResult());
 		
 		
 		entityManager.persist(productEntity);
-		Query query1 = entityManager.createNamedQuery("Region.getAll", Region.class);
+		TypedQuery<Region> query1 = entityManager.createNamedQuery("Region.getAll", Region.class);
 		List<Region> regions = query1.getResultList();
 		for(Region r : regions){
 //			Query query3 = entityManager.createNamedQuery("Product.getProduct",Product.class).setParameter("productId", product.getProductId());
 //			List<Product> products = query3.getResultList();
 			ProductStock prodStock = new ProductStock(productEntity,r,DateFormat.today());
 			prodStock.setStock(0.0);
-			Query uomQuery = entityManager.createNamedQuery("Uom.getUom", Uom.class).setParameter("uomId", product.getUom());
-			prodStock.setUom((Uom)uomQuery.getSingleResult());
 			entityManager.persist(prodStock);
 		}
 		
@@ -70,8 +68,6 @@ public class ProductDaoImpl implements ProductDao{
 //		List<Product> results = query.getResultList();
 		prodPrice.setProduct(productEntity); 
 		prodPrice.setPrice(product.getPrice());
-		Query uomQuery = entityManager.createNamedQuery("Uom.getUom", Uom.class).setParameter("uomId", product.getUom());
-		prodPrice.setUom((Uom)uomQuery.getSingleResult());
 		prodPrice.setPricingDate(DateFormat.today());
 		entityManager.persist(prodPrice);
 		
@@ -81,7 +77,7 @@ public class ProductDaoImpl implements ProductDao{
 	@Override
 	public void updateProduct(ProductBean product) throws ParseException {
 		// TODO Auto-generated method stub
-		Query query = entityManager.createNamedQuery("Product.getProduct",Product.class).setParameter("productId", product.getProductId());
+		TypedQuery<Product> query = entityManager.createNamedQuery("Product.getProduct",Product.class).setParameter("productId", product.getProductId());
 		List<Product> results = query.getResultList();
 		if(!results.isEmpty()){
 			Product productEntity = results.get(0);
@@ -89,8 +85,6 @@ public class ProductDaoImpl implements ProductDao{
 			ProductPrice prodPrice = new ProductPrice();
 			prodPrice.setProduct(productEntity);
 			prodPrice.setPrice(product.getPrice());
-			Query uomQuery = entityManager.createNamedQuery("Uom.getUom", Uom.class).setParameter("uomId", product.getUom());
-			prodPrice.setUom((Uom)uomQuery.getSingleResult());
 			prodPrice.setPricingDate(DateFormat.today());
 			prices.add(prodPrice);
 			productEntity.setPrice(prices);
@@ -115,8 +109,6 @@ public class ProductDaoImpl implements ProductDao{
 					prodPrice = new ProductPrice();
 					prodPrice.setProduct(productEntity);
 					prodPrice.setPrice(product.getPrice());
-					Query uomQuery = entityManager.createNamedQuery("Uom.getUom", Uom.class).setParameter("uomId", product.getUom());
-					prodPrice.setUom((Uom)uomQuery.getSingleResult());
 					prodPrice.setPricingDate(DateFormat.today());
 					entityManager.persist(prodPrice);
 			}
@@ -142,8 +134,6 @@ public class ProductDaoImpl implements ProductDao{
 						prodStock = new ProductStock();
 						prodStock.setProduct(productEntity);
 						prodStock.setStock(productStock.getStock());
-							Query uomQuery = entityManager.createNamedQuery("Uom.getUom", Uom.class).setParameter("uomId", productStock.getUom());
-							prodStock.setUom((Uom)uomQuery.getSingleResult());
 							prodStock.setStockDate(DateFormat.today());
 							Query regionQuery = entityManager.createNamedQuery("Region.getRegion", Region.class).setParameter("regionId", productStock.getRegion());
 							prodStock.setRegion((Region)regionQuery.getSingleResult());
@@ -154,15 +144,81 @@ public class ProductDaoImpl implements ProductDao{
 
 	@Override
 	public ProductPrice getProductPrice(String productId) throws NoResultException, ParseException{
-		Query priceQuery = entityManager.createNamedQuery("ProductPrice.getPrice",ProductPrice.class).setParameter("productId", productId).setParameter("date", DateFormat.today());
+		TypedQuery<ProductPrice> priceQuery = entityManager.createNamedQuery("ProductPrice.getPrice",ProductPrice.class).setParameter("productId", productId).setParameter("date", DateFormat.today());
 		return (ProductPrice) priceQuery.getSingleResult();
 	}
 
 	@Override
 	public List<ProductStock> getProductStock(String productId) throws ParseException {
 		// TODO Auto-generated method stub
-		Query stockQuery = entityManager.createNamedQuery("ProductStock.getStock.ByDate",ProductStock.class).setParameter("productId", productId).setParameter("date", DateFormat.today());
+		TypedQuery<ProductStock> stockQuery = entityManager.createNamedQuery("ProductStock.getStock.ByDate",ProductStock.class).setParameter("productId", productId).setParameter("date", DateFormat.today());
 		return stockQuery.getResultList();
+	}
+
+	@Override
+	public List<ProductPrice> getProductsWithPrice() throws ParseException {
+		// TODO Auto-generated method stub
+		TypedQuery<ProductPrice> priceQuery = entityManager.createNamedQuery("ProductPrice.getAllWithPrice",ProductPrice.class).setParameter("date", DateFormat.today());
+		return priceQuery.getResultList();
+	}
+
+	@Override
+	public void createPricingEntry() throws ParseException {
+		// TODO Auto-generated method stub
+		TypedQuery<Product> query  = entityManager.createNamedQuery("Product.getAll", Product.class);
+		List<Product> results = query.getResultList();
+		
+		
+		Iterator<Product> itr = results.iterator();
+		while(itr.hasNext()){
+		Product productEntity = itr.next();
+		ProductPrice prodPrice = new ProductPrice();
+		prodPrice.setProduct(productEntity); 
+		TypedQuery<ProductPrice> priceQuery = entityManager.createNamedQuery("ProductPrice.getPrice",ProductPrice.class).setParameter("productId", productEntity.getProductId()).setParameter("date", DateFormat.yesterday());
+		try{
+		ProductPrice prodYestPrice = (ProductPrice) priceQuery.getSingleResult();
+		prodPrice.setPrice(prodYestPrice.getPrice());
+		}catch(NoResultException ex){
+			prodPrice.setPrice(0.0);
+		}
+		prodPrice.setPricingDate(DateFormat.today());
+		entityManager.persist(prodPrice);
+		}
+	}
+
+	@Override
+	public List<ProductStock> getStockAllRegions(String date) throws ParseException {
+		
+		TypedQuery<ProductStock> query  = entityManager.createNamedQuery("ProductStock.getStock.ProductsForAllRegions", ProductStock.class).setParameter("date", date.equals(null) ? DateFormat.today() : date);
+		List<ProductStock> results = query.getResultList();
+		
+		return results;
+	}
+
+	@Override
+	public List<ProductStock> getStockForRegion(String date, String region) throws ParseException {
+		TypedQuery<ProductStock> query  = entityManager.createNamedQuery("ProductStock.getStock.ProductsForRegion", ProductStock.class).setParameter("regionId", region).setParameter("date", date.equals(null) ? DateFormat.today() : date);
+		List<ProductStock> results = query.getResultList();
+		
+		return results;
+		
+	}
+
+	@Override
+	public void updateDump(List<StockBean> stock) throws ParseException {
+		
+		// TODO Auto-generated method stub
+		Iterator<StockBean> itr = stock.iterator();
+		while(itr.hasNext()){
+			StockBean productStock = itr.next();
+		Query stockQuery = entityManager.createNamedQuery("ProductStock.getStock",ProductStock.class).setParameter("productId", productStock.getProductId()).setParameter("date", productStock.getStockDate()).setParameter("regionId",productStock.getRegion());
+		ProductStock prodStock  = (ProductStock) stockQuery.getSingleResult();
+					prodStock.setDump(productStock.getDump());
+					entityManager.persist(prodStock);
+	}
+	
+		
+		
 	}
 
 }

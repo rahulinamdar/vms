@@ -56,6 +56,56 @@ public class ProductRestController {
 	 * @author rahul
 	 * @param request
 	 * @return
+	 * @throws ParseException 
+	 */
+	@RequestMapping(value="admin/products/getAllWithPrice",method=RequestMethod.GET,produces=MediaType.APPLICATION_JSON_VALUE)
+	@ResponseBody
+	public List<Map<String,Object>>  getProductsWithPrice(HttpServletRequest request) throws ParseException{
+			return productService.getProductsWithPrice();
+		
+	}
+	
+	
+	/**
+	 * Method is registers for the get call for the path "admin/product/getAll" which fetch all products
+	 * 
+	 * @author rahul
+	 * @param request
+	 * @return
+	 * @throws ParseException 
+	 */
+	@RequestMapping(value="admin/products/getStockAllRegions",method=RequestMethod.GET,produces=MediaType.APPLICATION_JSON_VALUE)
+	@ResponseBody
+	public List<Map<String,Object>>  getStockAllRegions(HttpServletRequest request) throws ParseException{
+		String date = request.getParameter("date");
+		if(date!=null)
+			return productService.getStockAllRegions(date);
+		else
+			return productService.getStockAllRegions(null);
+		
+	}
+	
+	/**
+	 * Method is registers for the get call for the path "admin/product/getAll" which fetch all products
+	 * 
+	 * @author rahul
+	 * @param request
+	 * @return
+	 * @throws ParseException 
+	 */
+	@RequestMapping(value="admin/products/getStockAForRegion",method=RequestMethod.GET,produces=MediaType.APPLICATION_JSON_VALUE)
+	@ResponseBody
+	public List<Map<String,Object>>  getStockAForRegion(HttpServletRequest request) throws ParseException{
+			return productService.getStockForRegion(null,null);
+		
+	}
+	
+	/**
+	 * Method is registers for the get call for the path "admin/product/getAll" which fetch all products
+	 * 
+	 * @author rahul
+	 * @param request
+	 * @return
 	 */
 	@RequestMapping(value="admin/product/getDetail",method=RequestMethod.GET,produces=MediaType.APPLICATION_JSON_VALUE)
 	@ResponseBody
@@ -101,6 +151,13 @@ public class ProductRestController {
 	public void  updatePrice(@RequestBody ProductBean product) throws ParseException{
 		System.out.println("update price");
 			productService.updatePrice(product);
+	}
+	
+	@RequestMapping(value="admin/productStock/updateDump",method=RequestMethod.PUT,consumes=MediaType.APPLICATION_JSON_VALUE)
+	@ResponseBody
+	public void  updateDump(@RequestBody List<StockBean> stock) throws ParseException{
+		System.out.println("update price");
+			productService.updateDump(stock);
 	}
 	
 	@RequestMapping(value="admin/productStock/update",method=RequestMethod.PUT,consumes=MediaType.APPLICATION_JSON_VALUE)

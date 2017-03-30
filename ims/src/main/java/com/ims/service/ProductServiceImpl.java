@@ -53,6 +53,7 @@ public class ProductServiceImpl implements ProductService{
 			product.put("productId", prod.getProductId());
 			product.put("productDesc", prod.getProductDescription());
 			product.put("productImage", prod.getProductImage());
+			product.put("uom", prod.getUom().getUom());
 			
 			List<ProductPrice> prices = prod.getPrice();
 			Iterator<ProductPrice> priceItr = prices.iterator();
@@ -63,7 +64,7 @@ public class ProductServiceImpl implements ProductService{
 				
 				productPrice.put("productId", prodPrice.getProduct().getProductId());
 				productPrice.put("priceDate", prodPrice.getPricingDate());
-				productPrice.put("uom", prodPrice.getUom().getUom());
+				
 				productPrice.put("price", prodPrice.getPrice());
 				priceList.add(productPrice);
 			}
@@ -78,7 +79,6 @@ public class ProductServiceImpl implements ProductService{
 				
 				productStock.put("productId", prodStock.getProduct().getProductId());
 				productStock.put("stockDate", prodStock.getStockDate());
-				productStock.put("uom", prodStock.getUom().getUom());
 				productStock.put("region", prodStock.getRegion().getRegionname());
 				productStock.put("stock", prodStock.getStock());
 				stockList.add(productStock);
@@ -127,12 +127,12 @@ public class ProductServiceImpl implements ProductService{
 		product.put("productId", prod.getProductId());
 		product.put("productDesc", prod.getProductDescription());
 		product.put("productImage", prod.getProductImage());
+		product.put("uom", prod.getUom().getUom());
 		
 		Map<String,Object> productPrice = new HashMap<>();
 		
 		productPrice.put("productId", prodPrice.getProduct().getProductId());
 		productPrice.put("priceDate", prodPrice.getPricingDate());
-		productPrice.put("uom", prodPrice.getUom().getUom());
 		productPrice.put("price", prodPrice.getPrice());
 		product.put("priceInfo", productPrice);
 		Iterator<ProductStock> stockItr = stock.iterator();
@@ -143,7 +143,6 @@ public class ProductServiceImpl implements ProductService{
 			
 			productStock.put("productId", prodStock.getProduct().getProductId());
 			productStock.put("stockDate", prodStock.getStockDate());
-			productStock.put("uom", prodStock.getUom().getUom());
 			productStock.put("region", prodStock.getRegion().getRegionname());
 			productStock.put("stock", prodStock.getStock());
 			stockList.add(productStock);
@@ -152,6 +151,79 @@ public class ProductServiceImpl implements ProductService{
 		
 		
 		return product;
+	}
+
+	@Override
+	public List<Map<String, Object>> getProductsWithPrice() throws ParseException {
+		// TODO Auto-generated method stub
+		List<ProductPrice> products =  productDao.getProductsWithPrice();
+		Iterator<ProductPrice> priceItr = products.iterator();
+		List<Map<String,Object>> priceList = new ArrayList<>();
+		while(priceItr.hasNext()){
+			Map<String,Object> productPrice = new HashMap<>();
+			ProductPrice prodPrice = priceItr.next();
+			
+			productPrice.put("productId", prodPrice.getProduct().getProductId());
+			productPrice.put("productDesc", prodPrice.getProduct().getProductDescription());
+			productPrice.put("priceDate", prodPrice.getPricingDate());
+			productPrice.put("price", prodPrice.getPrice());
+			priceList.add(productPrice);
+		}
+		
+		
+		return priceList;
+	}
+
+	@Override
+	public void createPricingEntry() throws ParseException {
+		// TODO Auto-generated method stub
+		productDao.createPricingEntry();
+	}
+
+	@Override
+	public List<Map<String, Object>> getStockAllRegions(String date) throws ParseException {
+		List<ProductStock> stock = productDao.getStockAllRegions(date);
+		
+		Iterator<ProductStock> stockItr = stock.iterator();
+		List<Map<String,Object>> stockList = new ArrayList<>();
+		while(stockItr.hasNext()){
+			Map<String,Object> productStock = new HashMap<>();
+			ProductStock prodStock = stockItr.next();
+			
+			productStock.put("productId", prodStock.getProduct().getProductId());
+			productStock.put("stockDate", prodStock.getStockDate());
+			productStock.put("region", prodStock.getRegion().getRegionid());
+			productStock.put("stock", prodStock.getStock());
+			stockList.add(productStock);
+		}
+		return stockList; 
+			
+	}
+
+	@Override
+	public List<Map<String, Object>> getStockForRegion(String date, String region) throws ParseException {
+		List<ProductStock> stock =  productDao.getStockForRegion(date,region);
+		
+		Iterator<ProductStock> stockItr = stock.iterator();
+		List<Map<String,Object>> stockList = new ArrayList<>();
+		while(stockItr.hasNext()){
+			Map<String,Object> productStock = new HashMap<>();
+			ProductStock prodStock = stockItr.next();
+			
+			productStock.put("productId", prodStock.getProduct().getProductId());
+			productStock.put("stockDate", prodStock.getStockDate());
+			productStock.put("region", prodStock.getRegion().getRegionid());
+			productStock.put("stock", prodStock.getStock());
+			productStock.put("dump", prodStock.getDump());
+			stockList.add(productStock);
+		}
+		return stockList; 
+	}
+
+	@Override
+	public void updateDump(List<StockBean> stock) throws ParseException {
+		// TODO Auto-generated method stub
+		productDao.updateDump(stock);
 	}
 
 }

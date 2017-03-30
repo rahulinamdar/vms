@@ -2,10 +2,16 @@ package com.ims.entity;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 
 @Entity
 @Table(name="ordertype")
+@NamedQueries({
+	@NamedQuery(name="OrderType.getAll", query="SELECT ot FROM OrderType ot"),
+	@NamedQuery(name="OrderType.getOrderType", query="SELECT ot FROM OrderType ot WHERE ot.orderTypeId = :orderTypeId")
+})
 public class OrderType extends EntityAudit{
 
 	

@@ -2,12 +2,18 @@ package com.ims.entity;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 
 @Entity
 @Table(name="uom")
-@NamedQuery(name="Uom.getUom" , query = "SELECT u FROM Uom u WHERE u.uomid = :uomId")
+@NamedQueries({
+	@NamedQuery(name="Uom.getUom" , query = "SELECT u FROM Uom u WHERE u.uomid = :uomId"),
+	@NamedQuery(name="Uom.getAll" , query = "SELECT u FROM Uom u")
+	
+})
+
 public class Uom extends EntityAudit{
 
 	

@@ -77,6 +77,19 @@ public class StockBean {
 	public void setUom(String uom) {
 		this.uom = uom;
 	}
+	/**
+	 * @return the dump
+	 */
+	public Double getDump() {
+		return dump;
+	}
+	/**
+	 * @param dump the dump to set
+	 */
+	public void setDump(Double dump) {
+		this.dump = dump;
+	}
+	private Double dump;
 	private Double stock;
 	private String region;
 	private String uom;

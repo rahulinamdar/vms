@@ -2,10 +2,17 @@ package com.ims.entity;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 
 @Entity
 @Table(name="status")
+@NamedQueries({
+	@NamedQuery(name="Status.getAll", query="SELECT s FROM Status s"),
+	@NamedQuery(name="Status.getStatus", query="SELECT s FROM Status s WHERE s.statusId = :statusId")
+})
+
 public class Status extends EntityAudit{
 
 	

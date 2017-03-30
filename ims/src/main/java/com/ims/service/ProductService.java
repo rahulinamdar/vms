@@ -43,5 +43,15 @@ public interface ProductService {
 
 	Map<String, Object> getProductDetails(String productId) throws NoResultException, ParseException;
 
+	List<Map<String, Object>> getProductsWithPrice() throws ParseException;
+	
+	void createPricingEntry() throws ParseException;
+
+	List<Map<String, Object>> getStockAllRegions(String date) throws ParseException;
+
+	List<Map<String, Object>> getStockForRegion(String date,String region) throws ParseException;
+
+	void updateDump(List<StockBean> stock) throws ParseException;
+
 	
 }

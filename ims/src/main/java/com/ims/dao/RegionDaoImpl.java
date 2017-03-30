@@ -70,8 +70,6 @@ public class RegionDaoImpl implements RegionDao{
 				
 				ProductStock prodStock = new ProductStock(prod,(Region)regionQuery.getSingleResult(),DateFormat.today());
 				prodStock.setStock(0.0);
-				Query uomQuery = entityManager.createNamedQuery("Uom.getUom", Uom.class).setParameter("uomId", "kg");
-				prodStock.setUom((Uom)uomQuery.getSingleResult());
 				entityManager.persist(prodStock);
 			}
 		}

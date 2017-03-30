@@ -9,6 +9,7 @@ import javax.persistence.FetchType;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Transient;
 
 
@@ -35,9 +36,27 @@ public class Product extends EntityAudit{
 	private String productImage;
 	private String productDescription;
 
+	@OneToOne
+	private Uom uom;
+	
 	@OneToMany(mappedBy="product")
 	private List<ProductPrice> price; 
 	
+	/**
+	 * @return the uom
+	 */
+	public Uom getUom() {
+		return uom;
+	}
+
+
+	/**
+	 * @param uom the uom to set
+	 */
+	public void setUom(Uom uom) {
+		this.uom = uom;
+	}
+
 	@OneToMany(mappedBy="product")
 	private List<ProductStock> stock; 
 
