@@ -26,9 +26,21 @@ public class PriceScheduler {
 	 * @throws ParseException
 	 */
 	@Scheduled(cron="0 0 1 * * ?")
-    public void demoServiceMethod() throws ParseException
+    public void createPricingEntry() throws ParseException
     {
         System.out.println("Method executed at every 5 seconds. Current time is :: "+ new Date());
         productService.createPricingEntry();
+    }
+	
+	/**
+	 * @author rahul
+	 * 
+	 * @throws ParseException
+	 */
+	@Scheduled(cron="0 0 1 * * ?")
+    public void createStock() throws ParseException
+    {
+        System.out.println("Method executed at every 5 seconds. Current time is :: "+ new Date());
+        productService.createStock();
     }
 }

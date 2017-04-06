@@ -9,7 +9,9 @@ import javax.persistence.NoResultException;
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -19,6 +21,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.ims.beans.ProductBean;
 import com.ims.beans.StockBean;
 import com.ims.entity.Product;
+import com.ims.entity.ProductPrice;
 import com.ims.service.ProductService;
 
 @RestController
@@ -122,16 +125,18 @@ public class ProductRestController {
 		return result;
 	}
 	
-	@RequestMapping(value="admin/products/add",method=RequestMethod.POST,consumes=MediaType.APPLICATION_JSON_VALUE)
+	@RequestMapping(value="admin/products/add",method=RequestMethod.POST,consumes=MediaType.APPLICATION_JSON_VALUE,produces=MediaType.APPLICATION_JSON_VALUE)
 	@ResponseBody
-	public void  addProduct(@RequestBody ProductBean product){
+	public ResponseEntity<?>  addProduct(@RequestBody ProductBean product){
 		System.out.println("Add");
 		try {
-			productService.addProduct(product);
+			
+			return new ResponseEntity<Product>(productService.addProduct(product), HttpStatus.CREATED);
 		} catch (ParseException e) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
+			return new ResponseEntity<>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
 		}
+		
 	}
 	
 	@RequestMapping(value="admin/products/update",method=RequestMethod.PUT,consumes=MediaType.APPLICATION_JSON_VALUE)
@@ -148,9 +153,11 @@ public class ProductRestController {
 	
 	@RequestMapping(value="admin/productPrice/update",method=RequestMethod.PUT,consumes=MediaType.APPLICATION_JSON_VALUE)
 	@ResponseBody
-	public void  updatePrice(@RequestBody ProductBean product) throws ParseException{
-		System.out.println("update price");
-			productService.updatePrice(product);
+	public ResponseEntity<?> updatePrice(@RequestBody ProductBean product) throws ParseException{
+			ProductPrice price = productService.updatePrice(product);
+			Map<String,Object> map = new HashMap<>();
+			map.put("msg", "Price updated successfully for "+price.getProduct().getProductDescription()+"");
+			return new ResponseEntity<Map<String,Object>>(map, HttpStatus.OK);
 	}
 	
 	@RequestMapping(value="admin/productStock/updateDump",method=RequestMethod.PUT,consumes=MediaType.APPLICATION_JSON_VALUE)

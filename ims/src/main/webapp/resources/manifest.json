@@ -15,7 +15,6 @@
 			"version": "1.38.11"
 		}
 	},
-
 	"sap.ui": {
 		"_version": "1.1.0",
 		"technology": "UI5",
@@ -35,22 +34,27 @@
 		"supportedThemes": [
 			"sap_hcb",
 			"sap_bluecrystal"
-
 		]
 	},
-
 	"sap.ui5": {
 		"_version": "1.1.0",
 		"rootView": {
 			"viewName": "com.vasudha.view.home",
 			"type": "XML"
 		},
+		"handleValidation": true,
 		"dependencies": {
-			"minUI5Version": "1.30.0",
+			"minUI5Version": "1.34",
 			"libs": {
-				"sap.ui.core": {},
-				"sap.m": {},
-				"sap.ui.layout": {}
+				"sap.ui.core": {
+					"minVersion":"1.34.0"
+				},
+				"sap.m": {
+					"minVersion":"1.34.0"
+				},
+				"sap.ui.layout": {
+					"minVersion":"1.34.0"
+				}
 			}
 		},
 		"contentDensities": {
@@ -76,24 +80,65 @@
 			},
 			"routes": [
 				{
-					"pattern": "",
+					"pattern": "landing",
 					"name": "landing",
 					"target": "landing"
-				},{
-					"pattern":"/admin",
-					"name":"admin",
-					"target":"admin"
-				},{
-					"pattern":"/stock",
-					"name":"stock",
-					"target":"stock"
-				},{
+				},
+				{
+					"pattern": "",
+					"name": "admin",
+					"target": "admin"
+				},
+				{
+					"pattern": "stock",
+					"name": "stock",
+					"target": "stock"
+				},
+				{
 					"pattern": "products",
 					"name": "products",
 					"target": [
 						"master",
 						"detail"
 					]
+				},
+				{
+					"pattern": "products/{productId}",
+					"name": "productDetail",
+					"target":  [
+						"master",
+						"detail"
+					]
+				},
+				{
+					"pattern": "login",
+					"name": "login",
+					"target": "login"
+				},
+				{
+					"pattern": "shopOrders",
+					"name": "shopOrders",
+					"target": "shopOrders"
+				},
+				{
+					"pattern": "shopOrders/{orderId}",
+					"name": "orderDetail",
+					"target": "orderDetail"
+				},
+				{
+					"pattern": "pos",
+					"name": "pos",
+					"target": "pos"
+				},
+					{
+					"pattern": "region",
+					"name": "region",
+					"target": "region"
+				},
+					{
+					"pattern": "dump",
+					"name": "dump",
+					"target": "dump"
 				}
 			],
 			"targets": {
@@ -101,13 +146,13 @@
 					"viewName": "landing",
 					"viewLevel": 1
 				},
-				"admin":{
-					"viewName":"admin",
-					"viewLevel":2
+				"admin": {
+					"viewName": "admin",
+					"viewLevel": 2
 				},
-				"stock":{
-					"viewName":"stock",
-					"viewLevel":3
+				"stock": {
+					"viewName": "stock",
+					"viewLevel": 3
 				},
 				"parentSplitApp": {
 					"viewPath": "com.vasudha.view",
@@ -127,13 +172,43 @@
 					"viewId": "prodDetail",
 					"controlId": "prodSplitApp",
 					"controlAggregation": "detailPages"
+				},
+				"login": {
+					"viewName": "login",
+					"viewLevel": 4
+				},
+				"shopOrders": {
+					"viewName": "Orders",
+					"viewLevel": 5
+				},
+				"orderDetail": {
+					"viewName": "orderDetails",
+					"viewLevel": 6
+				},
+				"pos": {
+					"viewName": "POS",
+					"viewLevel": 7
+				},
+				"region":{
+					"viewName":"region",
+					"viewLevel":1
+				},
+				"dump":{
+					"viewName":"dump",
+					"viewLevel":1
 				}
 			}
 		},
 		"resources": {
-			"css": [{
-				"uri": "resources/css/style.css"
-			}]
+			"css": [
+				{
+					"uri": "resources/css/style.css"
+				}
+			]
 		}
+	},
+	"sap.platform.hcp": {
+		"uri": "webapp",
+		"_version": "1.1.0"
 	}
 }

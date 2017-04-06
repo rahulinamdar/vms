@@ -1,0 +1,24 @@
+<mvc:View xmlns:core="sap.ui.core" xmlns:mvc="sap.ui.core.mvc" xmlns="sap.m" controllerName="com.vasudha.controller.login"
+	xmlns:html="http://www.w3.org/1999/xhtml">
+			<Page title="Title">
+				<content>
+					<Panel>
+				<headerToolbar>
+					<Toolbar>
+						<Title level="H2" text="Upper center" />
+					</Toolbar>
+				</headerToolbar>
+				<FlexBox
+					height="100px"
+					alignItems="Start"
+					justifyContent="Center">
+					<items>
+						<Button text="1" type="Emphasized" class="sapUiSmallMarginEnd" />
+						<Button text="2" type="Reject" class="sapUiSmallMarginEnd" />
+						<Button text="3" type="Accept" />
+					</items>
+				</FlexBox>
+			</Panel>
+				</content>
+			</Page>
+</mvc:View>

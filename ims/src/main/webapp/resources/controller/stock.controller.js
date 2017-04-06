@@ -18,8 +18,7 @@ sap.ui.define([
 			this.oColumnModel = new JSONModel();
 			this.oColumnModel.setData(this._oData);
 			this.getView().setModel(this.oColumnModel, "columns");
-			var oModel = new JSONModel("../../webapp/model/stock.json");
-			this.getView().setModel(oModel, "stock");
+			this.getRouter().getRoute("stock").attachPatternMatched(this._onRouteMatched, this);
 		},
 		_oData: [{
 				header: "Product",
@@ -47,7 +46,28 @@ sap.ui.define([
 				demandPopin: false,
 				minScreenWidth: "",
 				styleClass: "cellBorderRight"
-			}]
+			}],
+			_onRouteMatched: function(oEvent) {
+				var oController = this;
+			$.ajax({
+				type: 'GET',
+				url: "admin/products/getStockAllRegions",
+				error: function(data) {
+				console.log(data);
+				},
+				dataType: 'json',
+				success: function(data) {
+					if(oController.getView().getModel("stock")){
+						oController.getView().getModel("stock").setData(data);
+					}else{
+					var oModel = new JSONModel();
+					oModel.setData(data);
+					oController.getView().setModel(oModel, "stock");
+					}
+				}
+				
+			});
+			}
 			/**
 			 * Similar to onAfterRendering, but this hook is invoked before the controller's View is re-rendered
 			 * (NOT before the first rendering! onInit() is used for that one!).

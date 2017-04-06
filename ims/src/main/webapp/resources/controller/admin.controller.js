@@ -12,7 +12,57 @@ sap.ui.define([
 		 * @memberOf com.vasudha.view.admin
 		 */
 		onInit: function() {
-			var oModel = new JSONModel("../../webapp/model/data.json");
+			var oModel = new JSONModel();
+			oModel.setData({
+				"TileCollection" : [
+					{
+						"id":"about_us",
+						"icon" : "sap-icon://hint",
+						"type" : "Monitor",
+						"title" : "About KK Retail Agro Fresh Inc."
+					},
+					{
+						"id":"so",
+						"icon" : "sap-icon://inbox",
+						"number" : "89",
+						"title" : "Sales Orders"
+					},
+					{
+						"id":"create_so",
+						"type" : "Create",
+						"title" : "Create Sales Order",
+						"info" : "Last Sales",
+						"infoState" : "Success"
+					},
+					{
+						"id":"products",
+						"icon" : "sap-icon://travel-expense-report",
+						"number" : "150",
+						"title" : "Product"
+					},
+					{
+						"id":"stocks",
+						"icon" : "sap-icon://loan",
+						"number" : "2380",
+						"numberUnit" : "inr",
+						"title" : "Stock",
+						"info" : "till date"
+					},
+					{
+						"id":"region",
+						"type" : "Create",
+						"title" : "Region",
+						"number" : "2380",
+						"info" : "Regions"
+					},
+						{
+						"id":"dump",
+						"title" : "Dump",
+						"number" : "12",
+						"info" : "Dump of the day"
+					}
+				]
+			});
 			this.getView().setModel(oModel);
 		},
 
@@ -43,9 +93,27 @@ sap.ui.define([
 		//	}
 		pressHandler: function(oEvent) {
 			var oContext = oEvent.getSource().getBindingContext();
-			oContext.getPath();
-			oContext.getModel();
-			this.getRouter().navTo();
+			var sPath = oContext.getPath();
+			var oModel = oContext.getModel();
+			var oData = oModel.getProperty(sPath);
+			if(oData.id === "stocks"){
+				this.getRouter().navTo("stock");
+			}else if(oData.id === "create_so"){
+				this.getRouter().navTo("pos");	
+			}else if(oData.id === "so"){
+				this.getRouter().navTo("shopOrders");	
+			}else if(oData.id === "products"){
+				this.getRouter().navTo("products");	
+			}else if(oData.id === "region"){
+					this.getRouter().navTo("region");
+			}
+			else if(oData.id === "dump"){
+					this.getRouter().navTo("dump");
+			}else{
+				sap.m.MessageToast.show("Under Progress");
+			}
+			
+			
 		}
 	});
 

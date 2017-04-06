@@ -9,7 +9,7 @@ import javax.persistence.*;
  *
  */
 @Entity
-
+@Table(name="orderitem_table")
 public class OrderItem extends EntityAudit implements Serializable {
 
 	

@@ -1,18 +1,18 @@
 sap.ui.define([
-	"sap/ui/core/mvc/Controller"
-], function(Controller) {
+	"com/vasudha/controller/BaseController",
+	"sap/ui/model/json/JSONModel"
+], function(Controller, JSONModel) {
 	"use strict";
 
 	return Controller.extend("com.vasudha.controller.products", {
-
 		/**
 		 * Called when a controller is instantiated and its View controls (if available) are already created.
 		 * Can be used to modify the View before it is displayed, to bind event handlers and do other one-time initialization.
 		 * @memberOf com.vasudha.view.products
 		 */
-		//	onInit: function() {
-		//
-		//	},
+		onInit: function() {
+			this.getRouter().getRoute("products").attachPatternMatched(this._onRouteMatched, this);
+		},
 
 		/**
 		 * Similar to onAfterRendering, but this hook is invoked before the controller's View is re-rendered
@@ -39,7 +39,22 @@ sap.ui.define([
 		//	onExit: function() {
 		//
 		//	}
+		_onRouteMatched: function(oEvent) {
 
+		/*	$.ajax({
+				type: 'GET',
+				url: '/simple/SimpleServlet',
+				error: function(data) {
+				console.log(data);
+				},
+				dataType: 'json',
+				success: function(data) {
+				console.log(data);
+				}
+				
+			});*/
+			
+		}
 	});
 
 });

@@ -39,4 +39,31 @@ public class CommonRestController {
 	public List<Map<String,Object>>  getRegions(HttpServletRequest request){
 		return service.getOrderTypes();
 	}
+	
+	/**
+	 * Method is registers for the get call for the path "admin/product/getAll" which fetch all products
+	 * 
+	 * @author rahul
+	 * @param request
+	 * @return
+	 */
+	@RequestMapping(value="status/getAll",method=RequestMethod.GET,produces=MediaType.APPLICATION_JSON_VALUE)
+	@ResponseBody
+	public List<Map<String,Object>>  getAllStatus(HttpServletRequest request){
+		return service.getAllStatus();
+	}
+	
+
+	/**
+	 * Method is registers for the get call for the path "admin/product/getAll" which fetch all products
+	 * 
+	 * @author rahul
+	 * @param request
+	 * @return
+	 */
+	@RequestMapping(value="uom/getAll",method=RequestMethod.GET,produces=MediaType.APPLICATION_JSON_VALUE)
+	@ResponseBody
+	public List<Map<String,Object>>  getAllUom(HttpServletRequest request){
+		return service.getAllUom();
+	}
 }

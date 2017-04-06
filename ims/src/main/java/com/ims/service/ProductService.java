@@ -9,6 +9,7 @@ import javax.persistence.NoResultException;
 import com.ims.beans.ProductBean;
 import com.ims.beans.StockBean;
 import com.ims.entity.Product;
+import com.ims.entity.ProductPrice;
 
 public interface ProductService {
 
@@ -33,11 +34,11 @@ public interface ProductService {
 	 * @return
 	 * @throws ParseException 
 	 */
-	void addProduct(ProductBean product) throws ParseException;
+	Product addProduct(ProductBean product) throws ParseException;
 
 	void updateProduct(ProductBean product) throws ParseException;
 
-	void updatePrice(ProductBean product) throws ParseException;
+	ProductPrice updatePrice(ProductBean product) throws ParseException;
 
 	void updateStock(List<StockBean> stock) throws ParseException;
 
@@ -52,6 +53,8 @@ public interface ProductService {
 	List<Map<String, Object>> getStockForRegion(String date,String region) throws ParseException;
 
 	void updateDump(List<StockBean> stock) throws ParseException;
+
+	void createStock() throws ParseException;
 
 	
 }

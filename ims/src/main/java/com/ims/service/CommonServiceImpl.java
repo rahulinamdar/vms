@@ -16,6 +16,8 @@ import org.springframework.stereotype.Service;
 
 import com.ims.dao.CommonDao;
 import com.ims.entity.OrderType;
+import com.ims.entity.Status;
+import com.ims.entity.Uom;
 
 /**
  * @author rahul
@@ -45,6 +47,52 @@ public class CommonServiceImpl implements CommonService{
 				}
 		
 		return oTypes;
+	}
+
+	/* (non-Javadoc)
+	 * @see com.ims.service.CommonService#getAllUom()
+	 */
+	@Override
+	public List<Map<String, Object>> getAllUom() {
+		// TODO Auto-generated method stub
+		
+		
+		List<Map<String, Object>> uoms = new ArrayList<>();
+		List<Uom> orderTypes = dao.getAllUom();
+		Iterator<Uom> ots = orderTypes.iterator();
+				while(ots.hasNext()){
+					Uom uom = ots.next();
+					
+					Map<String, Object> ot = new HashMap<>();
+					ot.put("uomId", uom.getUomid());
+					ot.put("uom", uom.getUom());
+					uoms.add(ot);
+				}
+		
+		return uoms;
+	}
+
+	/* (non-Javadoc)
+	 * @see com.ims.service.CommonService#getAllStatus()
+	 */
+	@Override
+	public List<Map<String, Object>> getAllStatus() {
+		// TODO Auto-generated method stub
+		
+
+		List<Map<String, Object>> statuses = new ArrayList<>();
+		List<Status> orderTypes = dao.getAllStatus();
+		Iterator<Status> ots = orderTypes.iterator();
+				while(ots.hasNext()){
+					Status st = ots.next();
+					
+					Map<String, Object> ot = new HashMap<>();
+					ot.put("statusId", st.getStatusId());
+					ot.put("status", st.getStatus());
+					statuses.add(ot);
+				}
+		
+		return statuses;
 	}
 
 }

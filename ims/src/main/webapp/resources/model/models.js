@@ -10,6 +10,41 @@ sap.ui.define([
 			var oModel = new JSONModel(Device);
 			oModel.setDefaultBindingMode("OneWay");
 			return oModel;
+		},
+		
+		createProductModel: function(){
+			var oModel = new JSONModel();
+			$.ajax({
+				type: 'GET',
+				url: 'admin/products/getAllWithPrice',
+				error: function(data) {
+						
+				},
+				dataType: 'json',
+				async:false,
+				success: function(data) {
+					oModel.setData(data);
+				}
+				
+			});
+			return oModel;
+			
+		},
+		
+		createUomModel: function(){
+			
+		},
+		
+		createProductCategoryModel: function(){
+			
+		},
+		
+		createStatusModel : function(){
+			
+		},
+		
+		createRegionsModel: function(){
+			
 		}
 
 	};

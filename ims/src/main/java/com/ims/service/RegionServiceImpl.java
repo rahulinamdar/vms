@@ -29,15 +29,17 @@ public class RegionServiceImpl implements RegionService {
 		// TODO Auto-generated method stub
 		List<Region> regions = regionDao.getRegions();
 		List<Map<String, Object>> regionsMap = new ArrayList<>();
-		Map<String,Object> region = new HashMap<>();
+		
 		
 		
 		Iterator<Region> itr = regions.iterator();
 		while(itr.hasNext()){
 			Region reg = itr.next();
+			Map<String,Object> region = new HashMap<>();
 			region.put("regionId", reg.getRegionid());
 			region.put("regionName", reg.getRegionname());
-			region.put("lat", reg.getGeo_lat());	region.put("long", reg.getGeo_long());
+			region.put("lat", reg.getGeo_lat());	
+			region.put("long", reg.getGeo_long());
 			region.put("address", reg.getShopaddress());	
 			regionsMap.add(region);
 		}

@@ -1,16 +1,28 @@
 package com.ims.entity;
 
-import com.ims.entity.BaseEntity;
 import java.io.Serializable;
+import java.util.Date;
 import java.util.List;
 
-import javax.persistence.*;
+import javax.persistence.Entity;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
+import javax.persistence.Table;
 
 /**
  * Entity implementation class for Entity: Order
  *
  */
 @Entity
+@Table(name="order_table")
+@NamedQueries({
+	@NamedQuery(name="Order.getAll", query="SELECT o FROM Order o"),
+	@NamedQuery(name="Order.getAllForRegion", query="SELECT o FROM Order o WHERE o.region.id = :regionId"),
+})
 
 public class Order extends EntityAudit implements Serializable {
 
@@ -23,8 +35,66 @@ public class Order extends EntityAudit implements Serializable {
 	@OneToMany(mappedBy="order")
 	private List<OrderItem> items;
 	
+	@ManyToOne
+	@JoinColumn(name="status")
+	private Status status;
+	
 	private Double netValue;
 	
+	@OneToOne
+	private Delivery delivery;
+	
+	@ManyToOne
+	@JoinColumn(name="region")
+	private Region region;
+	
+	@ManyToOne
+	private PaymentMethod paymentMethod;
+	
+	private Date date;
+	
+	/**
+	 * @return the status
+	 */
+	public Status getStatus() {
+		return status;
+	}
+
+	/**
+	 * @param status the status to set
+	 */
+	public void setStatus(Status status) {
+		this.status = status;
+	}
+
+	/**
+	 * @return the delivery
+	 */
+	public Delivery getDelivery() {
+		return delivery;
+	}
+
+	/**
+	 * @param delivery the delivery to set
+	 */
+	public void setDelivery(Delivery delivery) {
+		this.delivery = delivery;
+	}
+
+	/**
+	 * @return the region
+	 */
+	public Region getRegion() {
+		return region;
+	}
+
+	/**
+	 * @param region the region to set
+	 */
+	public void setRegion(Region region) {
+		this.region = region;
+	}
+
 	/**
 	 * @return the orderType
 	 */
@@ -69,6 +139,34 @@ public class Order extends EntityAudit implements Serializable {
 
 	public Order() {
 		super();
+	}
+
+	/**
+	 * @return the paymentMethod
+	 */
+	public PaymentMethod getPaymentMethod() {
+		return paymentMethod;
+	}
+
+	/**
+	 * @param paymentMethod the paymentMethod to set
+	 */
+	public void setPaymentMethod(PaymentMethod paymentMethod) {
+		this.paymentMethod = paymentMethod;
+	}
+
+	/**
+	 * @return the date
+	 */
+	public Date getDate() {
+		return date;
+	}
+
+	/**
+	 * @param date the date to set
+	 */
+	public void setDate(Date date) {
+		this.date = date;
 	}
    
 }

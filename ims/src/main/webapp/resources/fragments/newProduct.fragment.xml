@@ -1,0 +1,29 @@
+<core:FragmentDefinition xmlns="sap.m" xmlns:l="sap.ui.layout" xmlns:f="sap.ui.layout.form" xmlns:core="sap.ui.core">
+	<VBox class="sapUiSmallMargin">
+		<f:SimpleForm id="newProductFrom" minWidth="1024" maxContainerCols="2" editable="true" layout="ResponsiveGridLayout" title="Region Detail"
+			labelSpanL="3" labelSpanM="3" emptySpanL="4" emptySpanM="4" columnsL="1" columnsM="1" class="editableForm">
+			<f:content>
+				<Label text="Product Id" required="true"/>
+				<Input required="true" value="{ path:'newProduct>/productId' }"/>
+				<Label text="Product Description"/>
+				<Input value="{newProduct>/productDescription}"></Input>
+				<Label text="Uom"/>
+				<Select selectedKey="{newProduct>/uom}">
+					<items>
+						<core:Item text="PC" key="pc"></core:Item>
+						<core:Item text="KG" key="kg"></core:Item>
+					</items>
+				</Select>
+				<Label text="Price" required="true"/>
+				<Input id="new_product_price" type="Number" required="true"
+				value="{ 
+					path:'newProduct>/price',
+					type:'sap.ui.model.type.Float',
+					formatOptions:{
+						minFractionDigits:2
+					}
+				}"/>
+			</f:content>
+		</f:SimpleForm>
+	</VBox>
+</core:FragmentDefinition>

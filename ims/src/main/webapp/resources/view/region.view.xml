@@ -1,0 +1,50 @@
+<mvc:View xmlns:core="sap.ui.core" xmlns:mvc="sap.ui.core.mvc" xmlns="sap.m" controllerName="com.vasudha.controller.region"
+	xmlns:html="http://www.w3.org/1999/xhtml">
+			<Page title="Regions">
+				<content>
+					
+					<Button text="Add New Region" press="addRegion" />
+					
+					<Table id="regionsTable"
+			
+				items="{ 
+					path: 'regions>/',
+					sorter : {
+            			path : 'regionId',
+            			group : true
+        			}
+				}" 
+				columns="{
+					path: 'columns>/' 
+				}">
+				<headerToolbar>
+					<Toolbar>
+						<Title text="{i18n>products}" level="H2"/>
+					</Toolbar>
+				</headerToolbar>
+				<columns>
+					<Column styleClass="{columns>styleClass}" demandPopin="{columns>demandPopin}" minScreenWidth="{columns>minScreenWidth}"
+						popinDisplay="WithoutHeader">
+						<Text text="{columns>header}"/>
+					</Column>
+				</columns>
+				<items>
+					<ColumnListItem vAlign="Middle" type="Navigation">
+						<cells>
+							
+								<ObjectIdentifier
+								title="{regions>productDesc}"
+								text="{region>productId}" />
+						
+							<Text text="{regions>regionId}" wrapping="false"/>
+							<Text text="{regions>stock}" wrapping="false"/>
+								<Text text="{regions>total}" wrapping="false"/>
+						
+						</cells>
+					</ColumnListItem>
+				</items>
+			</Table>
+					
+				</content>
+			</Page>
+</mvc:View>

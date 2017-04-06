@@ -16,6 +16,10 @@ sap.ui.define([
 			} else {
 				this.getRouter().navTo("appHome", {}, true /*no history*/);
 			}
-		}
+		},
+		getComponent: function () {
+	        var sComponentId = sap.ui.core.Component.getOwnerIdFor(this.getView());
+	        return sap.ui.component(sComponentId);
+	    }
 	});
 });

@@ -4,20 +4,20 @@
 		{
 			"materialId":"100",
 			"materialDesc":"Apple",
-			"uom":"kg",
 			"price":"100",
-			"currency":"INR",
-			"discount":"",
-			"discountRemarks":""
+			"currency":"INR"
 		},
-		{
+			{
 			"materialId":"101",
-			"uom":"kg",
-			"materialDesc":"Carrot",
-			"price":"50",
-			"currency":"INR",
-			"discount":"",
-			"discountRemarks":""
+			"materialDesc":"Orange",
+			"price":"80",
+			"currency":"INR"
+		},	{
+			"materialId":"103",
+			"materialDesc":"Kiwi",
+			"price":"200",
+			"currency":"INR"
 		}
+	
 		]
 }

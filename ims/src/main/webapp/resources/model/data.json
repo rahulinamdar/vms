@@ -4,7 +4,7 @@
 			"id":"about_us",
 			"icon" : "sap-icon://hint",
 			"type" : "Monitor",
-			"title" : "About Vasudha Organics Inc."
+			"title" : "About KK Retail Agro Fresh Inc."
 		},
 		{
 			"id":"so",
@@ -16,15 +16,14 @@
 			"id":"create_so",
 			"type" : "Create",
 			"title" : "Create Sales Order",
-			"info" : "28 Days Left",
+			"info" : "Last Sales",
 			"infoState" : "Success"
 		},
 		{
-			"id":"invoice",
+			"id":"products",
 			"icon" : "sap-icon://travel-expense-report",
-			"number" : "281",
-			"numberUnit" : "inr",
-			"title" : "Invoices"
+			"number" : "150",
+			"title" : "Product"
 		},
 		{
 			"id":"stocks",
@@ -33,6 +32,19 @@
 			"numberUnit" : "inr",
 			"title" : "Stock",
 			"info" : "till date"
+		},
+		{
+			"id":"region",
+			"type" : "Create",
+			"title" : "Region",
+			"number" : "2380",
+			"info" : "Regions"
+		},
+			{
+			"id":"dump",
+			"title" : "Dump",
+			"number" : "12",
+			"info" : "Dump of the day"
 		}
 	]
 }

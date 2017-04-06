@@ -1,0 +1,43 @@
+<core:FragmentDefinition
+	xmlns="sap.m"
+	xmlns:l="sap.ui.layout"
+	xmlns:f="sap.ui.layout.form"
+	xmlns:core="sap.ui.core">
+	<VBox class="sapUiSmallMargin">
+		<f:SimpleForm id="newRegionFrom"
+			minWidth="1024"
+			maxContainerCols="2"
+			editable="true"
+			layout="ResponsiveGridLayout"
+			title="Region Detail"
+			labelSpanL="3"
+			labelSpanM="3"
+			emptySpanL="4"
+			emptySpanM="4"
+			columnsL="1"
+			columnsM="2"
+			class="editableForm">
+			<f:content>
+				<Label text="Region Id" required="true" />
+				<Input value="{newRegion>/regionid}" />
+				<Label text="Region Description" />
+				<Input value="{newRegion>/regionname}">
+				</Input>
+				
+				<Label text="Shop Address" />
+				<TextArea
+					id="shopaddressId"
+					value="{newRegion>/shopaddress}"
+					rows="2"
+					cols="20"
+					>
+				</TextArea>
+				<Label text="Latitude" />
+				<Input value="{newRegion>/geo_lat}"></Input>
+					<Label text="Latitude" />
+				<Input value="{newRegion>/geo_lat}">
+				</Input>
+			</f:content>
+		</f:SimpleForm>
+	</VBox>
+</core:FragmentDefinition>

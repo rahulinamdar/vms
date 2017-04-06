@@ -1,0 +1,22 @@
+<core:FragmentDefinition
+xmlns="sap.m"
+	xmlns:l="sap.ui.layout"
+	xmlns:f="sap.ui.layout.form"
+	xmlns:core="sap.ui.core">
+	
+	<VBox class="sapUiSmallMargin">
+	<Label text="Update Price"></Label>
+	<Input
+		id="priceUpdateId"
+		type="Number"
+		value="{ 
+					path:'productDetails>/priceInfo/price',
+					type:'sap.ui.model.type.Float',
+					formatOptions:{
+						minFractionDigits:2
+					}
+				}"/>
+
+	</VBox>
+	
+</core:FragmentDefinition>

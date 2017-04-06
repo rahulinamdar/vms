@@ -4,11 +4,16 @@
 		<class>com.ims.entity.BaseEntity</class>
 		<class>com.ims.entity.Currency</class>
 		<class>com.ims.entity.EntityAudit</class>
+		<class>com.ims.entity.Order</class>
+		<class>com.ims.entity.OrderItem</class>
 		<class>com.ims.entity.OrderType</class>
 		<class>com.ims.entity.Product</class>
 		<class>com.ims.entity.ProductPrice</class>
+		<class>com.ims.entity.ProductStock</class>
 		<class>com.ims.entity.Region</class>
+		<class>com.ims.entity.Role</class>
 		<class>com.ims.entity.Status</class>
+		<class>com.ims.entity.Stock</class>
 		<class>com.ims.entity.Uom</class>
 		<class>com.ims.entity.User</class>
 	</persistence-unit>

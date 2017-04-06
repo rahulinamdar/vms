@@ -79,8 +79,9 @@ public class ProductServiceImpl implements ProductService{
 				
 				productStock.put("productId", prodStock.getProduct().getProductId());
 				productStock.put("stockDate", prodStock.getStockDate());
-				productStock.put("region", prodStock.getRegion().getRegionname());
+				productStock.put("region", prodStock.getRegion().getRegionid());
 				productStock.put("stock", prodStock.getStock());
+				productStock.put("dump", prodStock.getDump());
 				stockList.add(productStock);
 			}
 			product.put("stockList", stockList);
@@ -91,10 +92,10 @@ public class ProductServiceImpl implements ProductService{
 	}
 
 	@Override
-	public void addProduct(ProductBean product) throws ParseException {
+	public Product addProduct(ProductBean product) throws ParseException {
 		
 		
-		productDao.addProduct(product);
+		return productDao.addProduct(product);
 	}
 
 	@Override
@@ -103,9 +104,9 @@ public class ProductServiceImpl implements ProductService{
 	}
 
 	@Override
-	public void updatePrice(ProductBean product) throws ParseException {
+	public ProductPrice updatePrice(ProductBean product) throws ParseException {
 		// TODO Auto-generated method stub
-		productDao.updatePrice(product);
+		return productDao.updatePrice(product);
 	}
 
 	@Override
@@ -143,8 +144,9 @@ public class ProductServiceImpl implements ProductService{
 			
 			productStock.put("productId", prodStock.getProduct().getProductId());
 			productStock.put("stockDate", prodStock.getStockDate());
-			productStock.put("region", prodStock.getRegion().getRegionname());
+			productStock.put("region", prodStock.getRegion().getRegionid());
 			productStock.put("stock", prodStock.getStock());
+			productStock.put("dump", prodStock.getDump());
 			stockList.add(productStock);
 		}
 		product.put("stockList", stockList);
@@ -162,11 +164,11 @@ public class ProductServiceImpl implements ProductService{
 		while(priceItr.hasNext()){
 			Map<String,Object> productPrice = new HashMap<>();
 			ProductPrice prodPrice = priceItr.next();
-			
 			productPrice.put("productId", prodPrice.getProduct().getProductId());
 			productPrice.put("productDesc", prodPrice.getProduct().getProductDescription());
 			productPrice.put("priceDate", prodPrice.getPricingDate());
 			productPrice.put("price", prodPrice.getPrice());
+			productPrice.put("currency", "INR");
 			priceList.add(productPrice);
 		}
 		
@@ -194,6 +196,7 @@ public class ProductServiceImpl implements ProductService{
 			productStock.put("stockDate", prodStock.getStockDate());
 			productStock.put("region", prodStock.getRegion().getRegionid());
 			productStock.put("stock", prodStock.getStock());
+			productStock.put("dump", prodStock.getDump());
 			stockList.add(productStock);
 		}
 		return stockList; 
@@ -224,6 +227,11 @@ public class ProductServiceImpl implements ProductService{
 	public void updateDump(List<StockBean> stock) throws ParseException {
 		// TODO Auto-generated method stub
 		productDao.updateDump(stock);
+	}
+
+	@Override
+	public void createStock() throws ParseException {
+		productDao.createStock();
 	}
 
 }

@@ -14,4 +14,22 @@ public interface CommonService {
 
 	List<Map<String, Object>> getOrderTypes();
 
+	/**
+	 * @author rahul
+	
+	 * @return
+	 * List<Map<String,Object>>
+	 *
+	 */
+	List<Map<String, Object>> getAllUom();
+
+	/**
+	 * @author rahul
+	
+	 * @return
+	 * List<Map<String,Object>>
+	 *
+	 */
+	List<Map<String, Object>> getAllStatus();
+
 }

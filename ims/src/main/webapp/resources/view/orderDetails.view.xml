@@ -1,10 +1,24 @@
 <mvc:View xmlns:core="sap.ui.core" xmlns:mvc="sap.ui.core.mvc" xmlns="sap.m" controllerName="com.vasudha.controller.orderDetails"
-	xmlns:html="http://www.w3.org/1999/xhtml">
-	<App>
-		<pages>
-			<Page title="Title">
-				<content></content>
+	xmlns:html="http://www.w3.org/1999/xhtml" xmlns:f="sap.ui.layout.form">
+			<Page title="{i18n>OrderDetail}">
+				<content>
+					<ObjectHeader id="objectHeader" title="{i18n>ProductID}" number="{ path: 'Price', formatter: '.formatter.numberUnit' }"
+				numberUnit="{CurrencyCode}" titleActive="true" titlePress="onShowDetailPopover" responsive="true"></ObjectHeader>
+			<Panel class="sapUiResponsiveMargin" width="auto" expandable="{device>/system/phone}" expanded="true">
+				<content>
+					<f:SimpleForm id="detailForm" editable="false" layout="ResponsiveGridLayout" labelSpanL="3"
+								labelSpanM="3" emptySpanL="4" emptySpanM="4">
+								<f:content>
+									<Label id="label1" text="GrossAmount"/>
+									<Text id="text1" text="{GrossAmount}"/>
+									<Label id="label2" text="NetAmount"/>
+									<Text id="text2" text="{NetAmount}"/>
+									<Label id="label3" text="Quantity"/>
+									<Text id="text3" text="{Quantity}"/>
+								</f:content>
+							</f:SimpleForm>
+					</content>
+					</Panel>
+				</content>
 			</Page>
-		</pages>
-	</App>
 </mvc:View>

@@ -7,19 +7,22 @@
 			</Toolbar>
 		</subHeader>
 		<content>
-			<List id="idList" items="{products>/materials}" selectionChange="onSelectionChange" includeItemInSelection="true">
+			<List id="productList" 
+				items="{products>/}" 
+				selectionChange="onSelectionChange"
+				includeItemInSelection="true"
+				itemPress="onPressItem">
 				<infoToolbar>
 					<Toolbar visible="false" id="idInfoToolbar">
 						<Label id="idFilterLabel"/>
 					</Toolbar>
 				</infoToolbar>
 				<items>
-					<ObjectListItem id="prodListItem" intro="{products>materialId}"
+					<ObjectListItem id="prodListItem" intro="{products>productId}"
 						number="{parts: [ {path: 'products>price'}, {path: 'products>currency'}],
                             type : 'sap.ui.model.type.Currency',
                             formatOptions: { showMeasure: false }}" 
-                        numberUnit="{products>currency}" press="onSelect" title="{products>materialDesc}"
-						type="{= ${device>/system/phone} ? 'Active' : 'Inactive'}">
+                        numberUnit="{products>currency}" press="onSelect" type="Active" title="{products>productDesc}">
 						<!--<secondStatus>
 							<ObjectStatus id="changedAtObjectStatus" text="{path: 'ChangedAt', type: 'sap.ui.model.type.Date',
 									formatOptions: { style: 'medium',
@@ -35,5 +38,11 @@
 				</items>
 			</List>
 		</content>
+		<footer>
+			<Toolbar>
+				<ToolbarSpacer/>
+				<Button type="Accept" icon="sap-icon://add" tooltip="Add" press="addProductHandler"/>
+			</Toolbar>
+		</footer>
 	</Page>
 </mvc:View>

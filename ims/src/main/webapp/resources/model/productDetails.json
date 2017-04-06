@@ -1,0 +1,17 @@
+{
+	"productDetails":{
+			"materialId":"100",
+			"materialDesc":"Apple",
+			"productPricing":[
+				{
+					"pricedate":"",
+					"price":"",
+					"uom":""
+				}
+				
+				
+				]
+	}
+	
+	
+}

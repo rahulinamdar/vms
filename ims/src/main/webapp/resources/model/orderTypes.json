@@ -13,6 +13,10 @@
 			{
 			"orderTypeId":"3",
 			"orderType":"Home Delivery"
+		},
+			{
+			"orderTypeId":"4",
+			"orderType":"POS"
 		}
 		]
 	
