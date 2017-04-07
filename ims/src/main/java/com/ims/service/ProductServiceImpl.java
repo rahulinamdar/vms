@@ -191,10 +191,11 @@ public class ProductServiceImpl implements ProductService{
 		while(stockItr.hasNext()){
 			Map<String,Object> productStock = new HashMap<>();
 			ProductStock prodStock = stockItr.next();
-			
 			productStock.put("productId", prodStock.getProduct().getProductId());
+			productStock.put("uom", prodStock.getProduct().getUom().getUom());
 			productStock.put("stockDate", prodStock.getStockDate());
 			productStock.put("region", prodStock.getRegion().getRegionid());
+			productStock.put("regionName", prodStock.getRegion().getRegionname());
 			productStock.put("stock", prodStock.getStock());
 			productStock.put("dump", prodStock.getDump());
 			stockList.add(productStock);

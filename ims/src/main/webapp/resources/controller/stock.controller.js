@@ -30,11 +30,6 @@ sap.ui.define([
 				demandPopin: true,
 				minScreenWidth: "Tablet",
 				styleClass: "cellBorderRight"
-			}, {
-				header: "Total",
-				demandPopin: true,
-				minScreenWidth: "Tablet",
-				styleClass: "cellBorderRight"
 			},
 			/* {
 				header: "UOM",

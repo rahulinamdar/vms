@@ -43,8 +43,21 @@ sap.ui.define([
 			
 		},
 		
-		createRegionsModel: function(){
-			
+		createRegionModel: function(){
+			var oModel = new JSONModel();
+			$.ajax({
+				type: 'GET',
+				url: "region/getAll",
+				error: function(data) {
+				console.log(data);
+				},
+				dataType: 'json',
+				success: function(data) {
+					oModel.setData(data);
+				}
+				
+			});
+			return oModel;
 		}
 
 	};

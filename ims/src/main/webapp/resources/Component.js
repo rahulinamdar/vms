@@ -26,6 +26,9 @@ sap.ui.define([
 			// set the device model
 			this.setModel(models.createProductModel(), "products");
 			
+			// set the device model
+			this.setModel(models.createRegionModel(), "regions");
+			
 			
 			//initializes router
 			 this.getRouter().initialize();

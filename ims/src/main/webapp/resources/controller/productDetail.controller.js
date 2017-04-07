@@ -176,12 +176,65 @@ sap.ui.define([
 			
 		},
 		changeStock:function(oEvent){
-			if(oEvent.getSource().getText() === "Edit Stock"){
-				this.getView().getModel("validationModel").setProperty("/visible",true);
-				oEvent.getSource().setText("Save Stock");
+			var oController = this;
+			var oButton = oEvent.getSource();
+			if(oButton.getText() === "Edit Stock"){
+				oController.getView().getModel("validationModel").setProperty("/visible",true);
+				oButton.setText("Save Stock");
 			}else{
-				this.getView().getModel("validationModel").setProperty("/visible",false);
-				oEvent.getSource().setText("Edit Stock");	
+				if (!oController.confirmEscapePreventDialog) {
+					oController.confirmEscapePreventDialog = new sap.m.Dialog({
+						icon: sap.ui.core.IconPool.getIconURI("message-information"),
+						title: "Are you sure?",
+						content: [
+							new sap.m.Text({
+								text: "Stock changes for this product"
+							})
+						],
+						type: sap.m.DialogType.Message,
+						buttons: [
+							new sap.m.Button({
+								text: "Yes",
+								press: function() {
+									
+									var aData = oController.getView().getModel("productDetails").getProperty("/stockList");
+									$.ajax({
+										type: 'PUT',
+										url: "admin/productStock/update",
+										error: function(data) {
+											oController.getView().getModel("validationModel").setProperty("/visible",false);
+											oButton.setText("Edit Stock");	
+											oController.confirmEscapePreventDialog.close();
+										},
+										data:JSON.stringify(aData),
+										contentType:"application/json",
+										dataType: 'json',
+										success: function(data) {
+											oController.getView().getModel("validationModel").setProperty("/visible",false);
+											oButton.setText("Edit Stock");	
+											oController.confirmEscapePreventDialog.close();
+										}
+										
+									});
+									
+									
+								}
+							}),
+							new sap.m.Button({
+								text: "No",
+								press: function() {
+									oController.getView().getModel("validationModel").setProperty("/visible",false);
+									oButton.setText("Edit Stock");
+									oController.confirmEscapePreventDialog.close();
+								}
+							})
+						]
+					});
+				}
+
+				oController.confirmEscapePreventDialog.open();
+				
+				
 			}
 		}
 		

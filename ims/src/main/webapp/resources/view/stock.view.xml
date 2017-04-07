@@ -17,29 +17,29 @@
 				icon="sap-icon://begin"
 				iconColor="Positive"
 				count="{/ProductCollectionStats/Counts/Weight/Ok}"
-				text="Ok"
-				key="Ok" />
+				text="In Stock"
+				key="instock" />
 			<IconTabFilter
 				icon="sap-icon://compare"
 				iconColor="Critical"
 				count="{/ProductCollectionStats/Counts/Weight/Heavy}"
-				text="Heavy"
-				key="Heavy" />
+				text="Less In Stock"
+				key="less" />
 			<IconTabFilter
 				icon="sap-icon://inventory"
 				iconColor="Negative"
 				count="{/ProductCollectionStats/Counts/Weight/Overweight}"
-				text="Overweight"
-				key="Overweight" />
+				text="Not In Stock"
+				key="veryless" />
 				
 		</items>
 	</IconTabBar>
 			<Table id="adminStockTable"
 			
 				items="{ 
-					path: 'stock>/stock',
+					path: 'stock>/',
 					sorter : {
-            			path : 'regionId',
+            			path : 'regionName',
             			group : true
         			}
 				}" 
@@ -58,21 +58,35 @@
 					</Column>
 				</columns>
 				<items>
-					<ColumnListItem vAlign="Middle" type="Navigation">
+					<ColumnListItem vAlign="Middle" type="Inactive">
 						<cells>
 							
-							<ObjectIdentifier
-								title="{stock>materialDesc}"
-								text="{stock>materialId}" />
+							<ComboBox
+				showSecondaryValues= "true"
+				selectedKey = "{stock>productId}"
+				editable = "false"
+				items="{
+					path: 'products>/',
+					sorter: { path: 'productDesc' }
+				}">
+				<core:ListItem key="{products>productId}" text="{products>productDesc}" additionalText = "{products>price} INR"/>
+			</ComboBox>
 						
-							<Text text="{stock>regionId}" wrapping="false"/>
-							<Text text="{stock>total}" wrapping="false"/>
-							
+							<ComboBox
+				showSecondaryValues= "true"
+				selectedKey = "{stock>region}"
+				editable = "false"
+				items="{
+					path: 'regions>/',
+					sorter: { path: 'regionName' }
+				}">
+					<core:ListItem key="{regions>regionId}" text="{regions>regionName}" />
+			</ComboBox>		
 							<ObjectNumber
-						number="{stock>availableQuantity}"
+						number="{stock>stock}"
 						unit="{stock>uom}"
 						state="{
-							path: 'stock>availableQuantity',
+							path: 'stock>stock',
 							formatter: '.formatter.qtyState'
 						}" />
 						</cells>

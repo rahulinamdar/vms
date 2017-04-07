@@ -130,6 +130,8 @@ sap.ui.define([
 										contentType:"application/json",
 										success: function(data) {
 											that.escapePreventDialog.close();
+											that.getComponent().getModel("products").setData(Model.createProductModel().getData());
+											that.getComponent().getModel("products").refresh();
 										}
 										
 									});

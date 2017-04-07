@@ -10,8 +10,7 @@
 				items="{ 
 					path: 'regions>/',
 					sorter : {
-            			path : 'regionId',
-            			group : true
+            			path : 'regionName'
         			}
 				}" 
 				columns="{
@@ -29,16 +28,16 @@
 					</Column>
 				</columns>
 				<items>
-					<ColumnListItem vAlign="Middle" type="Navigation">
+					<ColumnListItem vAlign="Middle" type="Inactive">
 						<cells>
 							
 								<ObjectIdentifier
-								title="{regions>productDesc}"
-								text="{region>productId}" />
+								title="{regions>regionId}"
+								text="{regions>regionName}" />
 						
-							<Text text="{regions>regionId}" wrapping="false"/>
-							<Text text="{regions>stock}" wrapping="false"/>
-								<Text text="{regions>total}" wrapping="false"/>
+							<Text text="{regions>address}" wrapping="true"/>
+							<Text text="{regions>lat}" wrapping="false"/>
+								<Text text="{regions>long}" wrapping="false"/>
 						
 						</cells>
 					</ColumnListItem>

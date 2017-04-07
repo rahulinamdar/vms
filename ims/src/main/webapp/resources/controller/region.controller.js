@@ -17,21 +17,21 @@ sap.ui.define([
 				this.oColumnModel = new JSONModel();
 			this.oColumnModel.setData(this._oData);
 			this.getView().setModel(this.oColumnModel, "columns");
-			this.getRouter().getRoute("region").attachPatternMatched(this._onRouteMatched, this);
+//			this.getRouter().getRoute("region").attachPatternMatched(this._onRouteMatched, this);
 			},
 
 		_oData: [{
-				header: "Product",
+				header: "Region",
 				demandPopin: false,
 				minScreenWidth: "",
 				styleClass: "cellBorderLeft cellBorderRight"
 			},{
-				header: "Region",
+				header: "Address",
 				demandPopin: true,
 				minScreenWidth: "Tablet",
 				styleClass: "cellBorderRight"
 			}, {
-				header: "Total",
+				header: "Latitude",
 				demandPopin: true,
 				minScreenWidth: "Tablet",
 				styleClass: "cellBorderRight"
@@ -42,7 +42,7 @@ sap.ui.define([
 				minScreenWidth: "",
 				styleClass: "cellBorderRight"
 			},*/{
-				header: "Available Quantity",
+				header: "Longitude",
 				demandPopin: false,
 				minScreenWidth: "",
 				styleClass: "cellBorderRight"
@@ -76,18 +76,18 @@ sap.ui.define([
 				var oController = this;
 			$.ajax({
 				type: 'GET',
-				url: "admin/products/getStockAllRegions",
+				url: "region/getAll",
 				error: function(data) {
 				console.log(data);
 				},
 				dataType: 'json',
 				success: function(data) {
-					if(oController.getView().getModel("dump")){
-						oController.getView().getModel("dump").setData(data);
+					if(oController.getView().getModel("regions")){
+						oController.getView().getModel("regions").setData(data);
 					}else{
 					var oModel = new JSONModel();
 					oModel.setData(data);
-					oController.getView().setModel(oModel, "dump");
+					oController.getView().setModel(oModel, "regions");
 					}
 				}
 				
@@ -127,7 +127,21 @@ sap.ui.define([
 							text: "Save",
 							type: "Accept",
 							press: function() {
-								that.escapePreventDialog.close();
+								$.ajax({
+									type: 'POST',
+									url: "admin/region/add",
+									error: function(data) {
+									console.log(data);
+									},
+									dataType: 'json',
+									data:JSON.stringify(oView.getModel("newRegion").getData()),
+									contentType:"application/json",
+									success: function(data) {
+										that.escapePreventDialog.close();
+									}
+									
+								});
+								
 							}
 						}),
 						new sap.m.Button({
