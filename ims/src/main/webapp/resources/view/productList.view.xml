@@ -1,6 +1,9 @@
 <mvc:View xmlns:core="sap.ui.core" xmlns:mvc="sap.ui.core.mvc" xmlns="sap.m" controllerName="com.vasudha.controller.productList"
 	xmlns:html="http://www.w3.org/1999/xhtml">
-	<Page title="{i18n>productMasterTitle}">
+	<Page id ="productListMaster" title="{i18n>productMasterTitle}"
+	showNavButton="true"
+	navButtonPress = "navack"
+	>
 		<subHeader>
 			<Toolbar>
 				<SearchField liveChange="onSearch" width="100%"/>
@@ -11,7 +14,10 @@
 				items="{products>/}" 
 				selectionChange="onSelectionChange"
 				includeItemInSelection="true"
-				itemPress="onPressItem">
+				itemPress="onPressItem"
+				mode="{viewModel>/mode}"
+				delete="handleDelete"
+				enableBusyIndicator="true">
 				<infoToolbar>
 					<Toolbar visible="false" id="idInfoToolbar">
 						<Label id="idFilterLabel"/>
@@ -22,7 +28,8 @@
 						number="{parts: [ {path: 'products>price'}, {path: 'products>currency'}],
                             type : 'sap.ui.model.type.Currency',
                             formatOptions: { showMeasure: false }}" 
-                        numberUnit="{products>currency}" press="onSelect" type="Active" title="{products>productDesc}">
+                        numberUnit="{products>currency}" press="onSelect" type="Detail" title="{products>productDesc}"
+                        detailPress="detailPress" >
 						<!--<secondStatus>
 							<ObjectStatus id="changedAtObjectStatus" text="{path: 'ChangedAt', type: 'sap.ui.model.type.Date',
 									formatOptions: { style: 'medium',
@@ -40,6 +47,7 @@
 		</content>
 		<footer>
 			<Toolbar>
+			<Button type="Accept" icon="sap-icon://delete" tooltip="Delete" press="deleteProductHandler"/>
 				<ToolbarSpacer/>
 				<Button type="Accept" icon="sap-icon://add" tooltip="Add" press="addProductHandler"/>
 			</Toolbar>

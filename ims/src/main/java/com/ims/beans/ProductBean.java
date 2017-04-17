@@ -4,18 +4,14 @@ import java.util.Date;
 
 public class ProductBean {
 	private String productId;
-	private String productDescription;
+	private String productDesc;
 	private String uom;
 	private Double price;
+	private String productCategory;
 	private String currency;
-	private Date date;
+	private Date priceDate;
 	
-	public String getProductDescription() {
-		return productDescription;
-	}
-	public void setProductDescription(String productDescription) {
-		this.productDescription = productDescription;
-	}
+	
 	public String getUom() {
 		return uom;
 	}
@@ -35,18 +31,7 @@ public class ProductBean {
 	public void setProductId(String productId) {
 		this.productId = productId;
 	}
-	/**
-	 * @return the date
-	 */
-	public Date getDate() {
-		return date;
-	}
-	/**
-	 * @param date the date to set
-	 */
-	public void setDate(Date date) {
-		this.date = date;
-	}
+	
 	/**
 	 * @return the price
 	 */
@@ -58,6 +43,43 @@ public class ProductBean {
 	 */
 	public void setPrice(Double price) {
 		this.price = price;
+	}
+	
+	/**
+	 * @return the productCategory
+	 */
+	public String getProductCategory() {
+		return productCategory;
+	}
+	/**
+	 * @param productCategory the productCategory to set
+	 */
+	public void setProductCategory(String productCategory) {
+		this.productCategory = productCategory;
+	}
+	/**
+	 * @return the priceDate
+	 */
+	public Date getPriceDate() {
+		return priceDate;
+	}
+	/**
+	 * @param priceDate the priceDate to set
+	 */
+	public void setPriceDate(Date priceDate) {
+		this.priceDate = priceDate;
+	}
+	/**
+	 * @return the productDesc
+	 */
+	public String getProductDesc() {
+		return productDesc;
+	}
+	/**
+	 * @param productDesc the productDesc to set
+	 */
+	public void setProductDesc(String productDesc) {
+		this.productDesc = productDesc;
 	}
 	
 

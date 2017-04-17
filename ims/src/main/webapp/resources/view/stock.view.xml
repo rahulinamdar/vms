@@ -1,6 +1,7 @@
 <mvc:View xmlns:core="sap.ui.core" xmlns:mvc="sap.ui.core.mvc" xmlns="sap.m" controllerName="com.vasudha.controller.stock"
 	xmlns:html="http://www.w3.org/1999/xhtml">
-	<Page title="Title">
+	<Page title="Product Stock" showNavButton="true"
+	navButtonPress = "navack">
 		<content>
 			<IconTabBar
 		id="idIconTabBar"

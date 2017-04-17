@@ -11,6 +11,7 @@ public class OrderItemBean {
 	
 	private String productId;
 	private Double quantity;
+	private String category;
 	/**
 	 * @return the productId
 	 */
@@ -46,6 +47,18 @@ public class OrderItemBean {
 	 */
 	public void setTotalPrice(Double totalPrice) {
 		this.totalPrice = totalPrice;
+	}
+	/**
+	 * @return the category
+	 */
+	public String getCategory() {
+		return category;
+	}
+	/**
+	 * @param category the category to set
+	 */
+	public void setCategory(String category) {
+		this.category = category;
 	}
 	private Double totalPrice;
 }

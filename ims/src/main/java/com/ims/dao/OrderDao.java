@@ -20,10 +20,11 @@ public interface OrderDao {
 	
 	 * @param order
 	 * void
+	 * @return 
 	 * @throws ParseException 
 	 *
 	 */
-	void createOrder(OrderBean order) throws ParseException;
+	Order createOrder(OrderBean order) throws ParseException;
 
 	/**
 	 * @author rahul
@@ -43,5 +44,14 @@ public interface OrderDao {
 	 *
 	 */
 	List<Order> getOrders();
+
+	/**
+	 * @author rahul
+	
+	 * @param orderId
+	 * void
+	 *
+	 */
+	Order getOrder(Long orderId);
 
 }

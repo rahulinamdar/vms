@@ -1,0 +1,42 @@
+<mvc:View xmlns:core="sap.ui.core" xmlns:mvc="sap.ui.core.mvc" xmlns="sap.m" controllerName="com.vasudha.controller.uomCreate"
+	xmlns:html="http://www.w3.org/1999/xhtml">
+			<Page title="Product Units">
+				<content>
+					<Button text="Add New Unit" press="addRegion" />
+					
+					<Table id="uomTable"
+			
+				items="{ 
+					path: 'uom>/',
+					sorter : {
+            			path : 'uom'
+        			}
+				}" 
+				columns="{
+					path: 'columns>/' 
+				}">
+				<headerToolbar>
+					<Toolbar>
+						<Title text="{i18n>products}" level="H2"/>
+					</Toolbar>
+				</headerToolbar>
+				<columns>
+					<Column styleClass="{columns>styleClass}" demandPopin="{columns>demandPopin}" minScreenWidth="{columns>minScreenWidth}"
+						popinDisplay="WithoutHeader">
+						<Text text="{columns>header}"/>
+					</Column>
+				</columns>
+				<items>
+					<ColumnListItem vAlign="Middle" type="Inactive">
+						<cells>
+							
+							<Text text="{uom>uomId}" wrapping="true"/>
+							<Text text="{uom>uom}" wrapping="false"/>
+						
+						</cells>
+					</ColumnListItem>
+				</items>
+			</Table>
+				</content>
+			</Page>
+</mvc:View>

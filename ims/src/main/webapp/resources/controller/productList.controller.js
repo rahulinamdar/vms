@@ -2,8 +2,9 @@ sap.ui.define([
 	"com/vasudha/controller/BaseController",
 	"sap/ui/model/json/JSONModel",
 	"sap/ui/model/Filter",
-	"sap/ui/model/FilterOperator"
-], function(Controller, JSONModel, Filter, FilterOperator) {
+	"sap/ui/model/FilterOperator",
+	"com/vasudha/model/models"
+], function(Controller, JSONModel, Filter, FilterOperator,Model) {
 	"use strict";
 
 	return Controller.extend("com.vasudha.controller.productList", {
@@ -16,6 +17,7 @@ sap.ui.define([
 		 */
 		onInit: function() {
 			this.getRouter().getRoute("products").attachPatternMatched(this._onRouteMatched, this);
+			this.getView().setModel(new JSONModel({mode:"SingleSelectMaster"}),"viewModel")
 		},
 
 		/**
@@ -43,8 +45,18 @@ sap.ui.define([
 		//	onExit: function() {
 		//
 		//	}
+		deleteProductHandler:function(oEvent){
+			var oViewModel = this.getView().getModel("viewModel");
+			if(oViewModel.getProperty("/mode") === "Delete"){
+				oViewModel.setProperty("/mode","SingleSelectMaster")
+			}else{
+				oViewModel.setProperty("/mode","Delete")
+			}
+		},
 		_onRouteMatched: function(oEvent) {
 			var oController = this;
+			if(oController.getView().getModel("products").getData().length !== 0)
+			this.getRouter().navTo("productDetail",{productId:oController.getView().getModel("products").getProperty("/0/productId")});
 //			var oModel = new JSONModel();
 //			$.ajax({
 //				type: 'GET',
@@ -60,6 +72,9 @@ sap.ui.define([
 //				
 //			});
 		
+	},
+	navack:function(){
+		this.getRouter().navTo("admin");
 	},
 		onSearch: function(oEvent) {
 			// build filter array
@@ -85,13 +100,106 @@ sap.ui.define([
 			this.getRouter().navTo("productDetail",{productId:oModel.getProperty(sPath+"/productId")});
 
 		},
+		detailPress:function(oEvent){
+
+			var that = this;
+			var oView = that.getView();
+			var oContext = oEvent.getSource().getBindingContext("products");
+			var sPath = oContext.getPath();
+			var oModel = oContext.getModel();
+			var oNewProduct =  oModel.getProperty(sPath);
+			if (!(oView.getModel("newProduct"))) {
+				var oNewProductModel = new sap.ui.model.json.JSONModel();
+				oNewProductModel.setData($.extend({},oNewProduct));
+				oView.setModel(oNewProductModel, "newProduct");
+			}else{
+				oView.getModel("newProduct").setData($.extend({},oNewProduct));
+				oView.getModel("newProduct").refresh();
+			}
+			if (!that.escapePreventDialog) {
+				oView.getModel("newProduct").refresh();
+				var oFormFragment = sap.ui.xmlfragment("com.vasudha.fragments.newProduct");
+				oView.addDependent(oFormFragment);
+				that.escapePreventDialog = new sap.m.Dialog({
+					title: 'Add Product',
+					buttons: [
+						new sap.m.Button({
+							text: "Save",
+							type: "Accept",
+							press: function() {
+								
+								var oModel = oView.getModel("newProduct");
+								var oData = oModel.getData();
+								if(oData.productId!== "" && oData.productDescription!== "" && oData.uom !== ""){
+									$.ajax({
+										type: 'PUT',
+										url: "admin/products/update",
+										data:JSON.stringify(oView.getModel("newProduct").getData()),
+										error: function(data) {
+											if(data){
+												that.showMessage("Error",data.error);
+												}
+										},
+										dataType: 'json',
+										contentType:"application/json",
+										success: function(data) {
+											if(data){
+												that.showMessage("Success",data.msg);
+												}
+											that.escapePreventDialog.close();
+											that.getView().getModel("products").setData(Model.createProductModel().getData());
+											that.getView().getModel("products").refresh();
+										}
+										
+									});
+										
+								}else{
+									sap.m.MessageToast.show("Plaese fill the mandatory fields", {
+									    duration: 3000,                  // default
+									    width: "15em",                   // default
+									    my: "center bottom",             // default
+									    at: "center bottom",             // default
+									    of: window,                      // default
+									    offset: "0 0",                   // default
+									    collision: "fit fit",            // default
+									    onClose: null,                   // default
+									    autoClose: true,                 // default
+									    animationTimingFunction: "ease", // default
+									    animationDuration: 1000,         // default
+									    closeOnBrowserNavigation: true   // default
+									});
+								}
+							}
+						}),
+						new sap.m.Button({
+							text: "Cancel",
+							type: "Reject",
+							press: function() {
+								that.escapePreventDialog.close();
+							}
+						})
+					]
+				});
+				that.escapePreventDialog.addContent(oFormFragment);
+			}
+			oView.getModel("newProduct").refresh();
+			that.escapePreventDialog.open();
+		
+		},
+		checkEditable:function(data){
+			if(data !== "")
+				return false;
+			else
+				return true;
+		},
 		addProductHandler: function(oEvent) {
 			var that = this;
 			var oView = that.getView();
 			var oNewProduct = {
 				"productId": "",
-				"productDescription": "",
-				"uom": "kg",
+				"productDesc": "",
+				"uom": "",
+				"productCategory":"",
 				"price": 0,
 			};
 			if (!(oView.getModel("newProduct"))) {
@@ -100,8 +208,9 @@ sap.ui.define([
 				oView.setModel(oNewProductModel, "newProduct");
 			} else {
 				oView.getModel("newProduct").setProperty("/productId", "");
-				oView.getModel("newProduct").setProperty("/productDescription", "");
-				oView.getModel("newProduct").setProperty("/uom", "kg");
+				oView.getModel("newProduct").setProperty("/productDesc", "");
+				oView.getModel("newProduct").setProperty("/uom", "");
+				oView.getModel("newProduct").setProperty("/productCategory", "");
 				oView.getModel("newProduct").setProperty("/price", 0);
 			}
 			if (!that.escapePreventDialog) {
@@ -118,20 +227,25 @@ sap.ui.define([
 								
 								var oModel = oView.getModel("newProduct");
 								var oData = oModel.getData();
-								if(oData.productId!== "" && oData.productDescription!== ""){
+								if(oData.productId!== "" && oData.productDescription!== "" && oData.uom !== ""){
 									$.ajax({
 										type: 'POST',
 										url: "admin/products/add",
 										data:JSON.stringify(oView.getModel("newProduct").getData()),
 										error: function(data) {
-										console.log(data);
+											if(data){
+												that.showMessage("Error",data.error);
+												}
 										},
 										dataType: 'json',
 										contentType:"application/json",
 										success: function(data) {
+											if(data){
+												that.showMessage("Success",data.msg);
+												}
 											that.escapePreventDialog.close();
-											that.getComponent().getModel("products").setData(Model.createProductModel().getData());
-											that.getComponent().getModel("products").refresh();
+											that.getView().getModel("products").setData(Model.createProductModel().getData());
+											that.getView().getModel("products").refresh();
 										}
 										
 									});

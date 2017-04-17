@@ -3,6 +3,7 @@ package com.ims.entity;
 
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -11,6 +12,7 @@ import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Transient;
+
 
 
 /**
@@ -39,7 +41,25 @@ public class Product extends EntityAudit{
 	@OneToOne
 	private Uom uom;
 	
-	@OneToMany(mappedBy="product")
+	@OneToOne
+	private ProductCategory category;
+	
+	/**
+	 * @return the category
+	 */
+	public ProductCategory getCategory() {
+		return category;
+	}
+
+
+	/**
+	 * @param category the category to set
+	 */
+	public void setCategory(ProductCategory category) {
+		this.category = category;
+	}
+
+	@OneToMany(mappedBy="product",cascade=CascadeType.REMOVE)
 	private List<ProductPrice> price; 
 	
 	/**
@@ -57,7 +77,7 @@ public class Product extends EntityAudit{
 		this.uom = uom;
 	}
 
-	@OneToMany(mappedBy="product")
+	@OneToMany(mappedBy="product",cascade=CascadeType.REMOVE)
 	private List<ProductStock> stock; 
 
 //

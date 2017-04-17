@@ -54,6 +54,7 @@ public class ProductServiceImpl implements ProductService{
 			product.put("productDesc", prod.getProductDescription());
 			product.put("productImage", prod.getProductImage());
 			product.put("uom", prod.getUom().getUom());
+			product.put("category", prod.getCategory().getCategoryId());
 			
 			List<ProductPrice> prices = prod.getPrice();
 			Iterator<ProductPrice> priceItr = prices.iterator();
@@ -129,6 +130,7 @@ public class ProductServiceImpl implements ProductService{
 		product.put("productDesc", prod.getProductDescription());
 		product.put("productImage", prod.getProductImage());
 		product.put("uom", prod.getUom().getUom());
+		product.put("category", prod.getCategory().getCategory());
 		
 		Map<String,Object> productPrice = new HashMap<>();
 		
@@ -165,9 +167,11 @@ public class ProductServiceImpl implements ProductService{
 			Map<String,Object> productPrice = new HashMap<>();
 			ProductPrice prodPrice = priceItr.next();
 			productPrice.put("productId", prodPrice.getProduct().getProductId());
+			productPrice.put("productCategory", prodPrice.getProduct().getCategory().getCategoryId());
 			productPrice.put("productDesc", prodPrice.getProduct().getProductDescription());
 			productPrice.put("priceDate", prodPrice.getPricingDate());
 			productPrice.put("price", prodPrice.getPrice());
+			productPrice.put("uom", prodPrice.getProduct().getUom().getUomid());
 			productPrice.put("currency", "INR");
 			priceList.add(productPrice);
 		}
@@ -233,6 +237,14 @@ public class ProductServiceImpl implements ProductService{
 	@Override
 	public void createStock() throws ParseException {
 		productDao.createStock();
+	}
+
+	/* (non-Javadoc)
+	 * @see com.ims.service.ProductService#deleteProduct(java.lang.String)
+	 */
+	@Override
+	public void deleteProduct(String productId) {
+		productDao.deleteProduct(productId);		
 	}
 
 }

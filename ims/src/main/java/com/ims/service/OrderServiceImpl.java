@@ -18,6 +18,7 @@ import org.springframework.stereotype.Service;
 import com.ims.beans.OrderBean;
 import com.ims.dao.OrderDao;
 import com.ims.entity.Order;
+import com.ims.entity.OrderItem;
 
 /**
  * @author rahul
@@ -33,9 +34,9 @@ public class OrderServiceImpl implements OrderService{
 	 * @see com.ims.service.OrderService#createOrder(com.ims.beans.OrderBean)
 	 */
 	@Override
-	public void createOrder(OrderBean order) throws ParseException {
+	public Order createOrder(OrderBean order) throws ParseException , RuntimeException{
 		// TODO Auto-generated method stub
-		orderDao.createOrder(order);
+		return orderDao.createOrder(order);
 	}
 	/* (non-Javadoc)
 	 * @see com.ims.service.OrderService#getOrdersForRegion(java.lang.String)
@@ -84,6 +85,37 @@ public class OrderServiceImpl implements OrderService{
 			orderList.add(orMap);
 		}
 		return orderList;
+	}
+	/* (non-Javadoc)
+	 * @see com.ims.service.OrderService#getOrder(java.lang.Long)
+	 */
+	@Override
+	public Map<String, Object> getOrder(Long orderId) {
+		Order or = orderDao.getOrder(orderId);
+		Map<String,Object> orMap = new HashMap<>();
+		orMap.put("orderId", or.getId());
+		orMap.put("orderDate", or.getDate());
+		orMap.put("orderStatus", or.getStatus().getStatusId());
+		orMap.put("orderRegion", or.getRegion().getRegionid());
+		orMap.put("netValue", or.getNetValue());
+		orMap.put("orderType",or.getOrderType().getOrderTypeId());
+		
+		
+		List<Map<String,Object>> orItemMap = new ArrayList<>();
+		List<OrderItem> orderItems = or.getItems();
+		Iterator<OrderItem> itr = orderItems.iterator();
+		while(itr.hasNext()){
+			OrderItem orI = itr.next();
+			Map<String,Object> orIMap = new HashMap<>();
+			orIMap.put("product", orI.getProduct().getProductId());
+			orIMap.put("quantity", orI.getQuantity());
+			orIMap.put("totalPrice", orI.getTotalPrice());
+			orIMap.put("uom", orI.getProduct().getUom().getUomid());
+			orItemMap.add(orIMap);
+		}
+		orMap.put("orderItems", orItemMap);
+		
+		return orMap;
 	}
 
 }

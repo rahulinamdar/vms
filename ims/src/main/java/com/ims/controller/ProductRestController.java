@@ -99,7 +99,9 @@ public class ProductRestController {
 	@RequestMapping(value="admin/products/getStockAForRegion",method=RequestMethod.GET,produces=MediaType.APPLICATION_JSON_VALUE)
 	@ResponseBody
 	public List<Map<String,Object>>  getStockAForRegion(HttpServletRequest request) throws ParseException{
-			return productService.getStockForRegion(null,null);
+		String date = request.getParameter("date");
+		String region = request.getParameter("region");
+		return productService.getStockForRegion(date,region);
 		
 	}
 	
@@ -139,19 +141,16 @@ public class ProductRestController {
 		
 	}
 	
-	@RequestMapping(value="admin/products/update",method=RequestMethod.PUT,consumes=MediaType.APPLICATION_JSON_VALUE)
+	@RequestMapping(value="admin/products/update",method=RequestMethod.PUT,consumes=MediaType.APPLICATION_JSON_VALUE,produces=MediaType.APPLICATION_JSON_VALUE)
 	@ResponseBody
-	public void  updateProduct(@RequestBody ProductBean product){
-		System.out.println("update");
-		try {
+	public ResponseEntity<?>  updateProduct(@RequestBody ProductBean product) throws ParseException{
 			productService.updateProduct(product);
-		} catch (ParseException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+			Map<String,Object> map = new HashMap<>();
+			map.put("msg", "Product Updated");
+			return new ResponseEntity<Map<String,Object>>(map, HttpStatus.OK);
 	}
 	
-	@RequestMapping(value="admin/productPrice/update",method=RequestMethod.PUT,consumes=MediaType.APPLICATION_JSON_VALUE)
+	@RequestMapping(value="admin/productPrice/update",method=RequestMethod.PUT,consumes=MediaType.APPLICATION_JSON_VALUE,produces=MediaType.APPLICATION_JSON_VALUE)
 	@ResponseBody
 	public ResponseEntity<?> updatePrice(@RequestBody ProductBean product) throws ParseException{
 			ProductPrice price = productService.updatePrice(product);
@@ -160,18 +159,32 @@ public class ProductRestController {
 			return new ResponseEntity<Map<String,Object>>(map, HttpStatus.OK);
 	}
 	
-	@RequestMapping(value="admin/productStock/updateDump",method=RequestMethod.PUT,consumes=MediaType.APPLICATION_JSON_VALUE)
+	@RequestMapping(value="admin/productStock/updateDump",method=RequestMethod.PUT,consumes=MediaType.APPLICATION_JSON_VALUE,produces=MediaType.APPLICATION_JSON_VALUE)
 	@ResponseBody
-	public void  updateDump(@RequestBody List<StockBean> stock) throws ParseException{
+	public ResponseEntity<?>  updateDump(@RequestBody List<StockBean> stock) throws ParseException{
 		System.out.println("update price");
-			productService.updateDump(stock);
+		productService.updateDump(stock);
+			Map<String,Object> map = new HashMap<>();
+			return new ResponseEntity<Map<String,Object>>(map, HttpStatus.OK);
 	}
 	
-	@RequestMapping(value="admin/productStock/update",method=RequestMethod.PUT,consumes=MediaType.APPLICATION_JSON_VALUE)
+	@RequestMapping(value="admin/productStock/update",method=RequestMethod.PUT,consumes=MediaType.APPLICATION_JSON_VALUE,produces=MediaType.APPLICATION_JSON_VALUE)
 	@ResponseBody
-	public void  updateStock(@RequestBody List<StockBean> stock) throws ParseException{
-		System.out.println("update price");
+	public ResponseEntity<?>  updateStock(@RequestBody List<StockBean> stock) throws ParseException{
 			productService.updateStock(stock);
+			Map<String,Object> map = new HashMap<>();
+			map.put("msg", "Stock updated successfully");
+			return new ResponseEntity<Map<String,Object>>(map, HttpStatus.OK);
+	}
+	
+	@RequestMapping(value="admin/product/delete",method=RequestMethod.DELETE,consumes=MediaType.APPLICATION_JSON_VALUE,produces=MediaType.APPLICATION_JSON_VALUE)
+	@ResponseBody
+	public ResponseEntity<?>  deleteProduct(HttpServletRequest request) throws ParseException{
+		String productId = request.getParameter("productId");
+			productService.deleteProduct(productId);
+			Map<String,Object> map = new HashMap<>();
+			map.put("msg", "Product Deleted");
+			return new ResponseEntity<Map<String,Object>>(map, HttpStatus.OK);
 	}
 	
 }

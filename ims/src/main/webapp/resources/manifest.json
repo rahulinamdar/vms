@@ -98,8 +98,7 @@
 					"pattern": "products",
 					"name": "products",
 					"target": [
-						"master",
-						"detail"
+						"master"
 					]
 				},
 				{
@@ -139,6 +138,45 @@
 					"pattern": "dump",
 					"name": "dump",
 					"target": "dump"
+				},
+					{
+					"pattern": "adminSplit",
+					"name": "adminSplit",
+					"target": [
+						"materList"
+					]
+				},
+					{
+					"pattern": "adminSplit/uom",
+					"name": "uomCreate",
+					"target": [
+					"materList",
+						"uomCreate"
+					]
+				},
+					{
+					"pattern": "adminSplit/category",
+					"name": "categoryCreate",
+					"target": [
+					"materList",
+						"categoryCreate"
+					]
+				},
+					{
+					"pattern": "adminSplit/region",
+					"name": "regionCreate",
+					"target": [
+					"materList",
+						"regionCreate"
+					]
+				},
+					{
+					"pattern": "adminSplit/status",
+					"name": "statusCreate",
+					"target": [
+					"materList",
+						"statusCreate"
+					]
 				}
 			],
 			"targets": {
@@ -191,18 +229,53 @@
 				},
 				"region":{
 					"viewName":"region",
-					"viewLevel":1
+					"viewLevel":8
 				},
 				"dump":{
 					"viewName":"dump",
-					"viewLevel":1
+					"viewLevel":9
+				},
+				"parentAdminSplitApp": {
+					"viewPath": "com.vasudha.view",
+					"viewName": "adminSplit",
+					"viewId": "adminSplit"
+				},
+				"materList":{
+					"parent":"parentAdminSplitApp",
+					"controlId":"adminSplit",
+					"controlAggregation":"masterPages",
+					"viewName":"adminActions"
+				},
+				"uomCreate":{
+					"parent": "parentAdminSplitApp",
+					"controlId": "adminSplit",
+					"controlAggregation": "detailPages",
+					"viewName":"uomCreate"
+				},
+				"statusCreate":{
+					"parent": "parentAdminSplitApp",
+					"controlId": "adminSplit",
+					"controlAggregation": "detailPages",
+					"viewName":"statusCreate"
+				},
+				"categoryCreate":{
+					"parent": "parentAdminSplitApp",
+					"controlId": "adminSplit",
+					"controlAggregation": "detailPages",
+					"viewName":"categoryCreate"
+				},
+				"regionCreate":{
+					"parent": "parentAdminSplitApp",
+					"controlId": "adminSplit",
+					"controlAggregation": "detailPages",
+					"viewName":"region"
 				}
 			}
 		},
 		"resources": {
 			"css": [
 				{
-					"uri": "resources/css/style.css"
+					"uri": "css/style.css"
 				}
 			]
 		}

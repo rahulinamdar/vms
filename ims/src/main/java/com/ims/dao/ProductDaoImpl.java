@@ -18,6 +18,7 @@ import com.ims.Utility.DateFormat;
 import com.ims.beans.ProductBean;
 import com.ims.beans.StockBean;
 import com.ims.entity.Product;
+import com.ims.entity.ProductCategory;
 import com.ims.entity.ProductPrice;
 import com.ims.entity.ProductStock;
 import com.ims.entity.Region;
@@ -47,10 +48,13 @@ public class ProductDaoImpl implements ProductDao{
 	public Product addProduct(ProductBean product) throws ParseException {
 		Product productEntity = new Product();
 		productEntity.setProductId(product.getProductId());
-		productEntity.setProductDescription(product.getProductDescription());
+		productEntity.setProductDescription(product.getProductDesc());
 		productEntity.setProductImage("qwe/qew");
 		Query uomQuery = entityManager.createNamedQuery("Uom.getUom", Uom.class).setParameter("uomId", product.getUom());
 		productEntity.setUom((Uom)uomQuery.getSingleResult());
+		
+		Query categoryQuery = entityManager.createNamedQuery("ProductCategory.getCategory", ProductCategory.class).setParameter("categoryId", product.getProductCategory());
+		productEntity.setCategory((ProductCategory)categoryQuery.getSingleResult());
 
 
 		entityManager.persist(productEntity);
@@ -81,19 +85,17 @@ public class ProductDaoImpl implements ProductDao{
 	public void updateProduct(ProductBean product) throws ParseException {
 		// TODO Auto-generated method stub
 		TypedQuery<Product> query = entityManager.createNamedQuery("Product.getProduct",Product.class).setParameter("productId", product.getProductId());
-		List<Product> results = query.getResultList();
-		if(!results.isEmpty()){
-			Product productEntity = results.get(0);
-			List<ProductPrice> prices = productEntity.getPrice();
-			ProductPrice prodPrice = new ProductPrice();
-			prodPrice.setProduct(productEntity);
-			prodPrice.setPrice(product.getPrice());
-			prodPrice.setPricingDate(DateFormat.today());
-			prices.add(prodPrice);
-			productEntity.setPrice(prices);
-			entityManager.persist(productEntity);
-		}else{
-
+		try{
+			Product productEntity = query.getSingleResult();
+			Query categoryQuery = entityManager.createNamedQuery("ProductCategory.getCategory", ProductCategory.class).setParameter("categoryId", product.getProductCategory());
+			productEntity.setCategory((ProductCategory)categoryQuery.getSingleResult());
+			productEntity.setProductDescription(product.getProductDesc());
+			productEntity.setProductImage("");//TODO adding image
+			Query uomQuery = entityManager.createNamedQuery("Uom.getUom", Uom.class).setParameter("uomId", product.getUom());
+			productEntity.setUom((Uom)uomQuery.getSingleResult());
+//			entityManager.persist(productEntity);
+		}catch(NoResultException ex){
+			throw new RuntimeException(ex);
 		}
 	}
 
@@ -192,7 +194,7 @@ public class ProductDaoImpl implements ProductDao{
 
 	@Override
 	public List<ProductStock> getStockForRegion(String date, String region) throws ParseException {
-		TypedQuery<ProductStock> query  = entityManager.createNamedQuery("ProductStock.getStock.ProductsForRegion", ProductStock.class).setParameter("regionId", region).setParameter("date", date.equals(null) ? DateFormat.today() : date);
+		TypedQuery<ProductStock> query  = entityManager.createNamedQuery("ProductStock.getStock.ProductsForRegion", ProductStock.class).setParameter("regionId", region).setParameter("date", date == null ? DateFormat.today() : date);
 		List<ProductStock> results = query.getResultList();
 
 		return results;
@@ -247,7 +249,11 @@ public class ProductDaoImpl implements ProductDao{
 				ProductStock yesterdayStock = new ProductStock();
 				try{
 					yesterdayStock = stockQuery.getSingleResult();
-					prodStock.setStock(yesterdayStock.getStock() - yesterdayStock.getDump());
+					Double stock = yesterdayStock.getStock() - yesterdayStock.getDump();
+					if(stock>=0)
+						prodStock.setStock(stock);
+					else
+						prodStock.setStock(0.0);
 				}catch(NoResultException ex){
 					prodStock.setStock(0.0);
 				}
@@ -257,6 +263,15 @@ public class ProductDaoImpl implements ProductDao{
 
 		}
 
+	}
+
+	/* (non-Javadoc)
+	 * @see com.ims.dao.ProductDao#deleteProduct(java.lang.String)
+	 */
+	@Override
+	public void deleteProduct(String productId) {
+		TypedQuery<Product> query = entityManager.createNamedQuery("Product.getProduct",Product.class).setParameter("productId", productId);
+		entityManager.remove(query.getSingleResult());
 	}
 
 }

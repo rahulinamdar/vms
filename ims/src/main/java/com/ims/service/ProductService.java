@@ -56,5 +56,14 @@ public interface ProductService {
 
 	void createStock() throws ParseException;
 
+	/**
+	 * @author rahul
+	
+	 * @param productId
+	 * void
+	 *
+	 */
+	void deleteProduct(String productId);
+
 	
 }

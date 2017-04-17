@@ -5,6 +5,7 @@ import java.util.Date;
 
 import javax.persistence.*;
 
+
 /**
  * Entity implementation class for Entity: ProductStock
  *

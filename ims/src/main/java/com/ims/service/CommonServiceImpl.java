@@ -12,10 +12,12 @@ import java.util.Map;
 import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import com.ims.dao.CommonDao;
 import com.ims.entity.OrderType;
+import com.ims.entity.ProductCategory;
 import com.ims.entity.Status;
 import com.ims.entity.Uom;
 
@@ -93,6 +95,86 @@ public class CommonServiceImpl implements CommonService{
 				}
 		
 		return statuses;
+	}
+
+	/* (non-Javadoc)
+	 * @see com.ims.service.CommonService#getAllCategories()
+	 */
+	@Override
+	public List<Map<String, Object>> getAllCategories() {
+		// TODO Auto-generated method stub
+		List<Map<String, Object>> categories = new ArrayList<>();
+		List<ProductCategory> orderTypes = dao.getAllCategories();
+		Iterator<ProductCategory> ots = orderTypes.iterator();
+				while(ots.hasNext()){
+					ProductCategory st = ots.next();
+					
+					Map<String, Object> ot = new HashMap<>();
+					ot.put("category", st.getCategory());
+					ot.put("categoryId", st.getCategoryId());
+					categories.add(ot);
+				}
+				return categories;
+			}
+
+	/* (non-Javadoc)
+	 * @see com.ims.service.CommonService#addUom()
+	 */
+	@Override
+	public void addUom(Uom uom) {
+		// TODO Auto-generated method stub
+		dao.addUom(uom);
+	}
+
+	/* (non-Javadoc)
+	 * @see com.ims.service.CommonService#addStatus(com.ims.entity.Status)
+	 */
+	@Override
+	public void addStatus(Status status) {
+		dao.addStatus(status);
+	}
+
+	/* (non-Javadoc)
+	 * @see com.ims.service.CommonService#addCategory(com.ims.entity.ProductCategory)
+	 */
+	@Override
+	public void addCategory(ProductCategory category) {
+		dao.addCategory(category);
+	}
+
+	/* (non-Javadoc)
+	 * @see com.ims.service.CommonService#deleteStatus(java.lang.String)
+	 */
+	@Override
+	public void deleteStatus(String statusId) {
+		dao.deleteStatus(statusId);		
+	}
+
+	/* (non-Javadoc)
+	 * @see com.ims.service.CommonService#deleteUom(java.lang.String)
+	 */
+	@Override
+	public void deleteUom(String uom) {
+		// TODO Auto-generated method stub
+		dao.deleteUom(uom);	
+	}
+
+	/* (non-Javadoc)
+	 * @see com.ims.service.CommonService#deleteCategory(java.lang.String)
+	 */
+	@Override
+	public void deleteCategory(String category) {
+		// TODO Auto-generated method stub
+		dao.deleteCategory(category);	
+	}
+
+	/* (non-Javadoc)
+	 * @see com.ims.service.CommonService#deleteRegion(java.lang.String)
+	 */
+	@Override
+	public void deleteRegion(String regionId) {
+		// TODO Auto-generated method stub
+		dao.deleteRegion(regionId);
 	}
 
 }

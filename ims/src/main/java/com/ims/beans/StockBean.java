@@ -15,6 +15,7 @@ import com.ims.entity.Uom;
 public class StockBean {
 
 	private String productId;
+	private String regionName;
 	/**
 	 * @return the productId
 	 */
@@ -88,6 +89,18 @@ public class StockBean {
 	 */
 	public void setDump(Double dump) {
 		this.dump = dump;
+	}
+	/**
+	 * @return the regionName
+	 */
+	public String getRegionName() {
+		return regionName;
+	}
+	/**
+	 * @param regionName the regionName to set
+	 */
+	public void setRegionName(String regionName) {
+		this.regionName = regionName;
 	}
 	private Double dump;
 	private Double stock;

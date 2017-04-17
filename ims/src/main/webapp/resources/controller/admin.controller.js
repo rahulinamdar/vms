@@ -60,7 +60,12 @@ sap.ui.define([
 						"title" : "Dump",
 						"number" : "12",
 						"info" : "Dump of the day"
-					}
+					},
+					{
+						"id":"adminSection",
+							"title" : "Admin Section",
+							"info" : "create UOM,Category,Status and Regions"	
+						}
 				]
 			});
 			this.getView().setModel(oModel);
@@ -109,6 +114,8 @@ sap.ui.define([
 			}
 			else if(oData.id === "dump"){
 					this.getRouter().navTo("dump");
+			}else if(oData.id === "adminSection"){
+					this.getRouter().navTo("adminSplit");
 			}else{
 				sap.m.MessageToast.show("Under Progress");
 			}

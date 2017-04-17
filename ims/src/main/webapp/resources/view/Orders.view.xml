@@ -1,6 +1,7 @@
 <mvc:View xmlns:core="sap.ui.core" xmlns:mvc="sap.ui.core.mvc" xmlns="sap.m" controllerName="com.vasudha.controller.Orders"
 	xmlns:html="http://www.w3.org/1999/xhtml">
-			<Page title="Title">
+			<Page title="Orders" showNavButton="true"
+	navButtonPress = "navack">
 				<content>
 					
 					<IconTabBar
@@ -35,21 +36,21 @@
 				
 		</items>
 	</IconTabBar>
-			<Table id="adminStockTable"
+			<Table id="adminOrderTable"
 			
 				items="{ 
-					path: 'stock>/stock',
+					path: 'orders>/orders',
 					sorter : {
-            			path : 'regionId',
-            			group : true
+            			path : 'orderDate'
         			}
 				}" 
 				columns="{
 					path: 'columns>/' 
-				}">
+				}"
+				itemPress="onRowClick">
 				<headerToolbar>
 					<Toolbar>
-						<Title text="{i18n>products}" level="H2"/>
+						<Title text="{i18n>Orders}" level="H2"/>
 					</Toolbar>
 				</headerToolbar>
 				<columns>
@@ -62,20 +63,46 @@
 					<ColumnListItem vAlign="Middle" type="Navigation">
 						<cells>
 							
-							<ObjectIdentifier
-								title="{stock>materialDesc}"
-								text="{stock>materialId}" />
+								<Text text="{orders>orderId}" wrapping="false"/>
 						
-							<Text text="{stock>regionId}" wrapping="false"/>
-							<Text text="{stock>total}" wrapping="false"/>
+							<ComboBox
+				showSecondaryValues= "true"
+				selectedKey = "{orders>orderRegion}"
+				editable = "false"
+				items="{
+					path: 'regions>/',
+					sorter: { path: 'regionName' }
+				}">
+					<core:ListItem key="{regions>regionId}" text="{regions>regionName}" />
+			</ComboBox>	
+							<ComboBox selectedKey="{orders>orderType}" 
+							editable = "false"
+							items="{
+					path: 'orderType>/'
+				}">
+							<core:ListItem key="{orderType>orderTypeId}" text="{orderType>orderTypeDesc}" />
+						</ComboBox>
+							<ComboBox selectedKey="{orders>orderStatus}"
+							editable = "false"
+							items="{
+					path: 'status>/',
+					sorter: { path: 'status' }
+				}">
+							<core:ListItem key="{status>statusId}" text="{status>status}" />
+						</ComboBox>
+							<Text text="{
+				path: 'orders>orderDate',
+				type: 'sap.ui.model.type.Date',
+				formatOptions: {
+					style: 'medium',
+					source: {
+						pattern: 'yyyy-MM-dd'
+					}
+				}
+			}" />
+							<Text text="{orders>netValue}" wrapping="false"/>
+							<Text text="{orders>orderItems}" wrapping="false"/>
 							
-							<ObjectNumber
-						number="{stock>availableQuantity}"
-						unit="{stock>uom}"
-						state="{
-							path: 'stock>availableQuantity',
-							formatter: '.formatter.qtyState'
-						}" />
 						</cells>
 					</ColumnListItem>
 				</items>

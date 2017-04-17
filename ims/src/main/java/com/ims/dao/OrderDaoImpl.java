@@ -4,6 +4,7 @@
 package com.ims.dao;
 
 import java.text.ParseException;
+import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 
@@ -41,7 +42,7 @@ public class OrderDaoImpl implements OrderDao{
 	 * @see com.ims.dao.OrderDao#createOrder(com.ims.beans.OrderBean)
 	 */
 	@Override
-	public void createOrder(OrderBean order) throws ParseException {
+	public Order createOrder(OrderBean order) throws ParseException {
 
 		Order or = new Order();
 		or.setNetValue(order.getNetValue());
@@ -51,7 +52,7 @@ public class OrderDaoImpl implements OrderDao{
 		or.setOrderType(query2.getSingleResult());
 		or.setRegion(query.getSingleResult());
 		or.setStatus(query3.getSingleResult());
-		or.setDate(DateFormat.today());
+		or.setDate(new Date());
 		entityManager.persist(or);
 		Iterator<OrderItemBean>  itr = order.getItems().iterator();
 		Double net = 0.0;
@@ -72,15 +73,26 @@ public class OrderDaoImpl implements OrderDao{
 			
 			TypedQuery<ProductStock> stockQuery = entityManager.createNamedQuery("ProductStock.getStock",ProductStock.class).setParameter("productId", oi.getProductId()).setParameter("date", DateFormat.today()).setParameter("regionId",order.getRegion());
 			ProductStock st = stockQuery.getSingleResult();
+			if(st.getStock() > oi.getQuantity()){
 			st.setStock(st.getStock() - oi.getQuantity());
+			}else{
+				throw new RuntimeException("Insuficient Stock for "+oi.getProductId()+" Please contact collection center");
+			}
 			entityManager.persist(st);
 		}
 		or.setNetValue(net);
 		entityManager.persist(or);
 		
 		
-		
+		return or;
 	}
+	
+	
+	public Double getAvailability(String productId,String regionId) throws ParseException{
+		TypedQuery<ProductStock> stockQuery = entityManager.createNamedQuery("ProductStock.getStock",ProductStock.class).setParameter("productId", productId).setParameter("date", DateFormat.today()).setParameter("regionId",regionId);
+		ProductStock st = stockQuery.getSingleResult();
+		return st.getStock();
+	} 
 	/* (non-Javadoc)
 	 * @see com.ims.dao.OrderDao#getOrdersForRegion(java.lang.String)
 	 */
@@ -99,6 +111,15 @@ public class OrderDaoImpl implements OrderDao{
 		// TODO Auto-generated method stub
 		TypedQuery<Order> queyOrder = entityManager.createNamedQuery("Order.getAll",Order.class);
 		return queyOrder.getResultList();
+	}
+
+
+	/* (non-Javadoc)
+	 * @see com.ims.dao.OrderDao#getOrder(java.lang.Long)
+	 */
+	@Override
+	public Order getOrder(Long orderId) {
+		return entityManager.find(Order.class, orderId);
 	}
 
 }

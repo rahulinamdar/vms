@@ -1,6 +1,7 @@
 <mvc:View xmlns:core="sap.ui.core" xmlns:mvc="sap.ui.core.mvc" xmlns="sap.m" controllerName="com.vasudha.controller.dump"
 	xmlns:html="http://www.w3.org/1999/xhtml">
-			<Page title="Title">
+			<Page title="Dump Management" showNavButton="true"
+	navButtonPress = "navack">
 				<content>
 					
 					<Table id="dumpUpdatetable" items="{ 
@@ -20,9 +21,16 @@
 						<items>
 							<ColumnListItem vAlign="Middle" type="Navigation">
 								<cells>
-									<ObjectIdentifier
-								title="{dump>productDesc}"
-								text="{dump>productId}" />
+									<ComboBox
+				showSecondaryValues= "true"
+				selectedKey = "{dump>productId}"
+				editable = "false"
+				items="{
+					path: 'products>/',
+					sorter: { path: 'productDesc' }
+				}">
+				<core:ListItem key="{products>productId}" text="{products>productDesc}" additionalText = "{products>price} INR"/>
+			</ComboBox>
 									<Input value="{
 										path:'dump>dump',
 										type:'sap.ui.model.type.Float'

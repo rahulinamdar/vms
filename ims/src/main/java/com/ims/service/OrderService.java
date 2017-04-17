@@ -8,6 +8,7 @@ import java.util.List;
 import java.util.Map;
 
 import com.ims.beans.OrderBean;
+import com.ims.entity.Order;
 
 /**
  * @author rahul
@@ -20,10 +21,11 @@ public interface OrderService {
 	
 	 * @param order
 	 * void
+	 * @return 
 	 * @throws ParseException 
 	 *
 	 */
-	void createOrder(OrderBean order) throws ParseException;
+	Order createOrder(OrderBean order) throws ParseException;
 
 	/**
 	 * @author rahul
@@ -43,5 +45,15 @@ public interface OrderService {
 	 *
 	 */
 	List<Map<String, Object>> getOrders();
+
+	/**
+	 * @author rahul
+	
+	 * @param orderId
+	 * @return
+	 * Map<String,Object>
+	 *
+	 */
+	Map<String, Object> getOrder(Long orderId);
 
 }

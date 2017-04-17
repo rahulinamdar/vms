@@ -29,6 +29,19 @@ sap.ui.define([
 			// set the device model
 			this.setModel(models.createRegionModel(), "regions");
 			
+			// set the device model
+			this.setModel(models.createStatusModel(), "status");
+			
+			// set the device model
+			this.setModel(models.createUomModel(), "uom");
+			
+			// set the device model
+			this.setModel(models.createCategoryModel(), "categories");
+			
+			// set the device model
+			this.setModel(models.createOrderTypeModel(), "orderType");
+			
+			
 			
 			//initializes router
 			 this.getRouter().initialize();

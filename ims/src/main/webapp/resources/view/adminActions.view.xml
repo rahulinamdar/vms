@@ -1,0 +1,26 @@
+<mvc:View xmlns:core="sap.ui.core" xmlns:mvc="sap.ui.core.mvc" xmlns="sap.m" controllerName="com.vasudha.controller.adminActions"
+	xmlns:html="http://www.w3.org/1999/xhtml">
+			<Page id="adminActionItems" title="Admin Actions" showNavButton="true"
+	navButtonPress = "navack">
+				<content>
+					<List itemPress="itemPress" >						<items>
+								<StandardListItem type="Active"
+			title="UOM"
+			counter="0"/>
+				<StandardListItem type="Active"
+			title="Categories"
+			counter="{Quantity}"/>
+				<StandardListItem type="Active"
+			title="Regions"
+			counter="{Quantity}"/>
+				<StandardListItem type="Active"
+			title="Order Status"
+			counter="{Quantity}"/>
+							
+							
+						</items>
+		
+	</List>
+				</content>
+			</Page>
+</mvc:View>

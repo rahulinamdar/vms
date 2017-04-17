@@ -1,0 +1,14 @@
+<core:FragmentDefinition xmlns="sap.m" xmlns:l="sap.ui.layout" xmlns:f="sap.ui.layout.form" xmlns:core="sap.ui.core">
+	<VBox class="sapUiSmallMargin">
+		<f:SimpleForm id="newCatFrom" minWidth="1024" maxContainerCols="2" editable="true" layout="ResponsiveGridLayout" title="Region Detail"
+			labelSpanL="3" labelSpanM="3" emptySpanL="4" emptySpanM="4" columnsL="1" columnsM="1" class="editableForm">
+			<f:content>
+				<Label text="Category Id" required="true"/>
+				<Input required="true" value="{ path:'newCategory>/categoryId' }"/>
+				<Label text="Category Description"/>
+				<Input value="{newCategory>/category}"></Input>
+				
+			</f:content>
+		</f:SimpleForm>
+	</VBox>
+</core:FragmentDefinition>

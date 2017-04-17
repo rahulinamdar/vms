@@ -1,6 +1,7 @@
 sap.ui.define([
-	"com/vasudha/controller/BaseController"
-], function(Controller) {
+	"com/vasudha/controller/BaseController",
+	"sap/ui/model/json/JSONModel"
+], function(Controller,JSONModel) {
 	"use strict";
 
 	return Controller.extend("com.vasudha.controller.Orders", {
@@ -10,9 +11,95 @@ sap.ui.define([
 		 * Can be used to modify the View before it is displayed, to bind event handlers and do other one-time initialization.
 		 * @memberOf com.vasudha.view.Orders
 		 */
-		//	onInit: function() {
-		//
-		//	},
+			onInit: function() {
+				this.oColumnModel = new JSONModel();
+				this.oColumnModel.setData(this._oData);
+				this.getView().setModel(this.oColumnModel, "columns");
+				this.getRouter().getRoute("shopOrders").attachPatternMatched(this._onRouteMatched, this);
+			},
+			_oData: [{
+				header: "Order ID",
+				demandPopin: false,
+				minScreenWidth: "",
+				styleClass: "cellBorderLeft cellBorderRight"
+			},{
+				header: "Region",
+				demandPopin: true,
+				minScreenWidth: "Tablet",
+				styleClass: "cellBorderRight"
+			},
+			{
+				header: "Type",
+				demandPopin: true,
+				minScreenWidth: "Tablet",
+				styleClass: "cellBorderRight"
+			},
+			{
+				header: "Status",
+				demandPopin: true,
+				minScreenWidth: "Tablet",
+				styleClass: "cellBorderRight"
+			},
+			{
+				header: "Date",
+				demandPopin: false,
+				minScreenWidth: "Tablet",
+				styleClass: "cellBorderRight"
+			},
+			{
+				header: "Net Value",
+				demandPopin: false,
+				minScreenWidth: "Tablet",
+				styleClass: "cellBorderRight"
+			},
+			/* {
+				header: "UOM",
+				demandPopin: false,
+				minScreenWidth: "",
+				styleClass: "cellBorderRight"
+			},*/{
+				header: "Items",
+				demandPopin: true,
+				minScreenWidth: "",
+				styleClass: "cellBorderRight"
+			}],
+			_onRouteMatched: function(oEvent) {
+				var oController = this;
+			$.ajax({
+				type: 'GET',
+				url: "order/getAll",
+				error: function(data,ohr,response) {
+					if(data){
+					oController.showMessage("Error",data.error);
+					}
+				},
+				dataType: 'json',
+				success: function(data) {
+					if(oController.getView().getModel("orders")){
+						oController.getView().getModel("orders").setData(data);
+					}else{
+					var oModel = new JSONModel();
+					oModel.setData(data);
+					oController.getView().setModel(oModel, "orders");
+					}
+				}
+				
+			});
+			},
+			formatDate:function(date){
+					return new Date(date);
+			},
+			onRowClick:function(oEvent){
+				var oContext = oEvent.getParameter("listItem").getBindingContext("orders");
+				var oModel = oContext.getModel();
+				var sPath = oContext.getPath();
+				var oData = oModel.getProperty(sPath);
+				
+				this.getRouter().navTo("orderDetail",{orderId:oData.orderId});
+			},
+			navack:function(){
+				this.getRouter().navTo("admin");
+			},
 
 		/**
 		 * Similar to onAfterRendering, but this hook is invoked before the controller's View is re-rendered

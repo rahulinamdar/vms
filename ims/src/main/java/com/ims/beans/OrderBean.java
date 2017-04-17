@@ -19,6 +19,7 @@ public class OrderBean {
 	private Delivery delivery;
 	private String payment;
 	private String region;
+	private Double discount;
 	
 	/**
 	 * @return the items

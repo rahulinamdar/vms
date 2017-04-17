@@ -1,7 +1,10 @@
 sap.ui.define([
 	"sap/ui/core/mvc/Controller",
-	"sap/ui/core/routing/History"
-], function (Controller, History) {
+	"sap/ui/core/routing/History",
+	'sap/m/Button',
+	'sap/m/Dialog',
+	'sap/m/Text'
+], function (Controller, History,Button,Dialog,Text) {
 	"use strict";
 	return Controller.extend("com.vasudha.controller.BaseController", {
 		getRouter : function () {
@@ -20,6 +23,27 @@ sap.ui.define([
 		getComponent: function () {
 	        var sComponentId = sap.ui.core.Component.getOwnerIdFor(this.getView());
 	        return sap.ui.component(sComponentId);
-	    }
+	    },
+	    showMessage: function (type,data) {
+			var dialog = new Dialog({
+				title: type,
+				type: 'Message',
+				state: type,
+				content: new Text({
+					text: data
+				}),
+				beginButton: new Button({
+					text: 'OK',
+					press: function () {
+						dialog.close();
+					}
+				}),
+				afterClose: function() {
+					dialog.destroy();
+				}
+			});
+ 
+			dialog.open();
+		}
 	});
 });

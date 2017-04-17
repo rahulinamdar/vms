@@ -4,13 +4,16 @@
 package com.ims.controller;
 
 import java.text.ParseException;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -45,15 +48,11 @@ public class RegionRestController {
 		return regionService.getRegions();
 	}
 	
-	@RequestMapping(value="admin/region/add",method=RequestMethod.POST,consumes=MediaType.APPLICATION_JSON_VALUE)
+	@RequestMapping(value="admin/region/add",method=RequestMethod.POST,consumes=MediaType.APPLICATION_JSON_VALUE,produces=MediaType.APPLICATION_JSON_VALUE)
 	@ResponseBody
-	public void  addProduct(@RequestBody RegionBean region){
-		System.out.println("Add");
-		try {
+	public ResponseEntity<?>  addProduct(@RequestBody RegionBean region) throws ParseException{
 			regionService.addRegion(region);
-		} catch (ParseException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+			Map<String,Object> map = new HashMap<>();
+			return new ResponseEntity<Map<String,Object>>(map, HttpStatus.OK);
 	}
 }

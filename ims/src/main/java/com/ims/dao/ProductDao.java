@@ -147,5 +147,14 @@ public interface ProductDao {
 	 * @throws ParseException
 	 */
 	void createStock() throws ParseException;
+
+	/**
+	 * @author rahul
+	
+	 * @param productId
+	 * void
+	 *
+	 */
+	void deleteProduct(String productId);
 	
 }

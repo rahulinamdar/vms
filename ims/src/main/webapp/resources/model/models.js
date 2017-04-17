@@ -32,15 +32,57 @@ sap.ui.define([
 		},
 		
 		createUomModel: function(){
-			
+			var oModel = new JSONModel();
+			$.ajax({
+				type: 'GET',
+				url: 'uom/getAll',
+				error: function(data) {
+						
+				},
+				dataType: 'json',
+				async:false,
+				success: function(data) {
+					oModel.setData(data);
+				}
+				
+			});
+			return oModel;
 		},
 		
-		createProductCategoryModel: function(){
-			
+		createCategoryModel: function(){
+			var oModel = new JSONModel();
+			$.ajax({
+				type: 'GET',
+				url: 'productCategory/getAll',
+				error: function(data) {
+						
+				},
+				dataType: 'json',
+				async:false,
+				success: function(data) {
+					oModel.setData(data);
+				}
+				
+			});
+			return oModel;
 		},
 		
 		createStatusModel : function(){
-			
+			var oModel = new JSONModel();
+			$.ajax({
+				type: 'GET',
+				url: 'status/getAll',
+				error: function(data) {
+						
+				},
+				dataType: 'json',
+				async:false,
+				success: function(data) {
+					oModel.setData(data);
+				}
+				
+			});
+			return oModel;
 		},
 		
 		createRegionModel: function(){
@@ -48,6 +90,22 @@ sap.ui.define([
 			$.ajax({
 				type: 'GET',
 				url: "region/getAll",
+				error: function(data) {
+				console.log(data);
+				},
+				dataType: 'json',
+				success: function(data) {
+					oModel.setData(data);
+				}
+				
+			});
+			return oModel;
+		},
+		createOrderTypeModel: function(){
+			var oModel = new JSONModel();
+			$.ajax({
+				type: 'GET',
+				url: "orderType/getAll",
 				error: function(data) {
 				console.log(data);
 				},

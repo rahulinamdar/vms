@@ -20,6 +20,9 @@ sap.ui.define([
 			this.getView().setModel(this.oColumnModel, "columns");
 			this.getRouter().getRoute("stock").attachPatternMatched(this._onRouteMatched, this);
 		},
+		navack:function(){
+			this.getRouter().navTo("admin");
+		},
 		_oData: [{
 				header: "Product",
 				demandPopin: false,

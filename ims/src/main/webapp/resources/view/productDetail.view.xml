@@ -8,8 +8,8 @@
 				<content>
 					<form:SimpleForm id="objectForm">
 						<form:content>
-							<!-- <Label text="Product Category"/>
-							<Text text="{Category}"/> -->
+							<Label text="Product Category"/>
+							<Text text="{productDetails>/category}"/> 
 							<Label text="Product Name"/>
 							<Text text="{productDetails>/productDesc}"/>
 						</form:content>
@@ -40,7 +40,7 @@
 				}">
 					<core:ListItem key="{regions>regionId}" text="{regions>regionName}" />
 			</ComboBox>	
-									<HBox id="stock_hbox" alignContent="SpaceAround" class="hbox_stock_update">
+									<HBox id="stock_hbox" alignContent="SpaceAround"  class="hbox_stock_update">
 										<items>
 											<Input value="{productDetails>stock}" type="Number" visible="{validationModel>/visible}" />
 											<ObjectNumber number="{productDetails>stock}" unit="{productDetails>/uom}"

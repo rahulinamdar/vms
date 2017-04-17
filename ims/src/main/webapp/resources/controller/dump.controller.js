@@ -23,6 +23,9 @@ sap.ui.define([
 			this.getView().setModel(oValidationModel, "validationModel");
 			
 			},
+			navack:function(){
+				this.getRouter().navTo("admin");
+			},
 		_oData: [
 			{
 				header: "Product",
@@ -65,7 +68,7 @@ sap.ui.define([
 				var oController = this;
 			$.ajax({
 				type: 'GET',
-				url: "admin/products/getStockAllRegions",
+				url: "admin/products/getStockAForRegion?region=1st_gate",
 				error: function(data) {
 				console.log(data);
 				},
@@ -83,12 +86,69 @@ sap.ui.define([
 			});
 			},
 		editDump:function(oEvent){
-			if(oEvent.getSource().getText() === "Edit Dump"){
-				this.getView().getModel("validationModel").setProperty("/visible",true);
-				oEvent.getSource().setText("Save Dump");
+			var oController = this;
+			var oButton = oEvent.getSource();
+			
+			if(oButton.getText() === "Edit Dump"){
+				this.aUnChangedData = $.extend(true,{},oController.getView().getModel("dump").getData());
+				oController.getView().getModel("validationModel").setProperty("/visible",true);
+				oButton.setText("Save Dump");
 			}else{
-				this.getView().getModel("validationModel").setProperty("/visible",false);
-				oEvent.getSource().setText("Edit Dump");	
+				if (!oController.confirmEscapePreventDialog) {
+					oController.confirmEscapePreventDialog = new sap.m.Dialog({
+						icon: sap.ui.core.IconPool.getIconURI("message-information"),
+						title: "Are you sure?",
+						content: [
+							new sap.m.Text({
+								text: "Stock changes for this product"
+							})
+						],
+						type: sap.m.DialogType.Message,
+						buttons: [
+							new sap.m.Button({
+								text: "Yes",
+								press: function() {
+									
+									var aData = oController.getView().getModel("dump").getData();
+									$.ajax({
+										type: 'PUT',
+										url: "admin/productStock/updateDump",
+										error: function(data) {
+											oController.getView().getModel("dump").setData(oController.aUnChangedData);
+											oController.getView().getModel("validationModel").setProperty("/visible",false);
+											oButton.setText("Edit Dump");	
+											oController.confirmEscapePreventDialog.close();
+										},
+										data:JSON.stringify(aData),
+										contentType:"application/json",
+										dataType: 'json',
+										success: function(data) {
+											oController.getView().getModel("validationModel").setProperty("/visible",false);
+											oButton.setText("Edit Dump");	
+											oController.confirmEscapePreventDialog.close();
+										}
+										
+									});
+									
+									
+								}
+							}),
+							new sap.m.Button({
+								text: "No",
+								press: function() {
+									oController.getView().getModel("dump").setData(oController.aUnChangedData);
+									oController.getView().getModel("validationModel").setProperty("/visible",false);
+									oButton.setText("Edit Dump");
+									oController.confirmEscapePreventDialog.close();
+								}
+							})
+						]
+					});
+				}
+
+				oController.confirmEscapePreventDialog.open();
+				
+				
 			}
 		}
 	});

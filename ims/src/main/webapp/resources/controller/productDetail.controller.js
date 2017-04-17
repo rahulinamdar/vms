@@ -70,7 +70,9 @@ sap.ui.define([
 				type: 'GET',
 				url: "admin/product/getDetail?productId="+oEvent.getParameter("arguments").productId+"",
 				error: function(data) {
-				console.log(data);
+					if(data){
+						oController.showMessage("Error",data.error);
+						}
 				},
 				dataType: 'json',
 				success: function(data) {
@@ -107,12 +109,17 @@ sap.ui.define([
 									type: 'PUT',
 									url: "admin/productPrice/update",
 									error: function(data) {
-									console.log(data);
+										if(data){
+											that.showMessage("Error",data.error);
+											}
 									},
 									dataType: 'json',
 									contentType:"application/json",
 									data:JSON.stringify(oData),
 									success: function(data) {
+										if(data){
+											that.showMessage("Success",data.msg);
+											}
 										oView.getModel("productDetails").refresh();
 										that.escapePreventDialog.close();
 										that.getComponent().getModel("products").setData(Model.createProductModel().getData());
@@ -202,6 +209,9 @@ sap.ui.define([
 										type: 'PUT',
 										url: "admin/productStock/update",
 										error: function(data) {
+											if(data){
+												oController.showMessage("Error",data.error);
+												}
 											oController.getView().getModel("validationModel").setProperty("/visible",false);
 											oButton.setText("Edit Stock");	
 											oController.confirmEscapePreventDialog.close();
@@ -210,6 +220,9 @@ sap.ui.define([
 										contentType:"application/json",
 										dataType: 'json',
 										success: function(data) {
+											if(data){
+												oController.showMessage("Success",data.msg);
+												}
 											oController.getView().getModel("validationModel").setProperty("/visible",false);
 											oButton.setText("Edit Stock");	
 											oController.confirmEscapePreventDialog.close();

@@ -5,6 +5,7 @@ import java.util.Date;
 import java.util.List;
 
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
@@ -12,6 +13,8 @@ import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 /**
  * Entity implementation class for Entity: Order
@@ -32,7 +35,7 @@ public class Order extends EntityAudit implements Serializable {
 	@OneToOne
 	private OrderType orderType;
 	
-	@OneToMany(mappedBy="order")
+	@OneToMany(mappedBy="order",fetch=FetchType.EAGER)
 	private List<OrderItem> items;
 	
 	@ManyToOne
@@ -51,6 +54,7 @@ public class Order extends EntityAudit implements Serializable {
 	@ManyToOne
 	private PaymentMethod paymentMethod;
 	
+	@Temporal(TemporalType.DATE)
 	private Date date;
 	
 	/**
