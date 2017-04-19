@@ -8,6 +8,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
+import com.ims.beans.UserBean;
 import com.ims.dao.UserDao;
 import com.ims.dao.UserDaoImpl;
 import com.ims.entity.User;
@@ -23,10 +24,10 @@ public class UserServiceImpl implements UserService {
 	
 	@Override
 	@Transactional
-	public void saveUser(User user) {
+	public void saveUser(UserBean user) {
 		// TODO Auto-generated method stub
 		
-		user.setPassword(passwordEncoder.encode(user.getPassword()));
+		
 		userDao.saveUser(user);
 	}
 

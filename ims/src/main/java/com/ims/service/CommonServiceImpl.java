@@ -177,4 +177,13 @@ public class CommonServiceImpl implements CommonService{
 		dao.deleteRegion(regionId);
 	}
 
+	/* (non-Javadoc)
+	 * @see com.ims.service.CommonService#addOrderType(com.ims.entity.OrderType)
+	 */
+	@Override
+	public void addOrderType(OrderType status) {
+		// TODO Auto-generated method stub
+		
+	}
+
 }

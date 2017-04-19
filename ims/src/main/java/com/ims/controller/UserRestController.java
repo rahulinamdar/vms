@@ -6,13 +6,17 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.ims.beans.ProductBean;
+import com.ims.beans.UserBean;
 import com.ims.entity.Role;
 import com.ims.entity.User;
 import com.ims.service.RoleService;
@@ -28,18 +32,13 @@ public class UserRestController {
 	@Autowired
 	private RoleService roleService;
 	
-	@RequestMapping(value = "/user", method = RequestMethod.GET)
+	@RequestMapping(value = "user/add", method = RequestMethod.POST,consumes=MediaType.APPLICATION_JSON_VALUE,produces=MediaType.APPLICATION_JSON_VALUE)
 	@ResponseBody
-	public String saveUser(){
+	public String addUser(@RequestBody UserBean userBean){
 		System.out.println("asdsad");
-		User user =  new User();
-		Role role = roleService.findRoleById((long)1);
-		user.setUserName("userNamesd");
-		user.setPassword("Test@123");
-		user.setRole(role);	
 		
 		
-		userService.saveUser(user);
+		userService.saveUser(userBean);
 		
 		return "Done";
 	}
@@ -57,6 +56,8 @@ public class UserRestController {
 		if(user!=null){
 			if(userService.authenticateUser(rawPasword, user)){
 				map.put("status", true);
+				map.put("region", user.getRegion().getRegionid());
+				map.put("username", user.getUserName());
 			}else{
 				map.put("status", false);
 			}

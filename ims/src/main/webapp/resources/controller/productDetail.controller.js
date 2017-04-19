@@ -182,6 +182,9 @@ sap.ui.define([
 		
 			
 		},
+		navack:function(){
+			this.onNavBack();
+		},
 		changeStock:function(oEvent){
 			var oController = this;
 			var oButton = oEvent.getSource();

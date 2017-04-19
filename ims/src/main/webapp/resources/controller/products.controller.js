@@ -12,6 +12,7 @@ sap.ui.define([
 		 */
 		onInit: function() {
 			this.getRouter().getRoute("products").attachPatternMatched(this._onRouteMatched, this);
+				
 		},
 
 		/**
@@ -40,7 +41,9 @@ sap.ui.define([
 		//
 		//	}
 		_onRouteMatched: function(oEvent) {
-
+//			if(this.getView().getModel("products").getData().length !== 0)
+//				this.getRouter().navTo("productDetail",{productId:this.getView().getModel("products").getProperty("/0/productId")});
+//			
 		/*	$.ajax({
 				type: 'GET',
 				url: '/simple/SimpleServlet',

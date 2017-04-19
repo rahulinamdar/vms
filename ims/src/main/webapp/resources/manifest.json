@@ -237,8 +237,7 @@
 				},
 				"parentAdminSplitApp": {
 					"viewPath": "com.vasudha.view",
-					"viewName": "adminSplit",
-					"viewId": "adminSplit"
+					"viewName": "adminSplit"
 				},
 				"materList":{
 					"parent":"parentAdminSplitApp",

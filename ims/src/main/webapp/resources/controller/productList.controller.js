@@ -18,6 +18,7 @@ sap.ui.define([
 		onInit: function() {
 			this.getRouter().getRoute("products").attachPatternMatched(this._onRouteMatched, this);
 			this.getView().setModel(new JSONModel({mode:"SingleSelectMaster"}),"viewModel")
+			
 		},
 
 		/**
@@ -55,9 +56,7 @@ sap.ui.define([
 		},
 		_onRouteMatched: function(oEvent) {
 			var oController = this;
-			if(oController.getView().getModel("products").getData().length !== 0)
-			this.getRouter().navTo("productDetail",{productId:oController.getView().getModel("products").getProperty("/0/productId")});
-//			var oModel = new JSONModel();
+			var oModel = new JSONModel();
 //			$.ajax({
 //				type: 'GET',
 //				url: 'admin/products/getAllWithPrice',

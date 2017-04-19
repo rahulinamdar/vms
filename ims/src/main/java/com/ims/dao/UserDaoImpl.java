@@ -10,8 +10,11 @@ import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
 import javax.transaction.Transactional;
 
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Repository;
 
+import com.ims.beans.UserBean;
+import com.ims.entity.Region;
 import com.ims.entity.User;
 
 @Repository
@@ -21,9 +24,18 @@ public class UserDaoImpl implements UserDao{
 	@PersistenceContext
 	private EntityManager entityManager;
 	
+	private BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder(); 
+	
 	@Override
-	public void saveUser(User user) {
+	public void saveUser(UserBean userBean) {
 		
+		User user =  new User();
+//		Role role = roleService.findRoleById((long)1);
+		user.setUserName(userBean.getUserName());
+		user.setPassword(passwordEncoder.encode(userBean.getPassword()));
+		TypedQuery<Region> query = entityManager.createNamedQuery("Region.getRegion",Region.class).setParameter("regionId",userBean.getRegion() );
+//		user.setRole(role);	
+		user.setRegion(query.getSingleResult());
 		entityManager.persist(user);
 	}
 

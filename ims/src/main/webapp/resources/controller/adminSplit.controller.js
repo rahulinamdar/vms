@@ -40,7 +40,7 @@ sap.ui.define([
 		//
 		//	}
 		_onRouteMatched:function(oEvent){
-			this.getRouter().navTo("uomCreate");
+			
 		}
 
 	});

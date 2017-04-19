@@ -34,9 +34,25 @@ public class User implements Serializable {
 	@Column(name="user_name")
 	private String userName;
 	
+//	@OneToOne
+//	private Role role;
+	
+	/**
+	 * @return the region
+	 */
+	public Region getRegion() {
+		return region;
+	}
+
+	/**
+	 * @param region the region to set
+	 */
+	public void setRegion(Region region) {
+		this.region = region;
+	}
+
 	@OneToOne
-	@JoinColumn(name="role_id",insertable=true,nullable=false)
-	private Role role;
+	private Region region;
 
 	public User() {
 	}
@@ -57,12 +73,12 @@ public class User implements Serializable {
 		this.userName = userName;
 	}
 
-	public Role getRole() {
-		return role;
-	}
-
-	public void setRole(Role role) {
-		this.role = role;
-	}
+//	public Role getRole() {
+//		return role;
+//	}
+//
+//	public void setRole(Role role) {
+//		this.role = role;
+//	}
 
 }

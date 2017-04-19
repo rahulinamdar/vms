@@ -19,7 +19,7 @@
 							</Column>
 						</columns>
 						<items>
-							<ColumnListItem vAlign="Middle" type="Navigation">
+							<ColumnListItem vAlign="Middle" type="Inactive">
 								<cells>
 									<ComboBox
 				showSecondaryValues= "true"

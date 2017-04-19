@@ -1,6 +1,7 @@
 <mvc:View xmlns:core="sap.ui.core" xmlns:mvc="sap.ui.core.mvc" xmlns="sap.m" controllerName="com.vasudha.controller.productDetail"
 	xmlns:html="http://www.w3.org/1999/xhtml" xmlns:form="sap.ui.layout.form">
-	<Page title="Product Details">
+	<Page title="Product Details" showNavButton="true"
+	navButtonPress = "navack">
 		<content>
 			<ObjectHeader id="objectHeader" title="{productDetails>/productDesc}" number="{productDetails>/priceInfo/price}" numberUnit="INR" titleActive="true" titlePress="onShowDetailPopover"
 				responsive="true"></ObjectHeader>

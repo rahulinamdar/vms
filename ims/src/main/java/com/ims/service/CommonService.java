@@ -6,6 +6,7 @@ package com.ims.service;
 import java.util.List;
 import java.util.Map;
 
+import com.ims.entity.OrderType;
 import com.ims.entity.ProductCategory;
 import com.ims.entity.Status;
 import com.ims.entity.Uom;
@@ -110,5 +111,14 @@ public interface CommonService {
 	 *
 	 */
 	void deleteRegion(String regionId);
+
+	/**
+	 * @author rahul
+	
+	 * @param status
+	 * void
+	 *
+	 */
+	void addOrderType(OrderType status);
 
 }
