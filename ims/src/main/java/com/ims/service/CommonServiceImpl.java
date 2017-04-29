@@ -181,8 +181,10 @@ public class CommonServiceImpl implements CommonService{
 	 * @see com.ims.service.CommonService#addOrderType(com.ims.entity.OrderType)
 	 */
 	@Override
-	public void addOrderType(OrderType status) {
+	public void addOrderType(OrderType oType) {
 		// TODO Auto-generated method stub
+		dao.addOrderType(oType);
+		
 		
 	}
 

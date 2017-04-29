@@ -44,6 +44,23 @@ sap.ui.define([
 			});
  
 			dialog.open();
-		}
+		},
+		validateUser:function(){
+			var cookie = document.cookie;
+			$.ajax({
+				type:"POST",
+				url:"validateUser",
+				success:function(data){
+					if(data.status){
+						
+					}else{
+						location.href="resources/log.html"
+					}
+				},
+				error:function(){
+					location.href="resources/log.html"
+				}
+			});
+		},
 	});
 });

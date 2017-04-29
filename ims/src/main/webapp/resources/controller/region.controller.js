@@ -1,8 +1,9 @@
 sap.ui.define([
 	"com/vasudha/controller/BaseController",
 	"sap/ui/model/json/JSONModel",
-	"com/vasudha/model/quantityFormatter"
-], function(Controller,JSONModel,quantityFormatter) {
+	"com/vasudha/model/quantityFormatter",
+	"com/vasudha/model/models"
+], function(Controller,JSONModel,quantityFormatter,Model) {
 	"use strict";
 
 	return Controller.extend("com.vasudha.controller.region", {
@@ -74,24 +75,24 @@ sap.ui.define([
 		//	}
 			_onRouteMatched: function(oEvent) {
 				var oController = this;
-			$.ajax({
-				type: 'GET',
-				url: "region/getAll",
-				error: function(data) {
-				console.log(data);
-				},
-				dataType: 'json',
-				success: function(data) {
-					if(oController.getView().getModel("regions")){
-						oController.getView().getModel("regions").setData(data);
-					}else{
-					var oModel = new JSONModel();
-					oModel.setData(data);
-					oController.getView().setModel(oModel, "regions");
-					}
-				}
-				
-			});
+//			$.ajax({
+//				type: 'GET',
+//				url: "region/getAll",
+//				error: function(data) {
+//				console.log(data);
+//				},
+//				dataType: 'json',
+//				success: function(data) {
+//					if(oController.getView().getModel("regions")){
+//						oController.getView().getModel("regions").setData(data);
+//					}else{
+//					var oModel = new JSONModel();
+//					oModel.setData(data);
+//					oController.getView().setModel(oModel, "regions");
+//					}
+//				}
+//				
+//			});
 			
 		},
 		addRegion: function(oEvent) {
@@ -137,6 +138,9 @@ sap.ui.define([
 									data:JSON.stringify(oView.getModel("newRegion").getData()),
 									contentType:"application/json",
 									success: function(data) {
+										that.getView().setModel(Model.createRegionModel(),"regions");
+										that.getView().getModel("regions").refresh();
+										
 										that.escapePreventDialog.close();
 									}
 									

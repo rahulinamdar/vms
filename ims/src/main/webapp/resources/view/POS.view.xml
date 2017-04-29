@@ -27,14 +27,14 @@
 						<Toolbar>
 							<Title text="{i18n>oderDetail}" level="H5" titleStyle="H5" />
 						</Toolbar>
-						<Label text="Order Type" />
-						<ComboBox selectedKey="{order>/orderType}" items="{
+						<Label  required="true" text="Order Type" />
+						<ComboBox selectedKey="{order>/orderType}" editable="false" required="true" items="{
 					path: 'orderType>/'
 				}">
 							<core:ListItem key="{orderType>orderTypeId}" text="{orderType>orderTypeDesc}" />
 						</ComboBox>
-						<Label text="Region" />
-						<ComboBox selectedKey="{order>/region}"
+						<Label required="true" text="Region" />
+						<ComboBox selectedKey="{order>/region}" id="pos_region_combo" editable="false" required="true"
 							items="{
 					path: 'regions>/',
 					sorter: { path: 'regionName' }
@@ -42,8 +42,8 @@
 							<core:ListItem key="{regions>regionId}" text="{regions>regionName}" />
 						</ComboBox>
 
-						<Label text="Status" />
-						<ComboBox selectedKey="{order>/status}"
+						<Label required="true" text="Status" />
+						<ComboBox selectedKey="{order>/status}" editable="false" required="true"
 							items="{
 					path: 'status>/',
 					sorter: { path: 'status' }
@@ -58,7 +58,7 @@
 												formatOptions:{
 													minFractionDigits:2
 												}
-											}"  type="Number">
+											}"  type="Number" change="calculateNet" >
 						</Input>
 
 						<Toolbar>
@@ -67,15 +67,15 @@
 							<Button icon="sap-icon://add" press="addItem" />
 						</Toolbar>
 						<Label text="Product Category" />
-						<ComboBox selectedKey="{orderItem>/category}"
+						<ComboBox selectedKey="{orderItem>/category}" selectionChange="selectionChange"
 							items="{
 					path: 'categories>/',
 					sorter: { path: 'category' }
 				}">
 							<core:Item key="{categories>categoryId}" text="{categories>category}" />
 						</ComboBox>
-						<Label text="Product" />
-						<ComboBox showSecondaryValues="true" selectedKey="{orderItem>/productId}"
+						<Label text="Product" required="true" />
+						<ComboBox id="pos_category_list" showSecondaryValues="true" selectedKey="{orderItem>/productId}"
 							items="{
 					path: 'products>/',
 					sorter: { path: 'productDesc' }
@@ -115,8 +115,8 @@
 					<items>
 						<ColumnListItem vAlign="Middle" type="Inactive">
 							<cells>
-
-								<ComboBox
+				
+				<ComboBox
 				showSecondaryValues= "true"
 				selectedKey = "{order>productId}"
 				editable = "false"
@@ -132,6 +132,17 @@
 												path:'order>quantity',
 												type:'sap.ui.model.type.Float'
 											}" change="calculateTotal" />
+											
+								<ComboBox
+				showSecondaryValues= "true"
+				selectedKey = "{order>uom}"
+				editable = "false"
+				items="{
+					path: 'uom>/',
+					sorter: { path: 'uom' }
+				}">
+				<core:ListItem key="{uom>uomId}" text="{uom>uom}" />
+			</ComboBox>
 								<Text text="{ 
 												path:'order>totalPrice',
 												type:'sap.ui.model.type.Float',

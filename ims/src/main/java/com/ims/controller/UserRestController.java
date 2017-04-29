@@ -56,8 +56,12 @@ public class UserRestController {
 		if(user!=null){
 			if(userService.authenticateUser(rawPasword, user)){
 				map.put("status", true);
-				map.put("region", user.getRegion().getRegionid());
+				if(user.getRegion() != null)
+					map.put("region", user.getRegion().getRegionid());
+				else
+					map.put("region", "All");
 				map.put("username", user.getUserName());
+				map.put("pass", user.getPassword());
 			}else{
 				map.put("status", false);
 			}

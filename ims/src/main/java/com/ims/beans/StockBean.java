@@ -5,9 +5,6 @@ package com.ims.beans;
 
 import java.util.Date;
 
-import com.ims.entity.Region;
-import com.ims.entity.Uom;
-
 /**
  * @author rahul
  *

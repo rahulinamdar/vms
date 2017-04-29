@@ -4,38 +4,14 @@
 	navButtonPress = "navack">
 				<content>
 					
-					<IconTabBar
-		id="idIconTabBar"
-		select="handleIconTabBarSelect"
-		class="sapUiResponsiveContentPadding">
-		<items>
-			<IconTabFilter
-				showAll="true"
-				count="{/ProductCollectionStats/Counts/Total}"
-				text="All Products"
-				key="All" />
-			<IconTabSeparator />
-			<IconTabFilter
-				icon="sap-icon://begin"
-				iconColor="Positive"
-				count="{/ProductCollectionStats/Counts/Weight/Ok}"
-				text="Ok"
-				key="Ok" />
-			<IconTabFilter
-				icon="sap-icon://compare"
-				iconColor="Critical"
-				count="{/ProductCollectionStats/Counts/Weight/Heavy}"
-				text="Heavy"
-				key="Heavy" />
-			<IconTabFilter
-				icon="sap-icon://inventory"
-				iconColor="Negative"
-				count="{/ProductCollectionStats/Counts/Weight/Overweight}"
-				text="Overweight"
-				key="Overweight" />
-				
-		</items>
-	</IconTabBar>
+			
+						<ComboBox selectionChange="selectionChange"
+							items="{
+					path: 'regions>/',
+					sorter: { path: 'regionName' }
+				}">
+							<core:ListItem key="{regions>regionId}" text="{regions>regionName}" />
+						</ComboBox>
 			<Table id="adminOrderTable"
 			
 				items="{ 
@@ -101,6 +77,7 @@
 				}
 			}" />
 							<Text text="{orders>netValue}" wrapping="false"/>
+							<Text text="{orders>discount}" wrapping="false"/>
 							<Text text="{orders>orderItems}" wrapping="false"/>
 							
 						</cells>

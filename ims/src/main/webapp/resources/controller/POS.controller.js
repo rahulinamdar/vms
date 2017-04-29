@@ -1,7 +1,9 @@
 sap.ui.define([
 	"com/vasudha/controller/BaseController",
-	"sap/ui/model/json/JSONModel"
-], function(Controller,JSONModel) {
+	"sap/ui/model/json/JSONModel",
+	"sap/ui/model/Filter",
+	"sap/ui/model/FilterOperator"
+], function(Controller,JSONModel,Filter, FilterOperator) {
 	"use strict";
 
 	return Controller.extend("com.vasudha.controller.POS", {
@@ -16,6 +18,9 @@ sap.ui.define([
 				this.oColumnModel.setData(this._oData);
 				this.getView().setModel(this.oColumnModel, "columns");
 				this.getRouter().getRoute("pos").attachPatternMatched(this._onRouteMatched, this);
+				if(localStorage["username"] === "admin"){
+					this.getView().byId("pos_region_combo").setEditable(true);
+				}
 			},
 			navack:function(){
 				this.getRouter().navTo("admin");
@@ -31,12 +36,12 @@ sap.ui.define([
 					minScreenWidth: "Tablet",
 					styleClass: "cellBorderRight"
 				},
-				/* {
-					header: "UOM",
+				 {
+					header: "Unit",
 					demandPopin: false,
 					minScreenWidth: "",
 					styleClass: "cellBorderRight"
-				},*/{
+				},{
 					header: "Total",
 					demandPopin: false,
 					minScreenWidth: "",
@@ -47,13 +52,14 @@ sap.ui.define([
 					
 					// initial values to be set
 					var obj = {
-							"orderType":"",
+							"orderType":"shop",
 							"items":[
 								
 								],
-							"status":"",
+							"status":"completed",
 							"netValue":0,
-							"region":"",
+							"region":localStorage["region"],
+							"discount":0
 				};
 					if(oController.getView().getModel("order")){
 						oController.getView().getModel("order").setData(obj);
@@ -67,6 +73,7 @@ sap.ui.define([
 							productId:"",
 							category:"",
 							quantity:0,
+							uom:"",
 							totalPrice:0
 				};
 					if(oController.getView().getModel("orderItem")){
@@ -77,6 +84,21 @@ sap.ui.define([
 					oController.getView().setModel(oModel, "orderItem");
 					}
 				},
+				selectionChange:function(oEvent){
+					var oSelectedItem = oEvent.getParameter("selectedItem");
+					var sQuery = oSelectedItem.getKey();
+					
+					var oBinding = this.getView().byId("pos_category_list").getBinding("items");
+					var aFilter = [];
+					if (sQuery) {
+						aFilter.push(new Filter([
+							new Filter("productCategory", FilterOperator.Contains, sQuery),
+						], false));
+					}
+
+					// filter binding
+					oBinding.filter(aFilter);
+				},
 				addItem:function(oEvent){
 					console.log(this);
 					var aProducts = this.getView().getModel("products").getData();
@@ -84,11 +106,13 @@ sap.ui.define([
 					var iQuantity = this.getView().getModel("orderItem").getProperty("/quantity");
 					var sCategory = this.getView().getModel("orderItem").getProperty("/category");
 					var iPrice = 0;
+					var sUnit = ""
 					if(sProductId !== ""){
 						if(iQuantity > 0){
 					for(var i in aProducts){
 						if(aProducts[i].productId === sProductId ){
 							iPrice = aProducts[i].price;
+							sUnit = aProducts[i].uom;
 							break;
 						}
 					}
@@ -96,6 +120,7 @@ sap.ui.define([
 								"productId":sProductId,
 								"quantity":iQuantity,
 								"totalPrice":(iQuantity * iPrice),
+								"uom":sUnit,
 								"category":sCategory
 							};
 								
@@ -105,6 +130,9 @@ sap.ui.define([
 					aOrderItems.push(obj);
 					oOrderModel.setProperty("/items",aOrderItems)
 					this.calculateNet();
+					this.getView().getModel("orderItem").setProperty("/productId","");
+					this.getView().getModel("orderItem").setProperty("/quantity","");
+					this.getView().getModel("orderItem").setProperty("/category","");
 					oOrderModel.refresh();
 						}else{
 							sap.m.MessageToast.show("Quantity cannot be 0");
@@ -119,9 +147,10 @@ sap.ui.define([
 					var aOrderItems = oOrderModel.getProperty("/items");
 					var netValue =0;
 					for(var i in aOrderItems){
-						netValue += aOrderItems[i].total;
+						netValue += aOrderItems[i].totalPrice;
 					}
-					oOrderModel.setProperty("/netValue",netValue);
+					var discount = oOrderModel.getProperty("/discount");
+					oOrderModel.setProperty("/netValue",netValue-discount);
 					
 				},
 				calculateTotal:function(oEvent){
@@ -144,6 +173,7 @@ sap.ui.define([
 				},
 				createOrder:function(){
 					var oOrder = this.getView().getModel("order").getData();
+					if(oOrder.items.length != 0 ){
 					if(oOrder.orderType !== ""&&oOrder.region !== ""&& oOrder.status !== ""){
 					var oController = this;
 					$.ajax({
@@ -167,6 +197,9 @@ sap.ui.define([
 					});
 					}else{
 						sap.m.MessageToast.show("Plaese fill the mandatory fields");
+					}
+					}else{
+						sap.m.MessageToast.show("At least add one item to create a order");
 					}
 
 				}

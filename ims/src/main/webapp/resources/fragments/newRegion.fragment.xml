@@ -35,7 +35,7 @@
 				<Label text="Latitude" />
 				<Input value="{newRegion>/geo_lat}"></Input>
 					<Label text="Latitude" />
-				<Input value="{newRegion>/geo_lat}">
+				<Input value="{newRegion>/geo_long}">
 				</Input>
 			</f:content>
 		</f:SimpleForm>

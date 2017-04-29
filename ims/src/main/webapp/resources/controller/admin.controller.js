@@ -1,7 +1,7 @@
 sap.ui.define([
 	"com/vasudha/controller/BaseController",
 	"sap/ui/model/json/JSONModel"
-], function(Controller,JSONModel) {
+], function(Controller,JSONModel,HashChanger) {
 	"use strict";
 
 	return Controller.extend("com.vasudha.controller.admin", {
@@ -12,62 +12,61 @@ sap.ui.define([
 		 * @memberOf com.vasudha.view.admin
 		 */
 		onInit: function() {
+			var oController= this;
+		
+			
 			var oModel = new JSONModel();
-			oModel.setData({
-				"TileCollection" : [
-					{
-						"id":"about_us",
-						"icon" : "sap-icon://hint",
-						"type" : "Monitor",
-						"title" : "About KK Retail Agro Fresh Inc."
-					},
-					{
-						"id":"so",
-						"icon" : "sap-icon://inbox",
-						"number" : "89",
-						"title" : "Sales Orders"
-					},
-					{
-						"id":"create_so",
-						"type" : "Create",
-						"title" : "Create Sales Order",
-						"info" : "Last Sales",
-						"infoState" : "Success"
-					},
-					{
-						"id":"products",
-						"icon" : "sap-icon://travel-expense-report",
-						"number" : "150",
-						"title" : "Product"
-					},
-					{
-						"id":"stocks",
-						"icon" : "sap-icon://loan",
-						"number" : "2380",
-						"numberUnit" : "inr",
-						"title" : "Stock",
-						"info" : "till date"
-					},
-					{
-						"id":"region",
-						"type" : "Create",
-						"title" : "Region",
-						"number" : "2380",
-						"info" : "Regions"
-					},
+			
+			var oData = {
+					"TileCollection" : [
 						{
-						"id":"dump",
-						"title" : "Dump",
-						"number" : "12",
-						"info" : "Dump of the day"
-					},
-					{
-						"id":"adminSection",
-							"title" : "Admin Section",
-							"info" : "create UOM,Category,Status and Regions"	
+							"id":"about_us",
+							"icon" : "sap-icon://hint",
+							"type" : "Monitor",
+							"title" : "About KK Retail Agro Fresh Inc."
+						},
+						{
+							"id":"so",
+							"icon" : "sap-icon://inbox",
+							"title" : "Sales Orders"
+						},
+						{
+							"id":"create_so",
+							"type" : "Create",
+							"title" : "Create Sales Order",
+							"info" : "Last Sales",
+							"infoState" : "Success"
+						},
+						
+						{
+							"id":"stocks",
+							"icon" : "sap-icon://loan",
+							"title" : "Stock",
+							"info" : "till date"
+						},
+						
+							{
+							"id":"dump",
+							"title" : "Dump",
+							"info" : "Dump of the day"
 						}
-				]
-			});
+						
+					]
+				}
+			if(localStorage["username"] === "admin"){
+				oData.TileCollection.push({
+					"id":"adminSection",
+					"type" : "Monitor",
+						"info" : "Admin Section",
+						"title" : "create UOM,Category,Status and Regions"	
+					});
+				oData.TileCollection.push({
+					"id":"products",
+					"icon" : "sap-icon://travel-expense-report",
+					"title" : "Product"
+				});
+			}
+			oModel.setData(oData);
 			this.getView().setModel(oModel);
 		},
 
@@ -121,6 +120,13 @@ sap.ui.define([
 			}
 			
 			
+		},
+		
+		logout:function(){
+			document.cookie = "username=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+			document.cookie = "region=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+			localStorage.clear();
+			location.href="resources/log.html";
 		}
 	});
 

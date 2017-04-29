@@ -106,4 +106,13 @@ public interface CommonDao {
 	 */
 	public void deleteRegion(String regionId);
 
+	/**
+	 * @author rahul
+	
+	 * @param oType
+	 * void
+	 *
+	 */
+	public void addOrderType(OrderType oType);
+
 }

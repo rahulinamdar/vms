@@ -66,9 +66,15 @@ sap.ui.define([
 		//	}
 			_onRouteMatched: function(oEvent) {
 				var oController = this;
+				var url = "admin/products/getStockAllRegions";
+				if(localStorage["username"] === "admin"){
+					url = "admin/products/getStockAllRegions";
+				}else{
+					url = "admin/products/getStockAForRegion?region="+localStorage["region"]+"";
+				}
 			$.ajax({
 				type: 'GET',
-				url: "admin/products/getStockAForRegion?region=1st_gate",
+				url: url,
 				error: function(data) {
 				console.log(data);
 				},

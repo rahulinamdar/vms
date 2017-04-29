@@ -24,7 +24,7 @@ import javax.persistence.TemporalType;
 @Table(name="order_table")
 @NamedQueries({
 	@NamedQuery(name="Order.getAll", query="SELECT o FROM Order o"),
-	@NamedQuery(name="Order.getAllForRegion", query="SELECT o FROM Order o WHERE o.region.id = :regionId"),
+	@NamedQuery(name="Order.getAllForRegion", query="SELECT o FROM Order o WHERE o.region.regionid = :regionId"),
 })
 
 public class Order extends EntityAudit implements Serializable {
@@ -43,6 +43,8 @@ public class Order extends EntityAudit implements Serializable {
 	private Status status;
 	
 	private Double netValue;
+	
+	private Double discount;
 	
 	@OneToOne
 	private Delivery delivery;
@@ -171,6 +173,20 @@ public class Order extends EntityAudit implements Serializable {
 	 */
 	public void setDate(Date date) {
 		this.date = date;
+	}
+
+	/**
+	 * @return the discount
+	 */
+	public Double getDiscount() {
+		return discount;
+	}
+
+	/**
+	 * @param discount the discount to set
+	 */
+	public void setDiscount(Double discount) {
+		this.discount = discount;
 	}
    
 }

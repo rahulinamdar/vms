@@ -1,7 +1,9 @@
 sap.ui.define([
 	"com/vasudha/controller/BaseController",
-	"sap/ui/model/json/JSONModel"
-], function(Controller,JSONModel) {
+	"sap/ui/model/json/JSONModel",
+	"sap/ui/model/Filter",
+	"sap/ui/model/FilterOperator"
+], function(Controller,JSONModel,Filter,FilterOperator) {
 	"use strict";
 
 	return Controller.extend("com.vasudha.controller.Orders", {
@@ -52,12 +54,12 @@ sap.ui.define([
 				minScreenWidth: "Tablet",
 				styleClass: "cellBorderRight"
 			},
-			/* {
-				header: "UOM",
+			 {
+				header: "Discount",
 				demandPopin: false,
 				minScreenWidth: "",
 				styleClass: "cellBorderRight"
-			},*/{
+			},{
 				header: "Items",
 				demandPopin: true,
 				minScreenWidth: "",
@@ -65,9 +67,15 @@ sap.ui.define([
 			}],
 			_onRouteMatched: function(oEvent) {
 				var oController = this;
+				var url = "order/getAll";
+				if(localStorage["username"] === "admin"){
+					url = "order/getAll";
+				}else{
+					url = "order/getAllForRegion?region="+localStorage["region"]+"";
+				}
 			$.ajax({
 				type: 'GET',
-				url: "order/getAll",
+				url: url,
 				error: function(data,ohr,response) {
 					if(data){
 					oController.showMessage("Error",data.error);
@@ -85,6 +93,22 @@ sap.ui.define([
 				}
 				
 			});
+			},
+
+			selectionChange:function(oEvent){
+				var oSelectedItem = oEvent.getParameter("selectedItem");
+				var sQuery = oSelectedItem.getKey();
+				
+				var oBinding = this.getView().byId("adminOrderTable").getBinding("items");
+				var aFilter = [];
+				if (sQuery) {
+					aFilter.push(new Filter([
+						new Filter("orderRegion", FilterOperator.Contains, sQuery),
+					], false));
+				}
+
+				// filter binding
+				oBinding.filter(aFilter);
 			},
 			formatDate:function(date){
 					return new Date(date);

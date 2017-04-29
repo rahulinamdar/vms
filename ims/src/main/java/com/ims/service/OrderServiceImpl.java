@@ -53,10 +53,11 @@ public class OrderServiceImpl implements OrderService{
 			Map<String,Object> orMap = new HashMap<>();
 			orMap.put("orderId", or.getId());
 			orMap.put("orderDate", or.getDate());
-			orMap.put("orderStatus", or.getStatus());
-			orMap.put("orderRegion", or.getRegion());
+			orMap.put("orderStatus", or.getStatus().getStatusId());
+			orMap.put("orderRegion", or.getRegion().getRegionid());
 			orMap.put("netValue", or.getNetValue());
-			orMap.put("orderType",or.getOrderType());
+			orMap.put("discount",or.getDiscount());
+			orMap.put("orderType",or.getOrderType().getOrderTypeId());
 			orMap.put("orderItems", or.getItems().size());
 			orderList.add(orMap);
 		}
@@ -80,6 +81,7 @@ public class OrderServiceImpl implements OrderService{
 			orMap.put("orderStatus", or.getStatus().getStatusId());
 			orMap.put("orderRegion", or.getRegion().getRegionid());
 			orMap.put("netValue", or.getNetValue());
+			orMap.put("discount",or.getDiscount());
 			orMap.put("orderType",or.getOrderType().getOrderTypeId());
 			orMap.put("orderItems", or.getItems().size());
 			orderList.add(orMap);
@@ -98,6 +100,7 @@ public class OrderServiceImpl implements OrderService{
 		orMap.put("orderStatus", or.getStatus().getStatusId());
 		orMap.put("orderRegion", or.getRegion().getRegionid());
 		orMap.put("netValue", or.getNetValue());
+		orMap.put("discount",or.getDiscount());
 		orMap.put("orderType",or.getOrderType().getOrderTypeId());
 		
 		

@@ -98,7 +98,7 @@ sap.ui.define([
 									data:JSON.stringify(oData),
 									contentType:"application/json",
 									success: function(data) {
-										that.getView().setModel(Model.createStatusModel(),"categories");
+										that.getView().setModel(Model.createCategoryModel(),"categories");
 										that.getView().getModel("categories").refresh();
 										that.escapePreventDialog.close();
 									}

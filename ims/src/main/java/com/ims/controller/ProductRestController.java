@@ -183,7 +183,7 @@ public class ProductRestController {
 		String productId = request.getParameter("productId");
 			productService.deleteProduct(productId);
 			Map<String,Object> map = new HashMap<>();
-			map.put("msg", "Product Deleted");
+			map.put("msg", "Product Deleted Please refresh the page");
 			return new ResponseEntity<Map<String,Object>>(map, HttpStatus.OK);
 	}
 	

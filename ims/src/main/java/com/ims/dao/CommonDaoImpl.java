@@ -127,4 +127,13 @@ public class CommonDaoImpl implements CommonDao{
 		entityManager.remove(query.getSingleResult());
 	}
 
+	/* (non-Javadoc)
+	 * @see com.ims.dao.CommonDao#addOrderType(com.ims.entity.OrderType)
+	 */
+	@Override
+	public void addOrderType(OrderType oType) {
+		// TODO Auto-generated method stub
+		entityManager.persist(oType);
+	}
+
 }

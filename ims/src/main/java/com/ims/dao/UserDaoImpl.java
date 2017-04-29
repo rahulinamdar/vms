@@ -33,9 +33,11 @@ public class UserDaoImpl implements UserDao{
 //		Role role = roleService.findRoleById((long)1);
 		user.setUserName(userBean.getUserName());
 		user.setPassword(passwordEncoder.encode(userBean.getPassword()));
-		TypedQuery<Region> query = entityManager.createNamedQuery("Region.getRegion",Region.class).setParameter("regionId",userBean.getRegion() );
+		if(userBean.getRegion() != null && !userBean.getRegion().equals("")){
+		TypedQuery<Region> query = entityManager.createNamedQuery("Region.getRegion",Region.class).setParameter("regionId",userBean.getRegion());
 //		user.setRole(role);	
 		user.setRegion(query.getSingleResult());
+		}
 		entityManager.persist(user);
 	}
 

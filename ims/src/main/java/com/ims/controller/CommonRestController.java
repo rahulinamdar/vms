@@ -19,7 +19,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.ims.beans.StockBean;
 import com.ims.entity.OrderType;
 import com.ims.entity.ProductCategory;
 import com.ims.entity.Status;
@@ -115,7 +114,7 @@ public class CommonRestController {
 	 */
 	@RequestMapping(value="admin/uom/add",method=RequestMethod.POST,consumes=MediaType.APPLICATION_JSON_VALUE,produces=MediaType.APPLICATION_JSON_VALUE)
 	@ResponseBody
-	public ResponseEntity<?>   addUom(@RequestBody Uom uom){
+	public ResponseEntity<?> addUom(@RequestBody Uom uom){
 		service.addUom(uom);
 		Map<String,Object> map = new HashMap<>();
 		map.put("msg", "Uom is successfully added");
@@ -148,8 +147,8 @@ public class CommonRestController {
 	 */
 	@RequestMapping(value="admin/orderType/add",method=RequestMethod.POST,consumes=MediaType.APPLICATION_JSON_VALUE,produces=MediaType.APPLICATION_JSON_VALUE)
 	@ResponseBody
-	public ResponseEntity<?>   addOrderType(@RequestBody OrderType status){
-		 service.addOrderType(status);
+	public ResponseEntity<?>   addOrderType(@RequestBody OrderType oType){
+		 service.addOrderType(oType);
 		Map<String,Object> map = new HashMap<>();
 		map.put("msg", "OrderType is successfully added");
 		return new ResponseEntity<Map<String,Object>>(map, HttpStatus.CREATED);

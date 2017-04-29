@@ -7,7 +7,7 @@
 					<Table id="dumpUpdatetable" items="{ 
 					path: 'dump>/',
 					sorter : {
-            			path : 'regionId',
+            			path : 'regionName',
             			group : true
         			}
 				}"  columns="{ path: 'columns>/' }">

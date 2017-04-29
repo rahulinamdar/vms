@@ -43,7 +43,7 @@ sap.ui.define([
 		itemPress:function(oEvent){
 			var oSelectedItem = oEvent.getParameter("listItem");
 			var sTitle = oSelectedItem.getTitle();
-			if(sTitle === "UOM"){
+			if(sTitle === "Product Units"){
 				this.getRouter().navTo("uomCreate");
 			}else if(sTitle === "Categories"){
 				this.getRouter().navTo("categoryCreate");
@@ -51,6 +51,8 @@ sap.ui.define([
 				this.getRouter().navTo("regionCreate");
 			}else if(sTitle === "Order Status"){
 				this.getRouter().navTo("statusCreate");
+			}else if(sTitle === "Order Type"){
+				this.getRouter().navTo("orderTypeCreate");
 			}
 			},
 			navack:function(){

@@ -53,6 +53,7 @@ public class OrderDaoImpl implements OrderDao{
 		or.setRegion(query.getSingleResult());
 		or.setStatus(query3.getSingleResult());
 		or.setDate(new Date());
+		or.setDiscount(order.getDiscount());
 		entityManager.persist(or);
 		Iterator<OrderItemBean>  itr = order.getItems().iterator();
 		Double net = 0.0;
@@ -73,14 +74,14 @@ public class OrderDaoImpl implements OrderDao{
 			
 			TypedQuery<ProductStock> stockQuery = entityManager.createNamedQuery("ProductStock.getStock",ProductStock.class).setParameter("productId", oi.getProductId()).setParameter("date", DateFormat.today()).setParameter("regionId",order.getRegion());
 			ProductStock st = stockQuery.getSingleResult();
-			if(st.getStock() > oi.getQuantity()){
+			if(st.getStock() >= oi.getQuantity()){
 			st.setStock(st.getStock() - oi.getQuantity());
 			}else{
 				throw new RuntimeException("Insuficient Stock for "+oi.getProductId()+" Please contact collection center");
 			}
 			entityManager.persist(st);
 		}
-		or.setNetValue(net);
+		or.setNetValue(net-order.getDiscount());
 		entityManager.persist(or);
 		
 		

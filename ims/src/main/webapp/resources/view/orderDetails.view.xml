@@ -87,11 +87,15 @@
 				<core:ListItem key="{products>productId}" text="{products>productDesc}" additionalText = "{products>price} INR"/>
 			</ComboBox>
 
-								<Input id="prodQnt" type="Number"
-									value="{ 
-												path:'orderDetails>quantity',
-												type:'sap.ui.model.type.Float'
-											}" editable="false" />
+								
+											<ObjectNumber
+						number="{orderDetails>quantity}"
+						unit="{orderDetails>uom}"
+						state="{
+							path: 'stock>stock',
+							formatter: '.formatter.qtyState'
+						}" />
+											
 								<Text text="{ 
 												path:'orderDetails>totalPrice',
 												type:'sap.ui.model.type.Float',

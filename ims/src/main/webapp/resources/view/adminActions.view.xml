@@ -5,18 +5,20 @@
 				<content>
 					<List itemPress="itemPress" >						<items>
 								<StandardListItem type="Active"
-			title="UOM"
-			counter="0"/>
+			title="Product Units"
+			/>
 				<StandardListItem type="Active"
 			title="Categories"
-			counter="{Quantity}"/>
+			/>
 				<StandardListItem type="Active"
 			title="Regions"
-			counter="{Quantity}"/>
+			/>
 				<StandardListItem type="Active"
 			title="Order Status"
-			counter="{Quantity}"/>
-							
+			/>
+				<StandardListItem type="Active"
+			title="Order Type"
+			/>			
 							
 						</items>
 		

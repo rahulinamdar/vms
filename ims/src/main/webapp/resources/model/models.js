@@ -54,6 +54,7 @@ sap.ui.define([
 			$.ajax({
 				type: 'GET',
 				url: 'productCategory/getAll',
+				async:false,
 				error: function(data) {
 						
 				},
@@ -93,6 +94,7 @@ sap.ui.define([
 				error: function(data) {
 				console.log(data);
 				},
+				async:false,
 				dataType: 'json',
 				success: function(data) {
 					oModel.setData(data);
@@ -106,6 +108,7 @@ sap.ui.define([
 			$.ajax({
 				type: 'GET',
 				url: "orderType/getAll",
+				async:false,
 				error: function(data) {
 				console.log(data);
 				},

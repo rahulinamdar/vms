@@ -3,8 +3,6 @@
  */
 package com.ims.beans;
 
-import javax.persistence.Column;
-
 /**
  * @author rahul
  *

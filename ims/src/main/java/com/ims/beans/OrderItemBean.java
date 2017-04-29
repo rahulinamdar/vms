@@ -12,6 +12,7 @@ public class OrderItemBean {
 	private String productId;
 	private Double quantity;
 	private String category;
+	private String uom;
 	/**
 	 * @return the productId
 	 */
@@ -59,6 +60,18 @@ public class OrderItemBean {
 	 */
 	public void setCategory(String category) {
 		this.category = category;
+	}
+	/**
+	 * @return the uom
+	 */
+	public String getUom() {
+		return uom;
+	}
+	/**
+	 * @param uom the uom to set
+	 */
+	public void setUom(String uom) {
+		this.uom = uom;
 	}
 	private Double totalPrice;
 }

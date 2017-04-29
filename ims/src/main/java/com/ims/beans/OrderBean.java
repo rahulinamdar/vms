@@ -108,6 +108,18 @@ public class OrderBean {
 	public void setRegion(String region) {
 		this.region = region;
 	}
+	/**
+	 * @return the discount
+	 */
+	public Double getDiscount() {
+		return discount;
+	}
+	/**
+	 * @param discount the discount to set
+	 */
+	public void setDiscount(Double discount) {
+		this.discount = discount;
+	}
 	
 	
 }

@@ -59,7 +59,7 @@ public class Product extends EntityAudit{
 		this.category = category;
 	}
 
-	@OneToMany(mappedBy="product",cascade=CascadeType.REMOVE)
+	@OneToMany(mappedBy="product",cascade=CascadeType.ALL)
 	private List<ProductPrice> price; 
 	
 	/**
@@ -77,7 +77,7 @@ public class Product extends EntityAudit{
 		this.uom = uom;
 	}
 
-	@OneToMany(mappedBy="product",cascade=CascadeType.REMOVE)
+	@OneToMany(mappedBy="product",cascade=CascadeType.ALL)
 	private List<ProductStock> stock; 
 
 //

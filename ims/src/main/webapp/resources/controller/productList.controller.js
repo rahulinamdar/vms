@@ -54,6 +54,31 @@ sap.ui.define([
 				oViewModel.setProperty("/mode","Delete")
 			}
 		},
+		handleDelete:function(oEvent){
+			var that = this;
+			var oContext = oEvent.getParameter("listItem").getBindingContext("products");
+			var productId = oContext.getModel().getProperty(oContext.getPath()).productId;
+			$.ajax({
+				type: 'DELETE',
+				url: "admin/product/delete?productId="+productId+"",
+				error: function(data) {
+					if(data){
+						that.showMessage("Error",data.statusText);
+						}
+				},
+				dataType: 'json',
+				contentType:"application/json",
+				success: function(data) {
+					if(data){
+						that.showMessage("Success",data.msg);
+						}
+					that.escapePreventDialog.close();
+					that.getView().getModel("products").setData(Model.createProductModel().getData());
+					that.getView().getModel("products").refresh();
+				}
+				
+			});
+		},
 		_onRouteMatched: function(oEvent) {
 			var oController = this;
 			var oModel = new JSONModel();
@@ -134,16 +159,16 @@ sap.ui.define([
 										type: 'PUT',
 										url: "admin/products/update",
 										data:JSON.stringify(oView.getModel("newProduct").getData()),
-										error: function(data) {
+										error: function(data,response) {
 											if(data){
-												that.showMessage("Error",data.error);
+												that.showMessage("Error",response);
 												}
 										},
 										dataType: 'json',
 										contentType:"application/json",
 										success: function(data) {
 											if(data){
-												that.showMessage("Success",data.msg);
+												that.showMessage("Success",data.productDesc+" Created successfully.");
 												}
 											that.escapePreventDialog.close();
 											that.getView().getModel("products").setData(Model.createProductModel().getData());
@@ -233,14 +258,14 @@ sap.ui.define([
 										data:JSON.stringify(oView.getModel("newProduct").getData()),
 										error: function(data) {
 											if(data){
-												that.showMessage("Error",data.error);
+												that.showMessage("Error",data.statusText);
 												}
 										},
 										dataType: 'json',
 										contentType:"application/json",
 										success: function(data) {
 											if(data){
-												that.showMessage("Success",data.msg);
+												that.showMessage("Success","New Product has been added");
 												}
 											that.escapePreventDialog.close();
 											that.getView().getModel("products").setData(Model.createProductModel().getData());
