@@ -11,10 +11,24 @@
       <script type="text/javascript" src="model/Utility.js"></script>
       <!--Let browser know website is optimized for mobile-->
       <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+      <style type="text/css">
+      .bck_veg{
+      	background: url("images/back.jpg");
+      	color: #ffaf71;
+      }
+      .row.login {
+    background: #efe7df;
+    padding: 2rem;
+    border-radius: 3rem;
+    position: relative;
+    top: 3rem;
+}
+      
+      </style>
       <script type="text/javascript">
       $.ajax({
 			type:"POST",
-			url:"validateUser",
+			url:"../validateUser",
 			success:function(data){
 				if(data.status){
 					location.href="../"
@@ -27,12 +41,16 @@
       </script>
     </head>
 
-    <body>
+    <body class="bck_veg">
      
       
       <div class="container">
-      
       <div class="row">
+        <div class="input-field col s12">
+          <h3>KK Agro Fresh Login</h3>
+        </div>
+      </div>
+      <div class="row login">
       <label  class="panel-login">
           <div id ="login_message" class="login_result">Login</div>
        </label>
@@ -52,7 +70,6 @@
      <div class="row">
         <div class="input-field col s12">
      <button class="btn waves-effect waves-light" onclick="Utility.login()" >Submit
-    <i class="material-icons right">send</i>
     
   </button>
   </div>
